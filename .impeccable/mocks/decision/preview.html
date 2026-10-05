@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conceitos · Café Boutique</title>
+  <style>
+    @font-face {
+      font-family: Antic Didone;
+      src: url("../../../.next/static/media/586e90f9df92ec63-s.p.0nuwoim6igfyd.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: Lustria;
+      src: url("../../../.next/static/media/0f1e4b08dc74c21f-s.p.1wg5fn48t_cv_.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 400;
+    }
+    :root {
+      --display: "Antic Didone", Georgia, serif;
+      --reading: "Lustria", Georgia, serif;
+      --ui: Arial, Helvetica, sans-serif;
+      --espresso: #2a170f;
+      --paper: #fbf7ee;
+      --butter: #f8f4cc;
+      --taupe: #988c74;
+      --gold: #bd8740;
+      --berry: #a23d36;
+      --leaf: #485843;
+      --page: 1440px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-width: 320px; min-height: 100%; }
+    body { background: #ebe5d9; color: var(--espresso); font-family: var(--reading); }
+    .site-frame { width: var(--page); min-height: 1000px; margin: 0 auto; overflow: hidden; background: var(--paper); }
+    .site-header { height: 92px; display: flex; align-items: center; justify-content: space-between; padding: 0 64px; background: var(--paper); color: var(--espresso); }
+    .brand { display: flex; width: 92px; height: 68px; align-items: center; justify-content: center; flex: 0 0 auto; background: #fff9df; overflow: hidden; }
+    .brand img { width: 88px; height: 60px; object-fit: contain; }
+    .navigation { display: flex; align-items: center; gap: 34px; font: 12px/1 var(--ui); letter-spacing: .04em; }
+    .navigation a { color: inherit; text-decoration: none; }
+    .navigation .order-link { min-height: 46px; display: inline-flex; align-items: center; padding: 0 20px; border-radius: 3px; background: var(--espresso); color: #fff9ed; font-weight: 700; letter-spacing: .01em; }
+    .hero { position: relative; display: grid; min-height: 545px; grid-template-columns: 45% 55%; background: var(--espresso); color: #fff9ed; }
+    .hero-copy { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 55px 45px 58px 74px; }
+    .hero h1 { max-width: 540px; margin: 0; font: 400 65px/.98 var(--display); letter-spacing: -.025em; text-wrap: balance; }
+    .hero-copy > p { max-width: 430px; margin: 27px 0 0; color: rgba(255,249,237,.82); font: 16px/1.65 var(--reading); }
+    .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .hero-actions a { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: 0 20px; color: inherit; text-decoration: none; font: 700 12px/1 var(--ui); }
+    .hero-actions .primary { background: var(--gold); color: #24150f; }
+    .hero-actions .secondary { border: 1px solid rgba(255,249,237,.55); }
+    .location { margin-top: 31px; color: rgba(255,249,237,.68); font: 11px/1.2 var(--ui); letter-spacing: .12em; text-transform: uppercase; }
+    .hero-media { position: relative; min-height: 545px; overflow: hidden; }
+    .hero-media > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+    .hero-media::after { position: absolute; inset: 42% 0 0; background: linear-gradient(0deg, rgba(28,16,10,.72), transparent); content: ""; }
+    .photo-label { position: absolute; z-index: 1; right: 30px; bottom: 28px; left: 30px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; color: white; }
+    .photo-label strong { display: block; font: 400 25px/1.1 var(--display); }
+    .photo-label span { font: 10px/1.35 var(--ui); letter-spacing: .11em; text-transform: uppercase; }
+    .photo-label .price-tag { padding: 10px 13px; background: var(--butter); color: var(--espresso); font-weight: 700; letter-spacing: 0; }
+    .catalogue { padding: 39px 64px 66px; background: var(--paper); }
+    .catalogue-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 22px; }
+    .catalogue-heading h2 { margin: 0; font: 400 42px/1 var(--display); letter-spacing: -.015em; }
+    .catalogue-heading p { max-width: 300px; margin: 0; color: #635748; font: 12px/1.5 var(--ui); }
+    .catalogue-heading a { color: inherit; font: 700 11px/1.3 var(--ui); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+    .product-grid { display: grid; grid-template-columns: 1fr 1.32fr .92fr; align-items: start; gap: 18px; }
+    .product { min-width: 0; }
+    .product img { display: block; width: 100%; height: 174px; object-fit: cover; }
+    .product:nth-child(2) img { height: 215px; }
+    .product:nth-child(3) img { height: 148px; }
+    .product figcaption { display: flex; align-items: start; justify-content: space-between; gap: 12px; padding-top: 11px; }
+    .product h3 { margin: 0; font: 400 19px/1.12 var(--display); }
+    .product p { margin: 5px 0 0; color: #756958; font: 10px/1.4 var(--ui); }
+    .product strong { white-space: nowrap; font: 700 12px/1.3 var(--ui); }
+    .site-footer { display: flex; align-items: center; justify-content: space-between; padding: 22px 64px; background: #22130d; color: #fff9ed; font: 10px/1.4 var(--ui); }
+    .site-footer strong { font-family: var(--display); font-size: 19px; font-weight: 400; }
+    .site-footer a { color: inherit; text-decoration: none; }
+    .rule { height: 1px; margin: 0 64px; background: rgba(42,23,15,.18); }
+
+    /* Direction assigned by the roll: an annotated kitchen notebook. */
+    body[data-concept="assigned"] .site-frame { background: #f5eddb; }
+    body[data-concept="assigned"] .site-header { background: #f5eddb; }
+    body[data-concept="assigned"] .brand { transform: rotate(-2deg); box-shadow: 0 5px 13px rgba(42,23,15,.1); }
+    body[data-concept="assigned"] .hero { grid-template-columns: 48% 52%; background: #3d2920; }
+    body[data-concept="assigned"] .hero-copy { padding-left: 68px; }
+    body[data-concept="assigned"] .hero h1 { max-width: 515px; font-size: 61px; }
+    body[data-concept="assigned"] .hero-media { margin: 22px 22px 22px 0; min-height: 501px; border: 7px solid #efe0bf; }
+    body[data-concept="assigned"] .hero-media > img { object-position: center 34%; }
+    body[data-concept="assigned"] .hero-media::after { inset: 55% 0 0; }
+    body[data-concept="assigned"] .catalogue { background: #f5eddb; }
+    body[data-concept="assigned"] .catalogue-heading h2 { font-size: 39px; }
+    body[data-concept="assigned"] .product:first-child img { height: 154px; }
+    body[data-concept="assigned"] .product:nth-child(2) img { height: 203px; }
+    body[data-concept="assigned"] .product:nth-child(3) img { height: 174px; }
+    body[data-concept="assigned"] .product figcaption { padding-top: 12px; }
+    body[data-concept="assigned"] .product h3 { font-size: 21px; }
+    body[data-concept="assigned"] .site-footer { background: #4b5b43; }
+    body[data-concept="assigned"] .navigation .order-link { background: #a23d36; }
+
+    /* Grounded pick: one continuous storefront frame and an actual product vitrine. */
+    body[data-concept="model-pick"] .site-header { height: 88px; background: #24120d; color: #fff9ed; }
+    body[data-concept="model-pick"] .brand { width: 94px; height: 66px; }
+    body[data-concept="model-pick"] .navigation .order-link { background: #bd8740; color: #24120d; }
+    body[data-concept="model-pick"] .hero { min-height: 555px; grid-template-columns: 43% 57%; background: #24120d; }
+    body[data-concept="model-pick"] .hero-copy { padding-left: 72px; }
+    body[data-concept="model-pick"] .hero h1 { font-size: 68px; }
+    body[data-concept="model-pick"] .hero-media { min-height: 555px; }
+    body[data-concept="model-pick"] .hero-media > img { object-position: center 38%; }
+    body[data-concept="model-pick"] .hero-actions .primary { background: #f8f4cc; }
+    body[data-concept="model-pick"] .catalogue { padding-top: 34px; }
+    body[data-concept="model-pick"] .catalogue-heading { margin-bottom: 18px; }
+    body[data-concept="model-pick"] .product-grid { grid-template-columns: 1.18fr 1.55fr .9fr; gap: 24px; }
+    body[data-concept="model-pick"] .product:first-child img { height: 183px; }
+    body[data-concept="model-pick"] .product:nth-child(2) img { height: 224px; }
+    body[data-concept="model-pick"] .product:nth-child(3) img { height: 155px; }
+    body[data-concept="model-pick"] .product:nth-child(2) { margin-top: -16px; }
+    body[data-concept="model-pick"] .product h3 { font-size: 21px; }
+    body[data-concept="model-pick"] .product strong { padding: 5px 8px; background: #f8f4cc; }
+
+    /* Competitive challenger: useful mobile-first consumer app grammar. */
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] { font-family: Arial, Helvetica, sans-serif; background: #e8eae4; color: #293527; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .site-frame { background: #f7f7f2; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .site-header { height: 82px; padding: 0 58px; background: white; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .brand { width: 84px; height: 58px; border-radius: 12px; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .navigation { gap: 25px; font-size: 13px; letter-spacing: 0; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .navigation .order-link { border-radius: 12px; background: #68744a; color: white; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .hero { min-height: 520px; grid-template-columns: 44% 56%; gap: 0; padding: 18px 58px; background: #f7f7f2; color: #293527; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .hero-copy { padding: 52px 28px 50px 0; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .hero h1 { font: 700 55px/1.02 Arial, Helvetica, sans-serif; letter-spacing: -.04em; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .hero-copy > p { color: #4d5744; font: 16px/1.65 Arial, Helvetica, sans-serif; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .hero-media { min-height: 484px; border-radius: 18px; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .hero-media > img { border-radius: 18px; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .hero-actions .primary { border-radius: 12px; background: #68744a; color: white; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .hero-actions .secondary { border: 0; background: white; color: #293527; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .location { color: #68744a; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .catalogue { padding: 31px 58px 62px; background: #f7f7f2; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .catalogue-heading h2 { font: 700 33px/1.1 Arial, Helvetica, sans-serif; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .product-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .product { padding: 10px 10px 15px; border-radius: 14px; background: white; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .product img,
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .product:nth-child(2) img,
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .product:nth-child(3) img { height: 130px; border-radius: 9px; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .product h3 { font: 700 14px/1.25 Arial, Helvetica, sans-serif; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .product strong { color: #52623e; }
+    body[data-concept="challenger-digital-design-canon-warm-consumer-app-surface"] .site-footer { background: #293527; }
+
+    /* Quiet category-standard exit, played straight. */
+    body[data-concept="canon"] { color: #241d19; font-family: Arial, Helvetica, sans-serif; background: #ebedf0; }
+    body[data-concept="canon"] .site-frame { background: #fff; }
+    body[data-concept="canon"] .site-header { height: 78px; padding: 0 64px; background: white; }
+    body[data-concept="canon"] .brand { width: 77px; height: 54px; }
+    body[data-concept="canon"] .brand img { width: 73px; height: 50px; }
+    body[data-concept="canon"] .navigation { font-size: 13px; letter-spacing: 0; }
+    body[data-concept="canon"] .navigation .order-link { border-radius: 7px; background: #2563eb; color: white; }
+    body[data-concept="canon"] .hero { min-height: 485px; grid-template-columns: 49% 51%; padding: 24px 64px; background: #fff; color: #241d19; }
+    body[data-concept="canon"] .hero-copy { padding: 40px 32px 40px 0; }
+    body[data-concept="canon"] .hero h1 { font: 400 54px/1.05 Georgia, serif; }
+    body[data-concept="canon"] .hero-copy > p { color: #625d58; font: 16px/1.55 Arial, Helvetica, sans-serif; }
+    body[data-concept="canon"] .hero-media { min-height: 435px; }
+    body[data-concept="canon"] .hero-actions .primary { border-radius: 7px; background: #2563eb; color: white; }
+    body[data-concept="canon"] .hero-actions .secondary { border: 1px solid #c8cbd0; border-radius: 7px; color: #241d19; }
+    body[data-concept="canon"] .location { color: #625d58; letter-spacing: .03em; }
+    body[data-concept="canon"] .catalogue { padding: 34px 64px 64px; background: white; }
+    body[data-concept="canon"] .catalogue-heading h2 { font: 600 31px/1.2 Arial, Helvetica, sans-serif; }
+    body[data-concept="canon"] .product-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    body[data-concept="canon"] .product { border: 1px solid #e4e5e7; border-radius: 10px; padding: 10px; background: white; }
+    body[data-concept="canon"] .product img,
+    body[data-concept="canon"] .product:nth-child(2) img,
+    body[data-concept="canon"] .product:nth-child(3) img { height: 140px; border-radius: 6px; }
+    body[data-concept="canon"] .product h3 { font: 600 14px/1.25 Arial, Helvetica, sans-serif; }
+    body[data-concept="canon"] .site-footer { background: #17243f; }
+
+    @media (max-width: 760px) {
+      .site-frame { width: 100%; min-height: 100vh; }
+      .site-header { height: 76px; padding: 0 18px; }
+      .brand { width: 68px; height: 50px; }
+      .brand img { width: 66px; height: 46px; }
+      .navigation a:not(.order-link) { display: none; }
+      .navigation .order-link { min-height: 42px; padding: 0 13px; font-size: 10px; }
+      .hero, body[data-concept] .hero { min-height: 0; grid-template-columns: 1fr; padding: 0; }
+      .hero-copy, body[data-concept] .hero-copy { min-height: 390px; padding: 42px 22px; }
+      .hero h1, body[data-concept] .hero h1 { font-size: clamp(42px, 12vw, 60px); }
+      .hero-copy > p { max-width: 37ch; font-size: 14px; }
+      .hero-actions { gap: 8px; }
+      .hero-actions a { padding: 0 13px; font-size: 10px; }
+      .hero-media, body[data-concept] .hero-media { min-height: 340px; margin: 0; border: 0; border-radius: 0; }
+      .catalogue, body[data-concept] .catalogue { padding: 28px 22px 48px; }
+      .catalogue-heading { align-items: start; flex-direction: column; gap: 10px; }
+      .catalogue-heading h2 { font-size: 34px; }
+      .product-grid, body[data-concept] .product-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+      .product:nth-child(2), body[data-concept] .product:nth-child(2) { margin-top: 0; }
+      .product img, .product:nth-child(2) img, .product:nth-child(3) img { height: 145px; }
+      .site-footer { padding: 20px 22px; }
+      .site-footer > span { max-width: 25ch; }
+      .rule { margin: 0 22px; }
+    }
+  </style>
+</head>
+<body data-concept="assigned">
+  <div class="site-frame">
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Café Boutique"><img src="../../../public/assets/brand/logo-cafe-boutique.webp" alt="Café Boutique"></a>
+      <nav class="navigation" aria-label="Navegação principal">
+        <a href="#sobre">A casa</a>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#visite">Como chegar</a>
+        <a class="order-link" href="#pedido">Encomendar no WhatsApp</a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero" id="sobre" aria-labelledby="title">
+        <div class="hero-copy">
+          <h1 id="title">Mais que um bolo,<br>uma memória afetiva.</h1>
+          <p>Bolos, cafés e sabores preparados para acompanhar bons momentos.</p>
+          <div class="hero-actions">
+            <a class="primary" href="#cardapio">Explorar o cardápio</a>
+            <a class="secondary" href="#pedido">Fazer encomenda</a>
+          </div>
+          <div class="location">São Luís · Maranhão</div>
+        </div>
+        <figure class="hero-media">
+          <img src="../../../public/assets/instagram/bolo-caramelo-instagram.jpg" alt="Bolo com cobertura de caramelo da Café Boutique">
+          <figcaption class="photo-label"><strong>Da vitrine da Boutique</strong><span class="price-tag">Ver o cardápio</span></figcaption>
+        </figure>
+      </section>
+      <section class="catalogue" id="cardapio" aria-labelledby="catalogue-title">
+        <div class="catalogue-heading">
+          <h2 id="catalogue-title">Os sabores da Boutique</h2>
+          <a href="#catalogo-completo">Ver o cardápio completo →</a>
+        </div>
+        <div class="product-grid">
+          <figure class="product"><img src="../../../public/assets/instagram/bolos-assados-formas.jpg" alt="Bolos amanteigados em formas"><figcaption><div><h3>Bolo amanteigado simples</h3><p>Fatia</p></div><strong>R$ 8,00</strong></figcaption></figure>
+          <figure class="product"><img src="../../../public/assets/instagram/sobremesa-morango-chocolate.jpg" alt="Supreme de morango com chocolate e creme"><figcaption><div><h3>Supreme de morango</h3><p>Creme, chocolate crocante e morangos frescos</p></div><strong>R$ 25,00</strong></figcaption></figure>
+          <figure class="product"><img src="../../../public/assets/instagram/fatia-bolo-com-cafe.jpg" alt="Fatia de bolo e café coado"><figcaption><div><h3>Café coado</h3><p>Aproximadamente 200 ml</p></div><strong>R$ 15,00</strong></figcaption></figure>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer" id="visite"><strong>Café Boutique</strong><span>São Luís · Maranhão</span><a id="pedido" href="#">Pedir pelo WhatsApp ↗</a></footer>
+  </div>
+  <script>
+    const concepts = ["assigned", "model-pick", "challenger-digital-design-canon-warm-consumer-app-surface", "canon"];
+    const requested = new URLSearchParams(window.location.search).get("concept");
+    if (concepts.includes(requested)) document.body.dataset.concept = requested;
+  </script>
+</body>
+</html>

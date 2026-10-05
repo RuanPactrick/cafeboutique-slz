@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T02:06:27Z",
+  "title": "Design System: Café Boutique",
+  "extensions": {
+    "colorMeta": {
+      "espresso": {
+        "role": "primary",
+        "displayName": "Espresso",
+        "canonical": "#2A170F",
+        "tonalRamp": ["oklch(15% 0.0344 43.5)", "oklch(25% 0.0344 43.5)", "oklch(35% 0.0344 43.5)", "oklch(45% 0.0344 43.5)", "oklch(55% 0.0344 43.5)", "oklch(65% 0.0344 43.5)", "oklch(80% 0.0344 43.5)", "oklch(95% 0.0266 43.5)"]
+      },
+      "cream": {
+        "role": "tertiary",
+        "displayName": "Cream",
+        "canonical": "#F8F4CC",
+        "tonalRamp": ["oklch(15% 0.0315 102.6)", "oklch(25% 0.0521 102.6)", "oklch(35% 0.0521 102.6)", "oklch(45% 0.0521 102.6)", "oklch(55% 0.0521 102.6)", "oklch(65% 0.0521 102.6)", "oklch(80% 0.0521 102.6)", "oklch(95% 0.0521 102.6)"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#F8F5EE",
+        "tonalRamp": ["oklch(15% 0.0098 87.5)", "oklch(25% 0.0098 87.5)", "oklch(35% 0.0098 87.5)", "oklch(45% 0.0098 87.5)", "oklch(55% 0.0098 87.5)", "oklch(65% 0.0098 87.5)", "oklch(80% 0.0098 87.5)", "oklch(95% 0.0098 87.5)"]
+      },
+      "paper-soft": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["oklch(15% 0.0000 89.9)", "oklch(25% 0.0000 89.9)", "oklch(35% 0.0000 89.9)", "oklch(45% 0.0000 89.9)", "oklch(55% 0.0000 89.9)", "oklch(65% 0.0000 89.9)", "oklch(80% 0.0000 89.9)", "oklch(95% 0.0000 89.9)"]
+      },
+      "paper-secondary": {
+        "role": "neutral",
+        "displayName": "Secondary Paper",
+        "canonical": "#F2EEE5",
+        "tonalRamp": ["oklch(15% 0.0127 86.8)", "oklch(25% 0.0127 86.8)", "oklch(35% 0.0127 86.8)", "oklch(45% 0.0127 86.8)", "oklch(55% 0.0127 86.8)", "oklch(65% 0.0127 86.8)", "oklch(80% 0.0127 86.8)", "oklch(95% 0.0127 86.8)"]
+      },
+      "taupe": {
+        "role": "secondary",
+        "displayName": "Warm Taupe",
+        "canonical": "#988C74",
+        "tonalRamp": ["oklch(15% 0.0308 84.5)", "oklch(25% 0.0372 84.5)", "oklch(35% 0.0372 84.5)", "oklch(45% 0.0372 84.5)", "oklch(55% 0.0372 84.5)", "oklch(65% 0.0372 84.5)", "oklch(80% 0.0372 84.5)", "oklch(95% 0.0372 84.5)"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Café Ink",
+        "canonical": "#3C311B",
+        "tonalRamp": ["oklch(15% 0.0308 83.8)", "oklch(25% 0.0385 83.8)", "oklch(35% 0.0385 83.8)", "oklch(45% 0.0385 83.8)", "oklch(55% 0.0385 83.8)", "oklch(65% 0.0385 83.8)", "oklch(80% 0.0385 83.8)", "oklch(95% 0.0385 83.8)"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Brown",
+        "canonical": "#655C50",
+        "tonalRamp": ["oklch(15% 0.0220 75.1)", "oklch(25% 0.0220 75.1)", "oklch(35% 0.0220 75.1)", "oklch(45% 0.0220 75.1)", "oklch(55% 0.0220 75.1)", "oklch(65% 0.0220 75.1)", "oklch(80% 0.0220 75.1)", "oklch(95% 0.0220 75.1)"]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Divider",
+        "canonical": "#DDD5C8",
+        "tonalRamp": ["oklch(15% 0.0197 80.1)", "oklch(25% 0.0197 80.1)", "oklch(35% 0.0197 80.1)", "oklch(45% 0.0197 80.1)", "oklch(55% 0.0197 80.1)", "oklch(65% 0.0197 80.1)", "oklch(80% 0.0197 80.1)", "oklch(95% 0.0197 80.1)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Antic Didone headings; hero sizes change by route and viewport." },
+      "headline": { "displayName": "Headline", "purpose": "Section headlines and story statements." },
+      "title": { "displayName": "Title", "purpose": "Smaller serif headings, with local card and menu adjustments." },
+      "body": { "displayName": "Body", "purpose": "Default Lustria reading copy." },
+      "label": { "displayName": "Interface Label", "purpose": "Arial/Helvetica navigation, categories, prices, and controls." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Home category panel entrance and image hover scaling." },
+      { "name": "standard-hover", "value": "180ms ease", "purpose": "Button colors, menu tabs, and navigation underline transitions." },
+      { "name": "reduced-motion", "value": "prefers-reduced-motion: reduce", "purpose": "Disables smooth scrolling and minimizes animation and transition durations." }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "1080px" },
+      { "name": "mobile", "value": "760px" },
+      { "name": "compact-mobile", "value": "400px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Espresso pill action for menu and ordering paths.",
+      "html": "<a class=\"ds-button-primary\" href=\"#\">Ver cardápio<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M7 17 17 7M8 7h9v9\" /></svg></a>",
+      "css": ".ds-button-primary { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 0.58rem; padding: 0.7rem 1.3rem; border: 1px solid var(--espresso); border-radius: 999px; color: var(--paper-soft); background: var(--espresso); font-family: Arial, Helvetica, sans-serif; font-size: 0.78rem; font-weight: 600; line-height: 1.2; text-decoration: none; transition: background-color 180ms ease, color 180ms ease, transform 180ms ease; } .ds-button-primary svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.6; } .ds-button-primary:hover { transform: translateY(-1px); color: var(--espresso); background: var(--paper-soft); } .ds-button-primary:focus-visible { outline: 3px solid var(--taupe); outline-offset: 4px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Transparent secondary pill action.",
+      "html": "<a class=\"ds-button-outline\" href=\"#\">Fazer encomenda</a>",
+      "css": ".ds-button-outline { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 0.7rem 1.3rem; border: 1px solid var(--espresso); border-radius: 999px; color: var(--espresso); background: transparent; font-family: Arial, Helvetica, sans-serif; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: background-color 180ms ease, color 180ms ease, transform 180ms ease; } .ds-button-outline:hover { transform: translateY(-1px); color: var(--paper-soft); background: var(--espresso); } .ds-button-outline:focus-visible { outline: 3px solid var(--taupe); outline-offset: 4px; }"
+    },
+    {
+      "name": "Light Button",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "Inverse pill action for dark ordering panels.",
+      "html": "<a class=\"ds-button-light\" href=\"#\">Falar no WhatsApp</a>",
+      "css": ".ds-button-light { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 0.7rem 1.3rem; border: 1px solid var(--paper-soft); border-radius: 999px; color: var(--espresso); background: var(--paper-soft); font-family: Arial, Helvetica, sans-serif; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: background-color 180ms ease, color 180ms ease, transform 180ms ease; } .ds-button-light:hover { transform: translateY(-1px); color: var(--paper-soft); background: transparent; } .ds-button-light:focus-visible { outline: 3px solid var(--taupe); outline-offset: 4px; }"
+    },
+    {
+      "name": "Primary Navigation Link",
+      "kind": "nav",
+      "refersTo": "navigation-link",
+      "description": "Compact sticky-header link with a taupe underline reveal.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Navegação principal\"><a href=\"#\">Início</a><a href=\"#\">Cardápio</a><a href=\"#\">Nossa história</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: center; gap: clamp(0.75rem, 1.45vw, 1.35rem); } .ds-nav a { position: relative; color: var(--ink); font-family: Arial, Helvetica, sans-serif; font-size: 0.7rem; text-decoration: none; } .ds-nav a::after { position: absolute; right: 50%; bottom: -0.38rem; left: 50%; height: 1px; background: var(--taupe); content: ''; transition: inset 180ms ease; } .ds-nav a:hover::after { right: 0; left: 0; } .ds-nav a:focus-visible { outline: 3px solid var(--taupe); outline-offset: 4px; }"
+    },
+    {
+      "name": "Featured Product Card",
+      "kind": "card",
+      "refersTo": "card-featured",
+      "description": "Source-backed featured product with cropped image area and WhatsApp link.",
+      "html": "<article class=\"ds-product-card\"><div class=\"ds-product-card__image\" aria-hidden=\"true\"></div><div class=\"ds-product-card__body\"><span class=\"ds-product-card__category\">Doces</span><div class=\"ds-product-card__title\"><h3>Fatia bolo Amanteigado Simples</h3><data>R$ 8,00</data></div><p>Uma fatia de bolo amanteigado do cardápio da Boutique.</p><a href=\"#\">Consultar pelo WhatsApp</a></div></article>",
+      "css": ".ds-product-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 8px; background: var(--paper-soft); font-family: Lustria, Georgia, serif; } .ds-product-card__image { aspect-ratio: 1.26 / 1; background: var(--paper-secondary); transition: transform 430ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-product-card:hover .ds-product-card__image { transform: scale(1.025); } .ds-product-card__body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 0.95rem 1rem 1rem; } .ds-product-card__category { color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 0.59rem; letter-spacing: 0.11em; text-transform: uppercase; } .ds-product-card__title { display: flex; width: 100%; justify-content: space-between; gap: 0.55rem; margin-top: 0.35rem; } .ds-product-card h3 { color: var(--espresso); font-family: Antic Didone, Georgia, serif; font-size: 1.48rem; font-weight: 400; line-height: 1.08; } .ds-product-card data { color: var(--espresso); font-family: Arial, Helvetica, sans-serif; font-size: 0.7rem; font-weight: 700; white-space: nowrap; } .ds-product-card p { margin-top: 0.52rem; color: var(--muted); font-size: 0.72rem; line-height: 1.48; } .ds-product-card a { min-height: 38px; margin-top: auto; padding-top: 0.55rem; color: var(--espresso); font-family: Arial, Helvetica, sans-serif; font-size: 0.66rem; font-weight: 600; text-decoration: none; } .ds-product-card a:hover { text-decoration: underline; text-underline-offset: 0.24em; } .ds-product-card a:focus-visible { outline: 3px solid var(--taupe); outline-offset: 4px; }"
+    },
+    {
+      "name": "Home Menu Category Tab",
+      "kind": "chip",
+      "refersTo": "home-menu-tab",
+      "description": "Selectable pill tab for the home page category preview.",
+      "html": "<button class=\"ds-home-menu-tab\" type=\"button\" aria-pressed=\"true\">Doces</button>",
+      "css": ".ds-home-menu-tab { min-height: 39px; padding: 0.45rem 0.85rem; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink); background: transparent; font-family: Arial, Helvetica, sans-serif; font-size: 0.7rem; cursor: pointer; transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease; } .ds-home-menu-tab:hover, .ds-home-menu-tab[aria-pressed='true'] { border-color: var(--espresso); color: var(--paper-soft); background: var(--espresso); } .ds-home-menu-tab:focus-visible { outline: 3px solid var(--taupe); outline-offset: 4px; }"
+    },
+    {
+      "name": "Menu Search",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Labeled catalogue search field.",
+      "html": "<label class=\"ds-menu-search\"><span>Buscar no cardápio</span><input class=\"ds-menu-search__input\" type=\"search\" placeholder=\"Ex.: bolo, café, tapioca\" /></label>",
+      "css": ".ds-menu-search { display: grid; width: min(100%, 460px); gap: 0.45rem; color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 0.68rem; } .ds-menu-search__input { min-height: 48px; padding: 0.7rem 0.9rem; border: 1px solid var(--rule); border-radius: 6px; color: var(--ink); background: var(--paper-soft); font-family: Lustria, Georgia, serif; font-size: 0.82rem; } .ds-menu-search__input::placeholder { color: #817767; } .ds-menu-search__input:focus-visible { outline: 3px solid var(--taupe); outline-offset: 4px; }"
+    },
+    {
+      "name": "Catalogue Category Chip",
+      "kind": "chip",
+      "refersTo": "chip-category",
+      "description": "Catalogue filter with espresso selected state.",
+      "html": "<button class=\"ds-category-chip\" type=\"button\" aria-pressed=\"true\">Todas</button>",
+      "css": ".ds-category-chip { min-height: 38px; padding: 0.42rem 0.8rem; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink); background: transparent; font-family: Arial, Helvetica, sans-serif; font-size: 0.68rem; cursor: pointer; transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease; } .ds-category-chip:hover, .ds-category-chip[aria-pressed='true'] { border-color: var(--espresso); color: var(--paper-soft); background: var(--espresso); } .ds-category-chip:focus-visible { outline: 3px solid var(--taupe); outline-offset: 4px; }"
+    },
+    {
+      "name": "Variant Selector",
+      "kind": "input",
+      "refersTo": "variant-select",
+      "description": "Label and native select for grouped product variations.",
+      "html": "<label class=\"ds-variant-select\"><span>Escolha uma opção</span><select><option>Com queijo — R$ 15,00</option></select></label>",
+      "css": ".ds-variant-select { display: grid; gap: 0.25rem; color: var(--muted); font-family: Arial, Helvetica, sans-serif; font-size: 0.59rem; } .ds-variant-select select { width: 100%; min-height: 38px; padding: 0.35rem 2rem 0.35rem 0.55rem; border: 1px solid var(--rule); border-radius: 5px; color: var(--ink); background: var(--paper-soft); font-family: Arial, Helvetica, sans-serif; font-size: 0.67rem; } .ds-variant-select select:focus-visible { outline: 3px solid var(--taupe); outline-offset: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Editorial Assimétrico",
+    "overview": "Café Boutique uses a light editorial page with generous paper fields, espresso anchors, fine dividers, and a warm serif pairing. Large source-backed photographs shape the home hero, product cards, story, kitchen, and gallery. The supplied logo remains an image asset; gaps in the media inventory remain unfilled.\\n\\nThe homepage moves from a split image-and-copy hero through product and category browsing, story, kitchen, gallery, values, aggregate rating, location, and contact. The full menu has its own searchable route. On mobile, featured products and category previews become horizontal scroll-snap carousels, while the full menu stays a list with compact selection controls.",
+    "keyCharacteristics": [
+      "Light paper surfaces with espresso contrast, cream highlights, taupe details, and fine rules.",
+      "Antic Didone display type and Lustria reading type, each with Georgia serif fallback; Arial/Helvetica for interface controls.",
+      "Source-backed photography, rounded actions and cards, and mobile horizontal carousels."
+    ],
+    "rules": [
+      { "name": "The Espresso Anchor Rule", "body": "Use espresso for the strongest contrast; reserve cream and taupe for small highlights and interaction details.", "section": "colors" },
+      { "name": "The Two-Voice Rule", "body": "Keep Antic Didone for headings and Lustria for reading copy; use Arial/Helvetica for interface controls and compact utility text.", "section": "typography" },
+      { "name": "The Image-First Split Rule", "body": "Keep the homepage hero at 45/55 copy-to-image on wide screens; at 760px and below, lead with the image and let the copy panel overlap its lower edge.", "section": "layout" },
+      { "name": "The Tonal-Depth Rule", "body": "Separate sections with the established warm surfaces and fine rules; do not add resting box shadows.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use the exact palette and type roles in the frontmatter.",
+      "Do keep the supplied logo as its original image asset.",
+      "Do use only the provenance-tracked real photo and video files; leave unavailable photo slots null.",
+      "Do preserve the hero proportions, section order, and responsive horizontal carousel behavior.",
+      "Do keep menu, location, WhatsApp, and aggregate rating content tied to centralized source data."
+    ],
+    "donts": [
+      "Don't add box shadows to resting surfaces; the implemented page has no shadow vocabulary.",
+      "Don't use generated food or café photography to fill missing media.",
+      "Don't invent Reel URLs, opening hours, product details, or review comments.",
+      "Don't replace the original logo with typeset brand text."
+    ]
+  }
+}

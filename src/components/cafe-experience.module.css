@@ -1,0 +1,216 @@
+.section {
+  overflow: hidden;
+  padding-bottom: clamp(32px, 4vw, 68px);
+  background: #f4eddf;
+}
+
+.composition {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  overflow: hidden;
+  background: #f4eddf;
+}
+
+.desktopArtwork {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.copy {
+  position: absolute;
+  z-index: 1;
+  top: 6.5%;
+  left: 5.3%;
+  width: 32.5%;
+  color: #342013;
+}
+
+.eyebrow {
+  margin-bottom: clamp(8px, 1.1vw, 18px);
+  color: #8a541b;
+  font: 400 clamp(11px, 1.2vw, 20px) / 1.3 var(--ui);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.copy h2 {
+  color: #301a0c;
+  font-size: clamp(48px, 5.35vw, 90px);
+  letter-spacing: -0.035em;
+  line-height: 0.87;
+  text-wrap: initial;
+}
+
+.description {
+  max-width: 36ch;
+  margin-top: clamp(13px, 1.15vw, 20px);
+  color: #392317;
+  font-size: clamp(15px, 1.3vw, 22px);
+  line-height: 1.32;
+}
+
+.link {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  margin-top: clamp(9px, 1vw, 16px);
+  color: #713d16;
+  font: 400 clamp(14px, 1.15vw, 20px) / 1.4 var(--ui);
+  text-decoration: none;
+}
+
+.linkLabel { padding-bottom: 7px; border-bottom: 1px solid currentColor; }
+.link:hover { color: var(--espresso); }
+
+.mobileGallery { display: none; }
+
+@media (max-width: 980px) {
+  .composition {
+    display: grid;
+    aspect-ratio: auto;
+    gap: 23px;
+    padding: 38px 22px 0;
+  }
+
+  .desktopArtwork { display: none; }
+
+  .copy {
+    position: static;
+    width: min(100%, 620px);
+    margin-inline: auto;
+  }
+
+  .eyebrow { margin-bottom: 10px; font-size: 11px; }
+  .copy h2 { font-size: clamp(46px, 9vw, 72px); }
+  .description { max-width: 53ch; margin-top: 14px; font-size: 16px; }
+  .link { margin-top: 9px; font-size: 15px; }
+
+  .mobileGallery {
+    position: relative;
+    display: block;
+    width: min(100%, 680px);
+    margin: 0 auto;
+  }
+
+  .galleryTrack {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .galleryTrack::-webkit-scrollbar { display: none; }
+
+  .gallerySlide {
+    flex: 0 0 min(84%, 480px);
+    min-width: 0;
+    margin: 0;
+    scroll-snap-align: center;
+  }
+
+  .galleryPhoto {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1.2;
+    border-radius: 13px;
+    background: #e1d2bd;
+  }
+
+  .galleryPhoto img { object-fit: cover; }
+
+  .galleryCaption {
+    margin-top: 9px;
+    color: #69421f;
+    font: 400 13px / 1.4 var(--ui);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .galleryControls {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    margin-top: 13px;
+  }
+
+  .galleryButton {
+    min-height: 40px;
+    padding: 0 13px;
+    border: 1px solid #c9b498;
+    border-radius: 999px;
+    background: transparent;
+    color: #4b2b17;
+    font: 500 12px / 1 var(--ui);
+    cursor: pointer;
+  }
+
+  .galleryButton:disabled {
+    border-color: #ddd2c2;
+    color: #a89b8a;
+    cursor: default;
+  }
+
+  .galleryButton:focus-visible,
+  .galleryDot:focus-visible {
+    outline: 2px solid #8a541b;
+    outline-offset: 3px;
+  }
+
+  .galleryPagination {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .galleryStatus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .galleryDot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #c9b498;
+    cursor: pointer;
+  }
+
+  .galleryDot[aria-current="true"] {
+    width: 20px;
+    border-radius: 999px;
+    background: #4b2b17;
+  }
+
+  .galleryCount {
+    color: #69421f;
+    font: 400 12px / 1 var(--ui);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (max-width: 480px) {
+  .composition { gap: 19px; padding: 34px 20px 0; }
+  .copy h2 { font-size: clamp(43px, 10.5vw, 55px); }
+  .description { font-size: 15px; }
+  .galleryTrack { gap: 9px; }
+  .galleryPhoto { border-radius: 10px; }
+  .galleryControls { gap: 8px; }
+  .galleryButton { min-height: 38px; padding-inline: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .galleryTrack { scroll-behavior: auto; transition: none; }
+}

@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+.impeccable/config.local.json
+.impeccable/build/
+.impeccable/questions/
+.impeccable/review/
+.codex-next-dev.*.log

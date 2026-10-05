@@ -1,0 +1,19 @@
+{
+  "mode": "lock",
+  "snapshot_max_age_minutes": 30,
+  "reserve_floor": {
+    "five_hour_remaining": 25,
+    "weekly_remaining": 35
+  },
+  "auto_escalation": {
+    "green_allow_gpt6_sol_once": true,
+    "green_allow_gpt61_sol": false,
+    "astra_requires_approval": true,
+    "unknown_quota_requires_approval": true
+  },
+  "limits_per_task": {
+    "max_non_luna_consultations": 1,
+    "max_astra_consultations": 0,
+    "max_concurrent_subagents": 1
+  }
+}

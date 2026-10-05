@@ -1,0 +1,8 @@
+name = "astra_judge"
+description = "Emergency-only read-only final judge for high-impact unresolved decisions. Requires explicit user approval before use."
+model = "gpt-6-astra"
+model_reasoning_effort = "low"
+sandbox_mode = "read-only"
+developer_instructions = """
+Act as a final judge on one narrowly framed decision. Do not explore broadly, do not edit files, and do not spawn subagents. Return the minimum reasoning needed to choose an action and a concrete validation plan.
+"""

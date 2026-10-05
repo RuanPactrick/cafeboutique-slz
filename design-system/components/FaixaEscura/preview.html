@@ -1,0 +1,62 @@
+<!-- @dsCard group="Estrutura" height=320 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Lustria&display=swap">
+<style>
+  .visit { padding: 28px 24px; color: var(--on-coffee, #fffaf1); background: var(--coffee, #2b160e); font-family: var(--font-body, "Lustria", Georgia, serif); }
+  .eyebrow { margin: 0; color: #ccb993; font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+  .visit h2 { margin: .45rem 0 0; max-width: 13ch; color: var(--on-coffee, #fffaf1); font-family: var(--font-display, "Antic Didone", Georgia, serif); font-weight: 400; line-height: 1.02; font-size: 2.8rem; }
+  .head { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem; margin-bottom: 1.6rem; }
+  .google-summary { display: grid; min-width: 290px; grid-template-columns: auto 1fr; align-items: center; column-gap: 1rem; padding: 1rem 1.3rem; border-radius: var(--radius-xl, 12px); color: var(--coffee, #2b160e); background: var(--cream, #fffaf1); }
+  .google-summary__score { display: flex; grid-row: span 2; align-items: baseline; gap: .25rem; }
+  .google-summary__score strong { font-family: var(--font-display, "Antic Didone", Georgia, serif); font-size: 3.2rem; font-weight: 400; line-height: 1; }
+  .google-summary__score > span { color: var(--muted, #76685c); font-size: .7rem; }
+  .google-stars { display: inline-flex; align-items: center; gap: .12rem; color: var(--star-gold, #d99329); }
+  .google-stars svg { width: .92rem; height: .92rem; fill: currentColor; stroke: currentColor; stroke-width: .8; }
+  .google-summary > p { margin: .15rem 0 0; font-size: .72rem; }
+  .google-summary > small { grid-column: 2; margin-top: .3rem; color: var(--muted, #76685c); font-size: .58rem; }
+  .review-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; }
+  .review-item { display: flex; min-height: 150px; flex-direction: column; align-items: flex-start; padding: 1.1rem 1.2rem; border: 1px solid rgba(255,250,241,.18); border-radius: var(--radius-xl, 12px); background: rgba(255,250,241,.06); }
+  .review-item > p { margin: .7rem 0 0; max-width: 46ch; color: var(--on-coffee-body, #f3e9db); font-size: .76rem; line-height: 1.55; }
+  .review-item__by { display: flex; width: 100%; align-items: baseline; justify-content: space-between; gap: .8rem; margin-top: auto; padding-top: 1rem; }
+  .review-item__by strong { color: var(--on-coffee, #fffaf1); font-size: .68rem; font-weight: 400; }
+  .review-item__by span { flex: 0 0 auto; color: var(--on-coffee-muted, #c9b7a2); font-size: .58rem; }
+  .review-item--featured { grid-column: span 2; color: var(--coffee, #2b160e); background: var(--cream, #fffaf1); }
+  .review-item--featured > p { color: var(--coffee-soft, #493026); font-size: .88rem; }
+  .review-item--featured .review-item__by strong { color: var(--coffee, #2b160e); }
+  .review-item--featured .review-item__by span { color: var(--muted, #76685c); }
+</style>
+
+<div class="visit">
+  <div class="head">
+    <div>
+      <p class="eyebrow">Venha tomar um café</p>
+      <h2>Onde a gente está</h2>
+    </div>
+    <div class="google-summary">
+      <span class="google-summary__score"><strong>4,6</strong> <span>/ 5</span></span>
+      <span class="google-stars" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/></svg>
+        <svg viewBox="0 0 24 24" style="fill:none;stroke-width:1.2"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/></svg>
+      </span>
+      <p>221 avaliações no Google</p>
+      <small>Consultado em 3 out. 2026</small>
+    </div>
+  </div>
+
+  <div class="review-grid">
+    <article class="review-item review-item--featured">
+      <span class="google-stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/></svg></span>
+      <p>Destaca as opções de doces e salgados, o espaço interno e ao ar livre, e o atendimento rápido e gentil.</p>
+      <div class="review-item__by"><strong>Felippe Mendes Lamounier</strong><span>2 meses atrás</span></div>
+    </article>
+    <article class="review-item">
+      <span class="google-stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/></svg></span>
+      <p>Comenta a decoração, as mesas no terraço e o salão climatizado, além dos bolos.</p>
+      <div class="review-item__by"><strong>Dores Gomes</strong><span>7 meses atrás</span></div>
+    </article>
+  </div>
+</div>

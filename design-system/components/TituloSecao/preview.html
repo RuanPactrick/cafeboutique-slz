@@ -1,0 +1,34 @@
+<!-- @dsCard group="Estrutura" height=260 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Lustria&display=swap">
+<style>
+  .wrap { padding: 24px 20px; background: var(--paper, #fbf7ee); font-family: var(--font-body, "Lustria", Georgia, serif); color: var(--ink, #321f17); }
+  .eyebrow { color: var(--olive, #8c7d5f); font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin: 0; }
+  h2 { margin: .35rem 0 0; color: var(--coffee, #2b160e); font-family: var(--font-display, "Antic Didone", Georgia, serif); font-weight: 400; line-height: 1.02; font-size: 2.6rem; text-wrap: balance; }
+  .ornament-title { display: grid; grid-template-columns: minmax(3rem, 1fr) auto minmax(3rem, 1fr); align-items: center; gap: 1.5rem; text-align: center; margin-bottom: 28px; }
+  .ornament-title > span { height: 1px; background: linear-gradient(90deg, transparent, var(--olive, #8c7d5f)); }
+  .ornament-title > span:last-child { background: linear-gradient(90deg, var(--olive, #8c7d5f), transparent); }
+  .section-heading-inline { display: flex; align-items: end; justify-content: space-between; gap: 2rem; border-top: 1px solid var(--rule, #d9cdbb); padding-top: 24px; }
+  .text-link { display: inline-flex; align-items: center; gap: 8px; color: var(--coffee, #2b160e); font-size: .82rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+  .text-link svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+
+<div class="wrap">
+  <div class="ornament-title">
+    <span></span>
+    <div>
+      <p class="eyebrow">Feito na casa</p>
+      <h2>Os favoritos da vitrine</h2>
+    </div>
+    <span></span>
+  </div>
+
+  <div class="section-heading-inline">
+    <div>
+      <p class="eyebrow">No Instagram</p>
+      <h2>O dia a dia do café</h2>
+    </div>
+    <a class="text-link" href="#">@cafeboutique.slz <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+name = "luna56_fallback"
+description = "Legacy GPT-5.6 Luna fallback for high-volume focused tasks when GPT-6 Luna is unavailable or measured worse for this account."
+model = "gpt-5.6-luna"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+developer_instructions = """
+Handle only focused, bounded work. Minimize context, retries, and output. Do not spawn subagents.
+"""

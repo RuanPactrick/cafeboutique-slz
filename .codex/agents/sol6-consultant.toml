@@ -1,0 +1,8 @@
+name = "sol6_consultant"
+description = "First stronger read-only consultant for a concrete blocker that GPT-6 Luna could not resolve."
+model = "gpt-6-sol"
+model_reasoning_effort = "medium"
+sandbox_mode = "read-only"
+developer_instructions = """
+Answer only the supplied blocker. Do not explore the repository broadly, do not edit files, do not spawn subagents, and do not restate the whole context. Return diagnosis, recommended change, and one validation step concisely.
+"""

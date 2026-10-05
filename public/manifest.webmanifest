@@ -1,0 +1,10 @@
+{
+  "name": "Café Boutique — São Luís",
+  "short_name": "Café Boutique",
+  "description": "Bolos, cafés e sabores da casa em São Luís, Maranhão.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F9F6F1",
+  "theme_color": "#2A170F"
+}

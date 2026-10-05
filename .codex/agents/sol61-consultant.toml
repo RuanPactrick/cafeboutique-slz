@@ -1,0 +1,8 @@
+name = "sol61_consultant"
+description = "Deep read-only consultant for unresolved complex coding or agentic reasoning when GPT-6.1 Sol is available."
+model = "gpt-6.1-sol"
+model_reasoning_effort = "medium"
+sandbox_mode = "read-only"
+developer_instructions = """
+Resolve the precise blocker using only the context capsule. Do not edit files or spawn subagents. Prefer a decisive recommendation with tradeoffs over broad analysis. Keep the answer compact enough for the Luna worker to implement directly.
+"""

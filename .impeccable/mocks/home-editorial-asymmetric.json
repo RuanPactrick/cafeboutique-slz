@@ -1,0 +1,8 @@
+{
+  "source": "OpenAI ImageGen",
+  "reference_board": "C:\\Users\\ruanp\\.codex\\generated_images\\01a0ff9a-dac7-78f2-acac-87eccadd66e8\\exec-951c9ba7-73ba-4cbb-b6e1-71f176f4d738.png",
+  "approved": true,
+  "approval": "User selected option A — Editorial assimétrico.",
+  "prompt": "Extract only option A from the approved visual board as a standalone 1440x1050 Café Boutique website comp. Keep the approved asymmetric editorial composition: compact header, hero copy and actions in a left column, tall neutral real-photo-pending frame at right, next section begins with a typographic menu preview. Use the supplied off-white, espresso, taupe and cream palette; Antic Didone-like display and Lustria-like body text. Show only confirmed copy and menu items from the user-provided prompt. Do not render food photographs, people, fabricated history, ratings, reviews, prices, products, or an invented logo.",
+  "note": "Layout reference only. Header logo and right-hand photography remain clearly marked as pending assets; comp text beyond the approved source brief is not shipping content."
+}

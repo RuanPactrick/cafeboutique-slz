@@ -1,0 +1,49 @@
+<!-- @dsCard height=320 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Lustria&display=swap">
+<style>
+  .cover { position: relative; width: 960px; height: 320px; overflow: hidden; background: var(--paper, #fbf7ee); }
+  .cover svg { position: absolute; inset: 0; }
+  .cover__text { position: absolute; left: 64px; bottom: 36px; width: 440px; }
+  .cover__name { margin: 0; color: var(--coffee, #2b160e); font-family: var(--font-display, "Antic Didone", Georgia, serif); font-weight: 400; font-size: 96px; line-height: .95; }
+  .cover__tagline { margin: 14px 0 0; color: var(--muted, #76685c); font-family: var(--font-body, "Lustria", Georgia, serif); font-size: 14px; line-height: 1.4; }
+  .slab { fill: var(--coffee, #2b160e); }
+  .field { fill: var(--paper-deep, #f2eadb); }
+  .band { fill: var(--olive, #8c7d5f); }
+  .dot { fill: var(--gold, #bd8740); }
+  .leader-light { stroke: var(--olive, #8c7d5f); stroke-width: 1; stroke-dasharray: 1 6; stroke-linecap: round; }
+  .leader-dark { stroke: var(--on-coffee-muted, #c9b7a2); stroke-width: 1; stroke-dasharray: 1 6; stroke-linecap: round; }
+</style>
+
+<div class="cover">
+  <!--
+    Blocos: coffee 176×256 (slab), paper-deep 256×152 sangrando na borda direita,
+            olive 112×88, gold disco r=28. Pesados pela identidade: o marrom é a tinta da marca.
+    Arranjo: uma lajota alta com satélites, o campo claro cortado pela borda direita.
+    Padrão: régua pontilhada (linha de preço do cardápio) — seis fios, três sobre o campo claro
+            e três sobre a lajota. Escolhido porque a peça mais característica deste site é a
+            lista de preços pontilhada do cardápio, não um motivo de café.
+    Escalas: raios radius-2xl 14px e radius-xl 12px; passo vertical de 32px (space-6) entre fios;
+            margens em 32px e 48px (space-6, space-7).
+  -->
+  <svg viewBox="0 0 960 320" width="960" height="320" aria-hidden="true">
+    <rect class="slab" x="512" y="32" width="176" height="256" rx="14"/>
+    <rect class="field" x="704" y="32" width="256" height="152" rx="14"/>
+    <rect class="band" x="704" y="200" width="112" height="88" rx="12"/>
+    <circle class="dot" cx="868" cy="244" r="28"/>
+
+    <line class="leader-light" x1="728" y1="72" x2="936" y2="72"/>
+    <line class="leader-light" x1="728" y1="104" x2="936" y2="104"/>
+    <line class="leader-light" x1="728" y1="136" x2="936" y2="136"/>
+
+    <line class="leader-dark" x1="536" y1="96" x2="664" y2="96"/>
+    <line class="leader-dark" x1="536" y1="128" x2="664" y2="128"/>
+    <line class="leader-dark" x1="536" y1="160" x2="664" y2="160"/>
+  </svg>
+
+  <div class="cover__text">
+    <h1 class="cover__name">Café<br>Boutique</h1>
+    <p class="cover__tagline">Mais que um bolo, uma memória afetiva.</p>
+  </div>
+</div>

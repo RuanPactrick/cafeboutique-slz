@@ -1,0 +1,147 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(38px, 3.35vw, 64px) 0 30px;
+  background: #f5ecdf;
+}
+
+.flora {
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto;
+  height: 17.7vw;
+  background: url("/cafe-boutique/destaques/queridinhos-sem-texto.png") top center / 100% auto no-repeat;
+  mask-image: linear-gradient(#000 76%, transparent);
+  pointer-events: none;
+}
+
+.heading {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 3vw;
+  margin: 0 5vw clamp(25px, 2.3vw, 44px);
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: #8a541b;
+  font: 400 clamp(11px, 1.12vw, 19px) / 1.3 var(--ui);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.heading h2 {
+  color: #301a0c;
+  font-size: clamp(46px, 5.8vw, 100px);
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  text-wrap: initial;
+}
+
+.intro { max-width: 28em; padding-top: 23px; }
+.intro p { max-width: 30ch; color: #392317; font-size: clamp(17px, 1.55vw, 26px); line-height: 1.32; }
+.intro > a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-top: 15px;
+  color: #713d16;
+  font: 400 clamp(15px, 1.2vw, 20px) / 1.4 var(--ui);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 10px;
+}
+.intro > a:hover { color: var(--espresso); }
+
+.rail {
+  display: flex;
+  gap: clamp(12px, 0.85vw, 18px);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 0 1.9vw 8px;
+  scroll-padding-inline: 1.9vw;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar { display: none; }
+.rail:focus-visible { outline: 2px solid #8a541b; outline-offset: -2px; }
+
+.card {
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 clamp(290px, 22.3vw, 420px);
+  aspect-ratio: 373 / 580;
+  overflow: hidden;
+  border-radius: 17px;
+  background: #351b08;
+  scroll-snap-align: start;
+}
+.photo { position: absolute; z-index: -2; inset: 0; overflow: hidden; }
+.photoImage { object-fit: cover; }
+.card::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(transparent 52%, rgba(45, 20, 4, 0.22) 66%, rgba(45, 20, 4, 0.65));
+  content: "";
+  pointer-events: none;
+}
+.copy {
+  display: flex;
+  min-height: 36%;
+  flex-direction: column;
+  position: absolute;
+  inset: auto 0 0;
+  padding: 0 clamp(22px, 1.6vw, 30px) clamp(20px, 1.55vw, 30px);
+  color: #fff1d8;
+}
+.category { margin-bottom: 9px; color: #f2d7a8; font: 400 clamp(11px, 0.85vw, 15px) / 1.2 var(--ui); letter-spacing: 0.22em; text-transform: uppercase; }
+.copy h3 { color: #fff5e4; font-size: clamp(25px, 1.8vw, 33px); letter-spacing: -0.035em; line-height: 1.05; text-wrap: initial; }
+.description { max-width: 29ch; margin-top: 13px; color: #f5dcba; font: 400 clamp(14px, 1.05vw, 18px) / 1.3 var(--ui); }
+.cardBottom { display: flex; min-height: 56px; align-items: flex-end; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 10px; }
+.price { color: #fff1dd; font: 400 clamp(22px, 1.65vw, 30px) / 1.1 var(--ui); white-space: nowrap; }
+.order { display: inline-flex; width: clamp(46px, 3.3vw, 58px); aspect-ratio: 1; flex-shrink: 0; align-items: center; justify-content: center; border: 1px solid #faefda; border-radius: 50%; color: #49290e; background: #faefda; font: 400 35px / 1 var(--ui); text-decoration: none; transition: background-color 160ms ease, color 160ms ease; }
+.order:hover { color: #fff1dd; background: #603719; }
+.order:focus-visible { outline-color: #fff1dd; }
+.singlePhoto { z-index: -2; object-fit: cover; object-position: 50% 35%; }
+.cake::after { background: linear-gradient(transparent 33%, rgba(45, 20, 4, 0.86) 67%, #2d1404); }
+.railFooter { display: flex; align-items: center; justify-content: flex-end; gap: 16px; margin: 12px 1.9vw 0; }
+.controls { display: flex; gap: 8px; }
+.controls button { min-height: 40px; padding: 0 14px; border: 1px solid #bca588; border-radius: 999px; color: #583415; background: transparent; font: 400 12px / 1 var(--ui); cursor: pointer; }
+.controls button:hover:not(:disabled) { color: #fff1dd; background: #583415; }
+.controls button:disabled { opacity: 0.3; cursor: default; }
+
+@media (max-width: 1050px) {
+  .heading { gap: 26px; }
+  .heading h2 { font-size: 6vw; }
+  .card { flex-basis: 31vw; min-width: 290px; }
+}
+
+@media (max-width: 760px) {
+  .section { padding-top: 38px; padding-bottom: 25px; }
+  .flora { right: 0; left: auto; width: 100%; height: 170px; background-size: 960px auto; background-position: top right; opacity: 0.5; }
+  .heading { grid-template-columns: minmax(0, 1fr); gap: 20px; margin: 0 22px 25px; }
+  .heading h2 { font-size: clamp(42px, 11.5vw, 70px); }
+  .eyebrow { margin-bottom: 10px; font-size: 11px; }
+  .intro { padding-top: 0; }
+  .intro p { max-width: 31ch; font-size: 17px; }
+  .intro > a { margin-top: 10px; font-size: 15px; }
+  .rail { padding-inline: 20px; scroll-padding-inline: 20px; gap: 12px; }
+  .card { flex-basis: 82vw; min-width: 0; max-width: 365px; border-radius: 15px; }
+  .copy { min-height: 38%; padding-inline: 22px; padding-bottom: 22px; }
+  .copy h3 { font-size: 27px; }
+  .description { font-size: 15px; }
+  .railFooter { margin-inline: 20px; }
+  .order { width: 48px; }
+}
+
+@media (max-width: 360px) {
+  .copy { padding-inline: 16px; }
+  .copy h3 { font-size: 24px; }
+  .description { margin-top: 9px; font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .order { transition: none; }
+}
