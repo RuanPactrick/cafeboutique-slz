@@ -12,7 +12,7 @@ export function CafeStory() {
               alt="A dona da Café Boutique sorrindo com um bolo nas mãos, em frente à vitrine de doces."
               fill
               sizes="(max-width: 760px) 86vw, 380px"
-              quality={88}
+              quality={90}
             />
           </div>
           <figcaption>Sempre um bom motivo para voltar.</figcaption>

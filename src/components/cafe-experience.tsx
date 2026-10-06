@@ -4,9 +4,9 @@ import { ChevronRightIcon } from "./icons";
 
 // Fotos reais do espaço, com o mesmo tratamento de cor das fotos de "Nossa história".
 const photos = [
-  { src: "/cafe-boutique/espaco/salao.jpg", width: 680, height: 567, alt: "Balcão da Café Boutique com bolos na vitrine e a equipe atendendo.", caption: "Interior" },
-  { src: "/cafe-boutique/espaco/area-externa.jpg", width: 380, height: 317, alt: "Mesas e cadeiras coloridas na área externa, rodeada por plantas.", caption: "Área externa" },
-  { src: "/cafe-boutique/espaco/cantinho-infantil.jpg", width: 333, height: 278, alt: "Mesinhas, cadeiras coloridas e brinquedos no cantinho infantil.", caption: "Cantinho infantil" },
+  { src: "/cafe-boutique/espaco/salao.jpg", alt: "Balcão da Café Boutique com bolos na vitrine e a equipe atendendo.", caption: "Interior" },
+  { src: "/cafe-boutique/espaco/area-externa.jpg", alt: "Mesas e cadeiras coloridas na área externa, rodeada por plantas.", caption: "Área externa" },
+  { src: "/cafe-boutique/espaco/cantinho-infantil.jpg", alt: "Mesinhas, cadeiras coloridas e brinquedos no cantinho infantil.", caption: "Cantinho infantil" },
 ] as const;
 
 export function CafeExperience() {
@@ -37,7 +37,7 @@ export function CafeExperience() {
             <li key={photo.src}>
               <figure>
                 <div className="cb-photo">
-                  <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 78vw, 320px" quality={88} />
+                  <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 78vw, 320px" quality={90} />
                 </div>
                 <figcaption>{photo.caption}</figcaption>
               </figure>

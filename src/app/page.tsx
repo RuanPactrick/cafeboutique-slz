@@ -25,7 +25,7 @@ export default function HomePage() {
                 fill
                 preload
                 quality={90}
-                sizes="(max-width: 1440px) 100vw, 1380px"
+                sizes="100vw"
                 style={{
                   "--position-desktop": cafeBoutiqueMedia.heroPanoramic.objectPositionDesktop,
                   "--position-mobile": cafeBoutiqueMedia.heroPanoramic.objectPositionMobile,

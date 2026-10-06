@@ -11,6 +11,8 @@ type Highlight = {
   description: string;
   priceCents: number;
   photo: string;
+  /** Enquadramento da foto na metade de cima do cartão. */
+  position: string;
   alt: string;
 };
 
@@ -25,11 +27,11 @@ function getHighlights(): Highlight[] {
   const cake = byId("fatia-bolo-amanteigado-com-cobertura");
 
   const list: (Highlight | null | undefined)[] = [
-    croissant && { key: croissant.id, name: croissant.name, orderName: croissant.name, description: "Croissant recheado para acompanhar a sua pausa.", priceCents: croissant.priceCents, photo: "/cafe-boutique/destaques/croissant-americano.webp", alt: "Croissant dourado e recheado, servido em um prato." },
-    capuccino && { key: capuccino.id, name: "Capuccino Tradicional", orderName: capuccino.name, description: "Seu capuccino tradicional, servido em uma xícara de 150 ml.", priceCents: capuccino.priceCents, photo: "/cafe-boutique/destaques/cappuccino-tradicional.webp", alt: "Xícara de capuccino em uma mesa de madeira." },
-    sandwich && { key: sandwich.id, name: "Sanduíche Americano", orderName: sandwich.name, description: "Presunto, queijo, requeijão, ovo, tomate e alface no pão francês.", priceCents: sandwich.priceCents, photo: "/cafe-boutique/destaques/sanduiche-americano.webp", alt: "Sanduíche com queijo e salada, imagem ilustrativa." },
-    { key: "sobremesas", name: "Sobremesas da Boutique", orderName: "sobremesas", description: "Supreme de morango, surpresa de uva e tortinha de banana.", priceCents: dessertPrice, photo: "/cafe-boutique/destaques/sobremesa-chocolate.webp", alt: "Sobremesa de chocolate com morango em uma panelinha, imagem ilustrativa." },
-    cake?.image ? { key: cake.id, name: "Fatia de Bolo Amanteigado", orderName: cake.name, description: "Uma fatia com cobertura para acompanhar o seu café.", priceCents: cake.priceCents, photo: cake.image.src, alt: cake.image.alt } : null,
+    croissant && { key: croissant.id, name: croissant.name, orderName: croissant.name, description: "Croissant recheado para acompanhar a sua pausa.", priceCents: croissant.priceCents, photo: "/cafe-boutique/destaques/croissant-americano-hd.jpg", position: "50% 66%", alt: "Croissant recheado com presunto, queijo e salada, servido em um prato." },
+    capuccino && { key: capuccino.id, name: "Capuccino Tradicional", orderName: capuccino.name, description: "Seu capuccino tradicional, servido em uma xícara de 150 ml.", priceCents: capuccino.priceCents, photo: "/cafe-boutique/destaques/cappuccino-tradicional.webp", position: "50% 26%", alt: "Xícara de capuccino em uma mesa de madeira." },
+    sandwich && { key: sandwich.id, name: "Sanduíche Americano", orderName: sandwich.name, description: "Presunto, queijo, requeijão, ovo, tomate e alface no pão francês.", priceCents: sandwich.priceCents, photo: "/cafe-boutique/destaques/sanduiche-americano.webp", position: "50% 26%", alt: "Sanduíche com queijo e salada, imagem ilustrativa." },
+    { key: "sobremesas", name: "Sobremesas da Boutique", orderName: "sobremesas", description: "Supreme de morango, surpresa de uva e tortinha de banana.", priceCents: dessertPrice, photo: "/cafe-boutique/destaques/sobremesa-surpresa-de-uva-hd.jpg", position: "50% 60%", alt: "Surpresa de uva servida no copo, com chocolate por cima." },
+    cake?.image ? { key: cake.id, name: "Fatia de Bolo Amanteigado", orderName: cake.name, description: "Uma fatia com cobertura para acompanhar o seu café.", priceCents: cake.priceCents, photo: "/cafe-boutique/destaques/fatia-bolo-amanteigado-hd.jpg", position: "50% 68%", alt: "Fatia de bolo amanteigado com cobertura, servida com uma xícara de café." } : null,
   ];
   return list.filter((item): item is Highlight => Boolean(item));
 }
@@ -38,7 +40,7 @@ function ProductCard({ item, clone }: { item: Highlight; clone?: boolean }) {
   return (
     <li className={styles.card} aria-hidden={clone || undefined}>
       <div className={styles.photo}>
-        <Image className={styles.photoImage} src={item.photo} alt={clone ? "" : item.alt} fill sizes="(max-width: 760px) 240px, 270px" quality={90} />
+        <Image className={styles.photoImage} src={item.photo} alt={clone ? "" : item.alt} fill sizes="(max-width: 760px) 240px, 270px" quality={90} style={{ objectPosition: item.position }} />
       </div>
       <div className={styles.copy}>
         <h3>{item.name}</h3>
