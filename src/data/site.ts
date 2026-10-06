@@ -18,8 +18,7 @@ export const siteConfig = {
   linktreeUrl: "https://linktr.ee/cafeboutiquesaoluiss",
   officialMenuUrl:
     "https://drive.google.com/file/d/1pdIE0CuN9dG4KNuPteYtuC2lqNjOKJit/view?usp=sharing",
-  mapsUrl:
-    "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x7f68d96d5c943f7:0xe95b1b6013aa2cfb",
+  mapsUrl: "https://www.google.com/maps?cid=16815063733178608891",
   address: {
     lines: [
       "Av. dos Holandeses, Loja 8",
