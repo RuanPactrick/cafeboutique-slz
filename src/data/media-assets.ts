@@ -47,7 +47,7 @@ export const cafeBoutiqueMedia = {
     height: 941,
     source: "arquivo fornecido",
     sourceUrl: null,
-    objectPositionDesktop: "50% 50%",
+    objectPositionDesktop: "50% 72%",
     objectPositionMobile: "62% 50%",
   },
   boloAmanteigadoProducao: {

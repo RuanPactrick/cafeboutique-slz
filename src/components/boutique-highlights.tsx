@@ -46,7 +46,7 @@ export function BoutiqueHighlights() {
   const cake = menuItems.find((item) => item.id === "fatia-bolo-amanteigado-com-cobertura");
 
   return (
-    <section className={styles.section} id="queridinhos" aria-labelledby="boutique-highlights-title">
+    <section className={styles.section} id="queridinhos" aria-labelledby="boutique-highlights-title" data-scroll-reveal="true">
       <div className={styles.flora} aria-hidden="true" />
       <div className={styles.heading}>
         <div>

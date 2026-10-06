@@ -35,7 +35,7 @@
 
 .copy h2 {
   color: #fff8ee;
-  font-size: clamp(43px, 4.55vw, 77px);
+  font-size: clamp(40px, 4.1vw, 69px);
   letter-spacing: -0.035em;
   line-height: 0.9;
   text-wrap: initial;

@@ -11,7 +11,7 @@ export function CafeExperience() {
   );
 
   return (
-    <section className={styles.section} id="a-casa" aria-labelledby="cafe-experience-title">
+    <section className={styles.section} id="a-casa" aria-labelledby="cafe-experience-title" data-scroll-reveal="true">
       <div className={styles.composition}>
         <Image
           className={styles.desktopArtwork}

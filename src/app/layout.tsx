@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Antic_Didone, Lustria } from "next/font/google";
+import { SectionReveal } from "@/components/section-reveal";
 import "./globals.css";
 
 const anticDidone = Antic_Didone({
@@ -47,7 +48,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${anticDidone.variable} ${lustria.variable}`}>{children}</body>
+      <body className={`${anticDidone.variable} ${lustria.variable}`}>
+        {children}
+        <SectionReveal />
+      </body>
     </html>
   );
 }

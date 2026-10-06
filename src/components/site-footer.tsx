@@ -4,7 +4,7 @@ import { siteConfig } from "@/data/site";
 
 export function SiteFooter() {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" data-scroll-reveal="true">
       <div className="site-footer__inner">
         <div className="footer-brand">
           <a href="/#inicio" aria-label="Café Boutique — início"><BrandLogo compact /></a>

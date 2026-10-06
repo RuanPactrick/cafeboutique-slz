@@ -251,7 +251,7 @@ export function MenuBrowser() {
         </div>
       </section>
 
-      <nav className="category-scroller" aria-label="Categorias do cardápio">
+      <nav className="category-scroller" aria-label="Categorias do cardápio" data-scroll-reveal="true">
         <div className="category-list">
           <button type="button" className="category-chip" aria-pressed={activeCategory === "todos"} onClick={() => setActiveCategory("todos")}>Todos</button>
           {menuCategories.map((category) => (
@@ -260,7 +260,7 @@ export function MenuBrowser() {
         </div>
       </nav>
 
-      <section className="menu-featured section-wrap" id="cardapio-do-site" aria-labelledby="featured-menu-title">
+      <section className="menu-featured section-wrap" id="cardapio-do-site" aria-labelledby="featured-menu-title" data-scroll-reveal="true">
         {activeCategory === "todos" && !normalizedQuery ? (
           <>
             <header className="menu-section-heading menu-featured__heading">
@@ -302,7 +302,7 @@ export function MenuBrowser() {
             {sections.map((section) => {
               const art = categoryArt[section.id];
               return (
-                <section className={`menu-category${section.id === "extras" ? " menu-category--extras" : ""}${art ? " menu-category--illustrated" : ""}`} key={section.id} id={`categoria-${section.id}`} aria-labelledby={`heading-${section.id}`}>
+                <section className={`menu-category${section.id === "extras" ? " menu-category--extras" : ""}${art ? " menu-category--illustrated" : ""}`} key={section.id} id={`categoria-${section.id}`} aria-labelledby={`heading-${section.id}`} data-scroll-reveal="true">
                   <header className="menu-section-heading menu-category__heading">
                     <div><p className="menu-eyebrow">{section.label}</p><h2 id={`heading-${section.id}`}>{categoryTitles[section.id]}</h2></div>
                     <p className="menu-category__description">{categoryDescriptions[section.id]}</p>
@@ -330,7 +330,7 @@ export function MenuBrowser() {
         )}
       </section>
 
-      <section className="menu-closing" aria-labelledby="menu-closing-title">
+      <section className="menu-closing" aria-labelledby="menu-closing-title" data-scroll-reveal="true">
         <div className="menu-closing__copy"><p className="menu-eyebrow">Café Boutique</p><h2 id="menu-closing-title">Tudo fica melhor com um bom café.</h2><p>Escolha seus favoritos e monte seu pedido para retirada.</p><a className="button button--light" href="#inicio-cardapio">Voltar ao cardápio</a></div>
         <div className="menu-closing__photo"><Image src="/cafe-boutique/destaques/cappuccino-tradicional.webp" alt="Capuccino tradicional servido em uma xícara da Café Boutique." fill sizes="(max-width: 760px) 100vw, 48vw" /></div>
       </section>

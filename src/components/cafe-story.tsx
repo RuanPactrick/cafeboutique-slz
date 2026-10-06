@@ -30,7 +30,7 @@ function MobilePortrait() {
 
 export function CafeStory() {
   return (
-    <section className={styles.section} id="cafe-story" aria-labelledby="cafe-story-title">
+    <section className={styles.section} id="cafe-story" aria-labelledby="cafe-story-title" data-scroll-reveal="true">
       <div className={styles.composition}>
         <Image
           className={styles.desktopArtwork}

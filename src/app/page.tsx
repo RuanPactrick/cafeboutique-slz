@@ -65,7 +65,7 @@ export default function HomePage() {
 
             <CafeStory />
 
-            <section className="instagram-section" id="instagram" aria-labelledby="instagram-title">
+            <section className="instagram-section" id="instagram" aria-labelledby="instagram-title" data-scroll-reveal="true">
               <div className="instagram-section__heading instagram-section__inner">
                 <div>
                   <h2 id="instagram-title">A Boutique em imagens.</h2>
@@ -112,7 +112,7 @@ export default function HomePage() {
               </ul>
             </section>
 
-            <section className="visit-band" id="localizacao" aria-labelledby="visit-title">
+            <section className="visit-band" id="localizacao" aria-labelledby="visit-title" data-scroll-reveal="true">
               <div className="visit-band__inner section-wrap">
                 <div className="visit-band__copy">
                   <p className="visit-band__eyebrow">Nossa cafeteria</p>
