@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { createWhatsAppUrl } from "@/data/site";
-import { ChevronRightIcon } from "./icons";
 
 // Fotos reais do espaço, com o mesmo tratamento de cor das fotos de "Nossa história".
 const photos = [
@@ -10,10 +8,6 @@ const photos = [
 ] as const;
 
 export function CafeExperience() {
-  const contactUrl = createWhatsAppUrl(
-    "Olá! Vim pelo site da Café Boutique e gostaria de saber mais sobre o estabelecimento.",
-  );
-
   return (
     <section className="cb cb--cream" id="a-casa" aria-labelledby="cafe-experience-title">
       <div className="cb-inner">
@@ -26,10 +20,6 @@ export function CafeExperience() {
             <p className="cb-lede">
               Em São Luís, a Café Boutique reúne cafés, bolos, sobremesas e lanches para acompanhar diferentes momentos. Conheça os sabores da casa e fale com a equipe para combinar sua retirada.
             </p>
-            <a className="cb-cta" href={contactUrl} target="_blank" rel="noreferrer">
-              <span>Conheça a Boutique</span>
-              <ChevronRightIcon />
-            </a>
           </div>
         </div>
         <ul className="cb-photos">
