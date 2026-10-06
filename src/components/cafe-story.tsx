@@ -11,7 +11,7 @@ export function CafeStory() {
               src="/cafe-boutique/historia/retrato.jpg"
               alt="A dona da Café Boutique sorrindo com um bolo nas mãos, em frente à vitrine de doces."
               fill
-              sizes="(max-width: 760px) 86vw, 380px"
+              sizes="(max-width: 760px) 86vw, 460px"
               quality={90}
             />
           </div>

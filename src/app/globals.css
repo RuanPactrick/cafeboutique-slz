@@ -28,6 +28,8 @@
   --page-width: 100%;
   --content-width: clamp(1280px, 84vw, 1600px);
   --gutter: clamp(20px, 5.5vw, 76px);
+  /* Grade única das seções da home: mesma largura e mesma margem esquerda em todas. */
+  --frame: min(calc(100% - var(--gutter) - var(--gutter)), 1240px);
 }
 
 * { box-sizing: border-box; }
@@ -440,10 +442,11 @@ time, data { font-variant-numeric: tabular-nums; }
 /* ===== Nosso espaço, Nossa história e Avaliações: um só sistema =====
    Mesma largura, sobretítulo, título em duas linhas com destaque, botão e moldura de foto.
    Escada de tons: creme, latte, cacau suave, com passagem gradual até as avaliações. */
-.cb { --cb-bg: #f8f5ee; --cb-title: #2a170f; --cb-body: #3c311b; --cb-muted: #655c50; --cb-accent: #8a541b; --cb-cta: rgba(42, 23, 15, 0.5); padding: 64px 0; color: var(--cb-body); background: var(--cb-bg); }
+.cb { --cb-bg: #f8f5ee; --cb-title: #2a170f; --cb-body: #3c311b; --cb-muted: #655c50; --cb-accent: #8a541b; --cb-cta: rgba(42, 23, 15, 0.5); padding: 72px 0; color: var(--cb-body); background: var(--cb-bg); }
 .cb--latte { --cb-bg: #efe4d4; }
-#cafe-story { padding-bottom: 40px; }
-.cb-inner, .rv-inner { position: relative; width: min(1000px, calc(100% - var(--gutter) - var(--gutter))); margin-inline: auto; }
+#cafe-story { padding-bottom: 48px; }
+.cb-inner, .rv-inner { position: relative; width: var(--frame); margin-inline: auto; }
+#localizacao .visit-band__inner { width: var(--frame); }
 .cb-eyebrow, .rv-eyebrow { color: var(--cb-accent); font: 400 var(--t-label) / 1.3 var(--body); letter-spacing: 0.22em; text-transform: uppercase; }
 .cb h2, .rv h2 { margin-top: 22px; color: var(--cb-title); font-size: var(--t-display); letter-spacing: 0; line-height: 1.02; }
 .cb h2 em, .rv h2 em { color: var(--cb-accent); font-style: normal; }
@@ -458,10 +461,10 @@ time, data { font-variant-numeric: tabular-nums; }
 .cb-photo img { object-fit: cover; }
 .cb-photo--portrait { aspect-ratio: 4 / 5; }
 .cb figcaption { margin-top: 12px; color: var(--cb-muted); font: 400 var(--t-label) / 1.3 var(--body); letter-spacing: 0.22em; text-transform: uppercase; }
-.cb-head { display: grid; grid-template-columns: minmax(0, 1fr) 380px; align-items: end; gap: 48px; }
+.cb-head { display: grid; grid-template-columns: minmax(0, 1fr) 420px; align-items: end; gap: 64px; }
 .cb-head__side .cb-cta { margin-top: 24px; }
-.cb-photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 56px; }
-.cb-story { display: grid; grid-template-columns: 380px minmax(0, 1fr); align-items: center; gap: 80px; }
+.cb-photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 64px; }
+.cb-story { display: grid; grid-template-columns: 460px minmax(0, 1fr); align-items: center; gap: 96px; }
 .cb-story__photo figcaption { font-family: var(--display); font-size: var(--t-lede); letter-spacing: 0; text-transform: none; }
 .cb-story__copy .cb-lede { margin-top: 24px; }
 .cb-story__copy .cb-cta { margin-top: 30px; }
@@ -489,7 +492,7 @@ time, data { font-variant-numeric: tabular-nums; }
 .rv-button { margin-top: 20px; }
 .rv-button:hover { background: rgba(241, 228, 211, 0.08); }
 .google-icon { width: 17px; height: 17px; flex: 0 0 auto; stroke: none; }
-.rv-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 30px; }
+.rv-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
 .rv-card { padding: 20px 24px 18px; border: 1px solid rgba(234, 220, 203, 0.18); border-radius: 12px; background: rgba(255, 248, 236, 0.04); transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.35s var(--ease-out); }
 .rv-card:hover { border-color: rgba(226, 196, 140, 0.42); background: rgba(255, 248, 236, 0.07); transform: translateY(-2px); }
 .rv-card__top { display: flex; align-items: center; gap: 12px; }
@@ -505,6 +508,14 @@ time, data { font-variant-numeric: tabular-nums; }
 .rv-note p { color: #bfa98c; font-size: var(--t-fine); }
 .rv-note a { display: inline-flex; align-items: center; gap: 8px; margin-top: 5px; color: #f1e4d3; font-size: var(--t-fine); text-decoration-color: rgba(241, 228, 211, 0.5); text-underline-offset: 3px; }
 .rv-note a svg { width: 13px; height: 13px; }
+/* As decorações precisam de uma margem lateral livre. Abaixo de 1660px a grade larga
+   encosta nelas: o raminho sai, a xícara encolhe e a nota vai para o centro. */
+@media (max-width: 1660px) {
+  .rv-prop--flowers { display: none; }
+  .rv-prop--cup { width: 132px; }
+  .rv-prop--pastry { width: 120px; }
+  .rv-note { justify-content: center; margin-left: 0; }
+}
 
 /* Venha nos visitar: a fachada real e uma só ação de rota. */
 #localizacao { padding-top: 64px; }

@@ -37,7 +37,7 @@ export function CafeExperience() {
             <li key={photo.src}>
               <figure>
                 <div className="cb-photo">
-                  <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 78vw, 320px" quality={90} />
+                  <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 78vw, 400px" quality={90} />
                 </div>
                 <figcaption>{photo.caption}</figcaption>
               </figure>
