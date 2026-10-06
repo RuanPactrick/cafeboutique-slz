@@ -45,7 +45,7 @@
 /* Carrossel contínuo. A lista vem duplicada; o padding final igual ao gap faz -50% cair
    exatamente no início da cópia. Pausa sob o mouse/foco e para com menos movimento. */
 .railView {
-  --card-w: 270px;
+  --card-w: 240px;
   --card-gap: 16px;
   overflow: hidden;
   margin-bottom: 28px;
@@ -61,40 +61,57 @@
 .railView:hover .rail, .railView:focus-within .rail { animation-play-state: paused; }
 @keyframes rail-loop { to { transform: translateX(-50%); } }
 
-/* Cartão: foto em cima, texto sobre o café escuro (nunca por cima da comida). */
+/* Cartão compacto: foto em cima, nome e preço embaixo. A descrição só aparece sobre a
+   foto ao passar o mouse, focar ou tocar, para o cartão não crescer. */
 .card {
-  position: relative;
-  isolation: isolate;
+  display: flex;
   flex: 0 0 var(--card-w);
-  aspect-ratio: 27 / 38;
+  flex-direction: column;
+  aspect-ratio: 240 / 304;
   overflow: hidden;
-  border-radius: 17px;
+  border-radius: 16px;
   background: #2a170f;
+  outline-offset: 3px;
 }
-.photo { position: absolute; z-index: -2; inset: 0 0 auto; height: 55%; overflow: hidden; }
+.card:focus-visible { outline: 2px solid #8a541b; }
+.photo { position: relative; flex: 1 1 auto; overflow: hidden; }
 .photoImage { object-fit: cover; object-position: 50% 26%; transition: transform 0.9s var(--ease-out); }
-.card:hover .photoImage { transform: scale(1.05); }
-.card::after {
+.photo::after {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  background: linear-gradient(rgba(42, 23, 15, 0) 40%, #2a170f 55.5%);
+  background: linear-gradient(180deg, rgba(42, 23, 15, 0.3) 0%, rgba(42, 23, 15, 0.66) 42%, rgba(42, 23, 15, 0.95) 100%);
+  opacity: 0;
   content: "";
+  transition: opacity 0.35s ease;
   pointer-events: none;
 }
-.copy {
+.description {
   position: absolute;
+  z-index: 1;
   inset: auto 0 0;
-  display: flex;
-  flex-direction: column;
-  padding: 0 22px 22px;
-  color: #fff1d8;
+  padding: 0 18px 16px;
+  color: #fff3e0;
+  font: 400 var(--t-small) / 1.45 var(--body);
+  text-wrap: pretty;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.45s var(--ease-out);
 }
-.copy h3 { color: #fff5e4; font-size: var(--t-title); letter-spacing: -0.01em; line-height: 1.12; text-wrap: initial; }
-.description { max-width: 29ch; margin-top: 10px; color: #f5dcba; font: 400 var(--t-small) / 1.5 var(--body); }
-.cardBottom { display: flex; min-height: 50px; align-items: flex-end; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 10px; }
-.price { color: #fff1dd; font: 400 var(--t-lede) / 1.1 var(--body); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.order { display: inline-flex; width: 46px; aspect-ratio: 1; flex-shrink: 0; align-items: center; justify-content: center; border: 1px solid #faefda; border-radius: 50%; color: #49290e; background: #faefda; font: 400 32px / 1 var(--body); text-decoration: none; transition: background-color 160ms ease, color 160ms ease; }
+.card:hover .photoImage, .card:focus-within .photoImage { transform: scale(1.05); }
+.card:hover .photo::after, .card:focus-within .photo::after,
+.card:hover .description, .card:focus-within .description { opacity: 1; }
+.card:hover .description, .card:focus-within .description { transform: none; }
+/* Em telas de toque não há hover: um "i" discreto avisa que o toque mostra a descrição. */
+.hint { position: absolute; z-index: 1; top: 10px; right: 10px; display: none; width: 24px; height: 24px; place-items: center; border-radius: 50%; color: #2a170f; background: rgba(255, 247, 236, 0.88); font: italic 400 14px / 1 var(--display); transition: opacity 0.25s ease; }
+@media (hover: none) {
+  .hint { display: grid; }
+  .card:focus-within .hint { opacity: 0; }
+}
+.copy { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 14px 16px 16px; color: #fff1d8; }
+.titleRow { min-width: 0; }
+.copy h3 { color: #fff5e4; font-size: 20px; letter-spacing: -0.01em; line-height: 1.12; text-wrap: balance; }
+.price { display: block; margin-top: 8px; color: #f5dcba; font: 400 var(--t-body) / 1.1 var(--body); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.order { display: inline-flex; width: 40px; aspect-ratio: 1; flex-shrink: 0; align-items: center; justify-content: center; border: 1px solid #faefda; border-radius: 50%; color: #49290e; background: #faefda; font: 400 26px / 1 var(--body); text-decoration: none; transition: background-color 160ms ease, color 160ms ease; }
 .order:hover { color: #fff1dd; background: #603719; }
 .order:focus-visible { outline-color: #fff1dd; }
 
@@ -108,10 +125,9 @@
   .heading { grid-template-columns: minmax(0, 1fr); gap: 16px; margin: 0 22px 24px; }
   .eyebrow { margin-bottom: 10px; }
   .intro { padding-top: 0; }
-  .railView { --card-w: 240px; --card-gap: 12px; margin-bottom: 20px; mask-image: none; }
-  .card { border-radius: 15px; }
-  .copy { padding: 0 18px 18px; }
-  .copy h3 { font-size: 22px; }
+  .railView { --card-w: 220px; --card-gap: 12px; margin-bottom: 20px; mask-image: none; }
+  .card { border-radius: 14px; }
+  .copy h3 { font-size: 19px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -119,6 +135,7 @@
   .railView { overflow-x: auto; mask-image: none; scrollbar-width: none; }
   .rail { animation: none; padding-left: var(--section-edge); }
   .card[aria-hidden="true"] { display: none; }
-  .card:hover .photoImage { transform: none; }
+  .card:hover .photoImage, .card:focus-within .photoImage { transform: none; }
+  .description { transform: none; }
   .order { transition: none; }
 }

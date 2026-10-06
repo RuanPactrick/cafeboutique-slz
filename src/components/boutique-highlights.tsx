@@ -38,26 +38,29 @@ function getHighlights(): Highlight[] {
 
 function ProductCard({ item, clone }: { item: Highlight; clone?: boolean }) {
   return (
-    <li className={styles.card} aria-hidden={clone || undefined}>
+    // A descrição fica guardada sobre a foto e aparece ao passar o mouse, focar ou tocar no cartão
+    // (o tabIndex deixa o toque e o teclado revelarem o texto sem JavaScript).
+    <li className={styles.card} aria-hidden={clone || undefined} tabIndex={clone ? undefined : 0}>
       <div className={styles.photo}>
-        <Image className={styles.photoImage} src={item.photo} alt={clone ? "" : item.alt} fill sizes="(max-width: 760px) 240px, 270px" quality={90} style={{ objectPosition: item.position }} />
+        <Image className={styles.photoImage} src={item.photo} alt={clone ? "" : item.alt} fill sizes="240px" quality={90} style={{ objectPosition: item.position }} />
+        <p className={styles.description}>{item.description}</p>
+        <span className={styles.hint} aria-hidden="true">i</span>
       </div>
       <div className={styles.copy}>
-        <h3>{item.name}</h3>
-        <p className={styles.description}>{item.description}</p>
-        <div className={styles.cardBottom}>
+        <div className={styles.titleRow}>
+          <h3>{item.name}</h3>
           <data className={styles.price} value={(item.priceCents / 100).toFixed(2)}>{formatPrice(item.priceCents)}</data>
-          <a
-            className={styles.order}
-            href={createWhatsAppUrl(`Olá! Vim pelo site da Café Boutique e gostaria de consultar a disponibilidade de ${item.orderName}.`)}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Consultar ${item.orderName} no WhatsApp`}
-            tabIndex={clone ? -1 : undefined}
-          >
-            <span aria-hidden="true">+</span>
-          </a>
         </div>
+        <a
+          className={styles.order}
+          href={createWhatsAppUrl(`Olá! Vim pelo site da Café Boutique e gostaria de consultar a disponibilidade de ${item.orderName}.`)}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Consultar ${item.orderName} no WhatsApp`}
+          tabIndex={clone ? -1 : undefined}
+        >
+          <span aria-hidden="true">+</span>
+        </a>
       </div>
     </li>
   );
