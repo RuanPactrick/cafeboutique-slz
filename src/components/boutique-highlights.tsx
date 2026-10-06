@@ -1,52 +1,71 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { menuItems, formatPrice } from "@/data/menu";
 import { createWhatsAppUrl } from "@/data/site";
-import { ProductRail } from "./product-rail";
 import styles from "./boutique-highlights.module.css";
 
-// Each product photo is an independent asset; all product labels are HTML.
-const highlights = [
-  { id: "croissant-americano", category: "Croissants", description: "Croissant recheado para acompanhar a sua pausa.", photo: "/cafe-boutique/destaques/croissant-americano.webp", alt: "Croissant dourado e recheado, servido em um prato." },
-  { id: "capuccino-tradicional-150ml", category: "Cafés", title: "Capuccino Tradicional", description: "Seu capuccino tradicional, servido em uma xícara de 150 ml.", photo: "/cafe-boutique/destaques/cappuccino-tradicional.webp", alt: "Xícara de capuccino em uma mesa de madeira." },
-  { id: "sanduiche-americano-pao-frances", category: "Sanduíches", title: "Sanduíche Americano", description: "Presunto, queijo, requeijão, ovo, tomate e alface no pão francês.", photo: "/cafe-boutique/destaques/sanduiche-americano.webp", alt: "Sanduíche com queijo e salada, imagem ilustrativa." },
-] as const;
+type Highlight = {
+  key: string;
+  name: string;
+  orderName: string;
+  description: string;
+  priceCents: number;
+  photo: string;
+  alt: string;
+};
 
-function ArtworkPhoto({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div className={styles.photo}>
-      <Image
-        className={styles.photoImage}
-        src={src}
-        alt={alt}
-        fill
-        sizes="(max-width: 760px) 82vw, (max-width: 1050px) 31vw, 23vw"
-        quality={92}
-      />
-    </div>
-  );
+// Each product photo is an independent asset; all product labels are HTML.
+function getHighlights(): Highlight[] {
+  const byId = (id: string) => menuItems.find((entry) => entry.id === id);
+  const desserts = menuItems.filter((item) => item.category === "sobremesas-gourmet" && item.availability === "listed-in-source");
+  const dessertPrice = Math.min(...desserts.map((item) => item.priceCents));
+  const croissant = byId("croissant-americano");
+  const capuccino = byId("capuccino-tradicional-150ml");
+  const sandwich = byId("sanduiche-americano-pao-frances");
+  const cake = byId("fatia-bolo-amanteigado-com-cobertura");
+
+  const list: (Highlight | null | undefined)[] = [
+    croissant && { key: croissant.id, name: croissant.name, orderName: croissant.name, description: "Croissant recheado para acompanhar a sua pausa.", priceCents: croissant.priceCents, photo: "/cafe-boutique/destaques/croissant-americano.webp", alt: "Croissant dourado e recheado, servido em um prato." },
+    capuccino && { key: capuccino.id, name: "Capuccino Tradicional", orderName: capuccino.name, description: "Seu capuccino tradicional, servido em uma xícara de 150 ml.", priceCents: capuccino.priceCents, photo: "/cafe-boutique/destaques/cappuccino-tradicional.webp", alt: "Xícara de capuccino em uma mesa de madeira." },
+    sandwich && { key: sandwich.id, name: "Sanduíche Americano", orderName: sandwich.name, description: "Presunto, queijo, requeijão, ovo, tomate e alface no pão francês.", priceCents: sandwich.priceCents, photo: "/cafe-boutique/destaques/sanduiche-americano.webp", alt: "Sanduíche com queijo e salada, imagem ilustrativa." },
+    { key: "sobremesas", name: "Sobremesas da Boutique", orderName: "sobremesas", description: "Supreme de morango, surpresa de uva e tortinha de banana.", priceCents: dessertPrice, photo: "/cafe-boutique/destaques/sobremesa-chocolate.webp", alt: "Sobremesa de chocolate com morango em uma panelinha, imagem ilustrativa." },
+    cake?.image ? { key: cake.id, name: "Fatia de Bolo Amanteigado", orderName: cake.name, description: "Uma fatia com cobertura para acompanhar o seu café.", priceCents: cake.priceCents, photo: cake.image.src, alt: cake.image.alt } : null,
+  ];
+  return list.filter((item): item is Highlight => Boolean(item));
 }
 
-function OrderLink({ name }: { name: string }) {
+function ProductCard({ item, clone }: { item: Highlight; clone?: boolean }) {
   return (
-    <a
-      className={styles.order}
-      href={createWhatsAppUrl(`Olá! Vim pelo site da Café Boutique e gostaria de consultar a disponibilidade de ${name}.`)}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={`Consultar ${name} no WhatsApp`}
-    >
-      <span aria-hidden="true">+</span>
-    </a>
+    <li className={styles.card} aria-hidden={clone || undefined}>
+      <div className={styles.photo}>
+        <Image className={styles.photoImage} src={item.photo} alt={clone ? "" : item.alt} fill sizes="(max-width: 760px) 240px, 270px" quality={90} />
+      </div>
+      <div className={styles.copy}>
+        <h3>{item.name}</h3>
+        <p className={styles.description}>{item.description}</p>
+        <div className={styles.cardBottom}>
+          <data className={styles.price} value={(item.priceCents / 100).toFixed(2)}>{formatPrice(item.priceCents)}</data>
+          <a
+            className={styles.order}
+            href={createWhatsAppUrl(`Olá! Vim pelo site da Café Boutique e gostaria de consultar a disponibilidade de ${item.orderName}.`)}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Consultar ${item.orderName} no WhatsApp`}
+            tabIndex={clone ? -1 : undefined}
+          >
+            <span aria-hidden="true">+</span>
+          </a>
+        </div>
+      </div>
+    </li>
   );
 }
 
 export function BoutiqueHighlights() {
-  const desserts = menuItems.filter((item) => item.category === "sobremesas-gourmet" && item.availability === "listed-in-source");
-  const dessertPrice = Math.min(...desserts.map((item) => item.priceCents));
-  const cake = menuItems.find((item) => item.id === "fatia-bolo-amanteigado-com-cobertura");
+  const highlights = getHighlights();
 
   return (
-    <section className={styles.section} id="queridinhos" aria-labelledby="boutique-highlights-title" data-scroll-reveal="true">
+    <section className={styles.section} id="queridinhos" aria-labelledby="boutique-highlights-title">
       <div className={styles.flora} aria-hidden="true" />
       <div className={styles.heading}>
         <div>
@@ -58,52 +77,13 @@ export function BoutiqueHighlights() {
           <a href="/cardapio">Ver cardápio completo</a>
         </div>
       </div>
-      <ProductRail>
-        {highlights.map((highlight) => {
-          const item = menuItems.find((entry) => entry.id === highlight.id);
-          if (!item) return null;
-          return (
-            <li className={styles.card} key={item.id}>
-              <ArtworkPhoto src={highlight.photo} alt={highlight.alt} />
-              <div className={styles.copy}>
-                <p className={styles.category}>{highlight.category}</p>
-                <h3>{"title" in highlight ? highlight.title : item.name}</h3>
-                <p className={styles.description}>{highlight.description}</p>
-                <div className={styles.cardBottom}>
-                  <data className={styles.price} value={(item.priceCents / 100).toFixed(2)}>{formatPrice(item.priceCents)}</data>
-                  <OrderLink name={item.name} />
-                </div>
-              </div>
-            </li>
-          );
-        })}
-        <li className={styles.card}>
-          <ArtworkPhoto src="/cafe-boutique/destaques/sobremesa-chocolate.webp" alt="Sobremesa de chocolate com morango em uma panelinha, imagem ilustrativa." />
-          <div className={styles.copy}>
-            <p className={styles.category}>Sobremesas</p>
-            <h3>Sobremesas da Boutique</h3>
-            <p className={styles.description}>Supreme de morango, surpresa de uva e tortinha de banana.</p>
-            <div className={styles.cardBottom}>
-              <data className={styles.price} value={(dessertPrice / 100).toFixed(2)}>{formatPrice(dessertPrice)}</data>
-              <OrderLink name="sobremesas" />
-            </div>
-          </div>
-        </li>
-        {cake?.image && (
-          <li className={`${styles.card} ${styles.cake}`}>
-            <Image src={cake.image.src} alt={cake.image.alt} fill sizes="(max-width: 760px) 82vw, 23vw" quality={92} className={styles.singlePhoto} />
-            <div className={styles.copy}>
-              <p className={styles.category}>Bolos</p>
-              <h3>Fatia de Bolo Amanteigado</h3>
-              <p className={styles.description}>Uma fatia com cobertura para acompanhar o seu café.</p>
-              <div className={styles.cardBottom}>
-                <data className={styles.price} value={(cake.priceCents / 100).toFixed(2)}>{formatPrice(cake.priceCents)}</data>
-                <OrderLink name={cake.name} />
-              </div>
-            </div>
-          </li>
-        )}
-      </ProductRail>
+      {/* Carrossel contínuo: a lista aparece duas vezes e a segunda cópia fica fora da leitura e do Tab. */}
+      <div className={styles.railView}>
+        <ul className={styles.rail} aria-label="Destaques do cardápio" style={{ "--items": highlights.length } as CSSProperties}>
+          {highlights.map((item) => <ProductCard item={item} key={item.key} />)}
+          {highlights.map((item) => <ProductCard item={item} key={`${item.key}-clone`} clone />)}
+        </ul>
+      </div>
     </section>
   );
 }

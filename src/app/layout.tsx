@@ -47,8 +47,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className={`${anticDidone.variable} ${lustria.variable}`}>
+    <html lang="pt-BR" className={`${anticDidone.variable} ${lustria.variable}`}>
+      <body>
         {children}
         <SectionReveal />
       </body>

@@ -12,7 +12,7 @@ As fotos foram mantidas em arquivos locais e vinculadas às publicações conhec
 | `products/torta-caramelito.jpg` | 480×640 | 61.115 | Publicação do Instagram | Torta Caramelito; sem correspondência exata no catálogo transcrito | [Post DdR7UltNPs9](https://www.instagram.com/cafeboutique.slz/p/DdR7UltNPs9/) · 14 set. 2026 |
 | `products/panelinha-morango.jpg` | 480×640 | 55.194 | Publicação do Instagram | Panelinha; não é o produto “Supreme de Morango” | [Post Dc4NlJ4N4p1](https://www.instagram.com/cafeboutique.slz/p/Dc4NlJ4N4p1/) · 4 set. 2026 |
 | `marca/logo-cafe-boutique.webp` | 1522×1033 | 183.206 | Header e footer | Logotipo original; não substituir | Arquivo de marca fornecido no projeto |
-| `localizacao-fachada.webp` | 783×436 | 85.986 | Bloco de localização | Recorte da imagem de fachada enviada como referência visual; a foto não foi confirmada separadamente como registro atual da loja | Captura de referência enviada pelo usuário · 5 out. 2026 |
+| `localizacao/fachada.jpg` | 335×597 | 54.819 | Bloco de localização | Foto real da fachada, enviada pelo usuário; substitui a imagem anterior gerada por IA | Foto enviada pelo usuário · 6 out. 2026 |
 | `cozinha/preparo-cozinha.mp4` | Vídeo | 6.035.849 | Mantido no inventário, sem reprodução automática no site | O briefing fornecido confirma Reel oficial; o permalink do Reel não foi localizado | Arquivo de vídeo já fornecido no projeto |
 
 ## Revisão do Instagram

@@ -128,11 +128,3 @@ export const menuItemMedia: Record<string, CafeBoutiqueMedia> = {
   [cafeBoutiqueMedia.fatiaBoloAmanteigadoComCobertura.menuItemId!]:
     cafeBoutiqueMedia.fatiaBoloAmanteigadoComCobertura,
 };
-
-export const instagramSelections = [
-  { media: cafeBoutiqueMedia.boloAmanteigadoProducao, title: "Bolos em produção", date: "28 set. 2026", dateTime: "2026-09-28" },
-  { media: cafeBoutiqueMedia.panelinhaCaramelo, title: "Panelinhas", date: "18 set. 2026", dateTime: "2026-09-18" },
-  { media: cafeBoutiqueMedia.quicheEmpadas, title: "Quiches e empadas", date: "16 set. 2026", dateTime: "2026-09-16" },
-  { media: cafeBoutiqueMedia.tortaCaramelito, title: "Torta Caramelito", date: "14 set. 2026", dateTime: "2026-09-14" },
-  { media: cafeBoutiqueMedia.panelinhaMorango, title: "Panelinha", date: "4 set. 2026", dateTime: "2026-09-04" },
-] as const;

@@ -19,6 +19,8 @@ export const siteConfig = {
   officialMenuUrl:
     "https://drive.google.com/file/d/1pdIE0CuN9dG4KNuPteYtuC2lqNjOKJit/view?usp=sharing",
   mapsUrl: "https://www.google.com/maps?cid=16815063733178608891",
+  // Coordenadas da ficha da Café Boutique no Google Maps (mesmo cid acima).
+  directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=-2.4935545%2C-44.2712488",
   address: {
     lines: [
       "Av. dos Holandeses, Loja 8",

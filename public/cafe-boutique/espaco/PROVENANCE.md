@@ -1,7 +1,6 @@
-# Proveniência do mosaico do espaço
+# Proveniência das fotos do espaço
 
-- Saída local: `espaco-sem-texto.png`.
-- Referência fornecida pela pessoa usuária: captura colada em 5 de outubro de 2026 (`codex-clipboard-f7b87bf3-8333-4a38-a6b7-5be30fccd3ba.png`).
-- Edição: ferramenta ImageGen integrada, edição pontual para remover a tipografia, setas, linhas e demais dizeres da área creme; as três fotos, o enquadramento e a composição foram preservados.
-- Prompt: “Edite esta imagem para remover todas as palavras, letras, pontuação, sublinhados, setas e textos da área creme superior esquerda, reconstruindo o fundo marfim. Preserve a tela panorâmica, as cores, o enquadramento e as três fotografias: interior do café à direita, varanda no canto inferior esquerdo e área infantil no centro inferior. Não acrescente objetos nem redesenhe as fotos. Não inclua texto, logotipo ou marca d’água.”
-- Uso: ilustração visual da seção “Nosso espaço”. Título, descrição e link são HTML em `src/components/cafe-experience.tsx`; a legenda informa que as fotos não representam necessariamente a estrutura física da loja.
+- `salao.jpg`, `area-externa.jpg` e `cantinho-infantil.jpg` são fotos reais da Café Boutique. A proprietária informou que elas foram melhoradas por IA, sem ter sido criadas do zero.
+- Tratamento comum, feito no redesenho de 6 out. 2026, para as três parecerem da mesma sessão de fotos e perderem a cara de IA: nitidez artificial suavizada, saturação −14%, contraste −8%, pretos levemente erguidos, aquecimento leve e um grão fino. Recorte 6:5, sem ampliar além do original.
+- Uso: seção "Nosso espaço" em `src/components/cafe-experience.tsx`.
+- O mosaico anterior (`espaco-sem-texto.png`, editado por IA a partir de uma captura) saiu do site.

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BrandLogo } from "@/components/brand-logo";
-import { MenuIcon } from "@/components/icons";
+import { MenuIcon, WhatsAppGlyph } from "@/components/icons";
 import { navigationItems, siteConfig } from "@/data/site";
 
 export function SiteHeader() {
@@ -30,7 +30,8 @@ export function SiteHeader() {
 
         <div className="site-header__actions">
           <a className="button button--header" href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer">
-            Fale conosco
+            <WhatsAppGlyph className="whatsapp-glyph" />
+            <span>Fale conosco</span>
           </a>
           <button
             className="mobile-menu-toggle"
