@@ -42,16 +42,17 @@
 }
 .intro > a:hover { color: var(--espresso); }
 
-/* Carrossel contínuo. A lista vem duplicada; o padding final igual ao gap faz -50% cair
+/* Carrossel contínuo, dentro da mesma grade das outras seções. A lista vem duplicada; o padding final igual ao gap faz -50% cair
    exatamente no início da cópia. Pausa sob o mouse/foco e para com menos movimento. */
 .railView {
   --card-w: 240px;
   /* Mocha: mais suave que o espresso e ainda com 7,3:1 para o nome e 6:1 para o preço. */
   --panel: #6b4a36;
   --card-gap: 16px;
+  width: var(--frame);
   overflow: hidden;
-  margin-bottom: 28px;
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  margin: 0 auto 28px;
+  mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent);
 }
 .rail {
   display: flex;
@@ -127,7 +128,7 @@
   .heading { grid-template-columns: minmax(0, 1fr); gap: 16px; margin: 0 22px 24px; }
   .eyebrow { margin-bottom: 10px; }
   .intro { padding-top: 0; }
-  .railView { --card-w: 220px; --card-gap: 12px; margin-bottom: 20px; mask-image: none; }
+  .railView { --card-w: 220px; --card-gap: 12px; margin-bottom: 20px; mask-image: linear-gradient(90deg, transparent, #000 20px, #000 calc(100% - 20px), transparent); }
   .card { border-radius: 14px; }
   .copy h3 { font-size: 19px; }
 }
@@ -135,7 +136,7 @@
 @media (prefers-reduced-motion: reduce) {
   /* Sem rolagem automática: a fileira vira rolagem manual e a cópia some. */
   .railView { overflow-x: auto; mask-image: none; scrollbar-width: none; }
-  .rail { animation: none; padding-left: var(--section-edge); }
+  .rail { animation: none; }
   .card[aria-hidden="true"] { display: none; }
   .card:hover .photoImage, .card:focus-within .photoImage { transform: none; }
   .description { transform: none; }
