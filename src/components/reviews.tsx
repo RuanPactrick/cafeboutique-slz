@@ -17,11 +17,11 @@ export function Reviews() {
 
   return (
     <section className="rv" id="avaliacoes" aria-labelledby="rv-title">
-      {/* O salão da Boutique ao fundo, desfocado no próprio arquivo: o lugar é reconhecível,
-          mas nenhum cliente da foto vira o "rosto" de uma avaliação. No celular, o recorte é a vitrine. */}
+      {/* O salão da Boutique ao fundo, quase nítido; só as pessoas da foto são desfocadas no próprio arquivo,
+          para nenhum cliente virar o "rosto" de uma avaliação. No celular, o recorte é a vitrine. */}
       <picture className="rv-bg" aria-hidden="true">
-        <source media="(max-width: 760px)" srcSet="/cafe-boutique/avaliacoes/salao-fundo-mobile.jpg" />
-        <img src="/cafe-boutique/avaliacoes/salao-fundo.jpg" alt="" loading="lazy" decoding="async" />
+        <source media="(max-width: 760px)" srcSet="/cafe-boutique/avaliacoes/salao-fundo-mobile-2.jpg" />
+        <img src="/cafe-boutique/avaliacoes/salao-fundo-2.jpg" alt="" loading="lazy" decoding="async" />
       </picture>
       <div className="rv-inner">
         <div className="rv-top">
