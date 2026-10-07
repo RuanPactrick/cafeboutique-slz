@@ -2,7 +2,7 @@ import Image from "next/image";
 
 // Fotos reais do espaço, com o mesmo tratamento de cor das fotos de "Nossa história".
 const photos = [
-  { src: "/cafe-boutique/espaco/salao.jpg", alt: "Balcão da Café Boutique com bolos na vitrine e a equipe atendendo.", caption: "Interior" },
+  { src: "/cafe-boutique/espaco/salao.jpg", alt: "Balcão da cafeteria com vitrine de bolos, prateleiras iluminadas, plantas e xícaras.", caption: "Interior" },
   { src: "/cafe-boutique/espaco/area-externa.jpg", alt: "Mesas e cadeiras coloridas na área externa, rodeada por plantas.", caption: "Área externa" },
   { src: "/cafe-boutique/espaco/cantinho-infantil.jpg", alt: "Mesinhas, cadeiras coloridas e brinquedos no cantinho infantil.", caption: "Cantinho infantil" },
 ] as const;

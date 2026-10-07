@@ -1,6 +1,5 @@
 # Proveniência das fotos do espaço
 
-- `area-externa.jpg`: foto real do pátio publicada no Instagram oficial (@cafeboutique.slz), 1238×2200 no original, recortada em 6:5.
-- `salao.jpg` e `cantinho-infantil.jpg`: fotos reais da Café Boutique que, segundo a proprietária, foram melhoradas por IA, sem ter sido criadas do zero. Recorte 6:5 no tamanho original (o cantinho só existe em 333px de largura; uma foto maior melhoraria a seção).
-- Tratamento (6 out. 2026): só um ajuste de cor leve para as três conversarem (saturação −7%, aquecimento leve). Saíram o desfoque e o grão da rodada anterior, que deixavam as fotos turvas.
+- Versões anteriores: `area-externa.jpg` era uma foto do pátio publicada no Instagram oficial (@cafeboutique.slz); `salao.jpg` e `cantinho-infantil.jpg` eram fotos da Café Boutique melhoradas por IA, sem serem criadas do zero. As versões anteriores tinham tratamento de cor leve em 6 de outubro de 2026.
+- Atualização (7 out. 2026): os três JPGs atuais foram substituídos pelas imagens em alta resolução fornecidas pela proprietária (2400 × 1792 px cada). Os arquivos originais foram copiados sem recompressão nem recorte; os nomes e o uso na galeria foram mantidos.
 - Uso: seção "Nosso espaço" em `src/components/cafe-experience.tsx`.
