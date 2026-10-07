@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cakeCoverings, formatPrice, getMenuPriceLabel, hasCoveringChoice, menuCategories, menuItems, menuSectionNotes, type MenuItem } from "@/data/menu";
-import { cakeOrderUrl, createWhatsAppUrl, siteConfig } from "@/data/site";
+import { createWhatsAppUrl, siteConfig } from "@/data/site";
 
 type MenuGroup = {
   key: string;
@@ -518,16 +518,6 @@ export function MenuBrowser() {
                         </div>
                       ))}
                       {menuSectionNotes[section.id] ? <p className="menu-section-note">{menuSectionNotes[section.id]}</p> : null}
-                      {section.id === "doces" ? (
-                        // Bolo inteiro não tem preço fixo no cardápio: a encomenda é combinada no WhatsApp.
-                        <div className="menu-cake-order">
-                          <div>
-                            <h3>Bolo inteiro sob encomenda</h3>
-                            <p>Sabor, cobertura, tamanho e data combinados com a equipe pelo WhatsApp.</p>
-                          </div>
-                          <a className="button" href={cakeOrderUrl} target="_blank" rel="noreferrer">Encomendar bolo</a>
-                        </div>
-                      ) : null}
                       {collapsible ? (
                         // Fechar pelo fim da lista devolve o visitante ao título da categoria.
                         <button type="button" className="menu-category__close" aria-controls={`itens-${section.id}`} onClick={() => {
@@ -546,7 +536,7 @@ export function MenuBrowser() {
 
       <section className="menu-closing" aria-labelledby="menu-closing-title" data-scroll-reveal="true">
         <div className="menu-closing__copy"><p className="menu-eyebrow">Café Boutique</p><h2 id="menu-closing-title">Tudo fica melhor com um bom café.</h2><p>Escolha seus favoritos e monte seu pedido para retirada.</p><a className="button button--light" href="#inicio-cardapio">Voltar ao cardápio</a></div>
-        <div className="menu-closing__photo"><Image src="/cafe-boutique/destaques/cappuccino-tradicional.webp" alt="Capuccino tradicional servido em uma xícara da Café Boutique." fill sizes="(max-width: 760px) 100vw, 48vw" /></div>
+        <div className="menu-closing__photo"><Image src="/cafe-boutique/destaques/capuccino-xicara-boutique.jpg" alt="Capuccino com desenho de canela na espuma, servido na xícara da Café Boutique." fill quality={90} sizes="(max-width: 760px) 100vw, 360px" /></div>
       </section>
 
       <p className="visually-hidden" role="status" aria-live="polite">{lastAdded ? `${lastAdded.name} adicionado ao pedido. ${cartCount} ${cartCount === 1 ? "item" : "itens"} no pedido.` : ""}</p>

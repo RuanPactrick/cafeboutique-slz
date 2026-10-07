@@ -37,6 +37,7 @@ export const siteConfig = {
 } as const;
 
 // Bolo inteiro é sob consulta: a mensagem já pergunta o que a equipe precisa saber.
+// Fora do site por enquanto (decisão de 7 out. 2026); fica pronto para voltar.
 export const cakeOrderUrl = createWhatsAppUrl([
   "Olá! Vim pelo site da Café Boutique e gostaria de encomendar um bolo inteiro.",
   "Sabor:",

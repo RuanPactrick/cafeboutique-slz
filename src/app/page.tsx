@@ -9,7 +9,7 @@ import { Reviews } from "@/components/reviews";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { cafeBoutiqueMedia } from "@/data/media-assets";
-import { cakeOrderUrl, localBusinessSchema, siteConfig } from "@/data/site";
+import { localBusinessSchema, siteConfig } from "@/data/site";
 
 export default function HomePage() {
   return (
@@ -41,9 +41,6 @@ export default function HomePage() {
                 <div className="home-hero__actions">
                   <a className="button button--hero" href="/cardapio">
                     <span>Ver cardápio e pedir</span>
-                  </a>
-                  <a className="home-hero__secondary" href={cakeOrderUrl} target="_blank" rel="noreferrer">
-                    Encomendar um bolo inteiro
                   </a>
                 </div>
               </div>

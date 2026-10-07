@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ChevronRightIcon, MapPinIcon } from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { cakeOrderUrl, siteConfig } from "@/data/site";
+import { siteConfig } from "@/data/site";
 import styles from "./nossa-historia.module.css";
 
 export const metadata: Metadata = {
@@ -178,9 +178,6 @@ export default function NossaHistoriaPage() {
               <div className={styles.flavorLinks}>
                 <a className={styles.textLink} href="/cardapio">
                   Ver o cardápio <ChevronRightIcon />
-                </a>
-                <a className={styles.textLink} href={cakeOrderUrl} target="_blank" rel="noreferrer">
-                  Encomendar um bolo <ChevronRightIcon />
                 </a>
               </div>
             </div>

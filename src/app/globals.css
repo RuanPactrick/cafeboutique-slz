@@ -276,25 +276,20 @@ time, data { font-variant-numeric: tabular-nums; }
 .menu-list--extras .menu-item__copy p { display: none; }
 .menu-list--extras .menu-item__price { grid-column: 1; grid-row: 2; }
 .menu-list--extras .menu-item__add { grid-column: 2; grid-row: 1 / span 2; width: 32px; height: 32px; }
-/* Bolo inteiro: um convite claro no fim dos Doces, sem preço porque é sob consulta. */
-.menu-cake-order { display: flex; align-items: center; justify-content: space-between; gap: 1rem 1.5rem; flex-wrap: wrap; margin-top: 1.2rem; padding: 1.1rem 1.2rem; border-radius: 14px; color: var(--paper-soft); background: var(--espresso); }
-.menu-cake-order h3 { color: var(--paper-soft); font-family: var(--display); font-size: 1.35rem; line-height: 1.15; }
-.menu-cake-order p { margin-top: 0.3rem; max-width: 34ch; color: #e8d8c2; font-size: var(--t-small); line-height: 1.45; }
-.menu-cake-order .button { min-height: 46px; flex: 0 0 auto; border-color: var(--cream); color: var(--espresso); background: var(--cream); }
-.menu-cake-order .button:hover { background: #fff; }
 .menu-section-note { margin-top: 0.8rem; color: var(--muted); font-size: var(--t-small); line-height: 1.5; }
 .menu-empty { padding-block: 3rem; border-top: 1px solid var(--rule); }
 .menu-empty p { margin-top: 0.55rem; color: var(--muted); }
 .menu-empty .menu-reset { margin-top: 0.5rem; }
 .menu-category--extras .menu-category__body { display: block; }
-.menu-closing { display: grid; width: min(calc(100% - var(--gutter) - var(--gutter)), var(--content-width)); min-height: 250px; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); overflow: hidden; margin: 0 auto clamp(50px, 6vw, 78px); border-radius: 12px; color: var(--paper-soft); background: linear-gradient(120deg, #2a170f, #3a2115); }
+.menu-closing { display: grid; width: min(calc(100% - var(--gutter) - var(--gutter)), var(--content-width)); grid-template-columns: minmax(0, 1fr) 360px; overflow: hidden; margin: 0 auto clamp(50px, 6vw, 78px); border-radius: 12px; color: var(--paper-soft); background: linear-gradient(120deg, #2a170f, #3a2115); }
 .menu-closing__copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(26px, 4vw, 54px); }
 .menu-closing__copy .menu-eyebrow { color: #e3c496; }
 .menu-closing__copy h2 { max-width: 13ch; margin-top: 0.45rem; color: var(--paper-soft); font-size: clamp(2rem, 3.4vw, 3.25rem); }
 .menu-closing__copy > p:not(.menu-eyebrow) { margin-top: 0.55rem; color: var(--paper-secondary); font-size: var(--t-body); }
 .menu-closing__copy .button { min-height: 44px; margin-top: 1rem; }
-.menu-closing__photo { position: relative; min-height: 250px; overflow: hidden; }
-.menu-closing__photo img { object-fit: cover; object-position: 50% 54%; }
+/* A foto da xícara é quase quadrada: o quadro segue a proporção dela, sem esticar nem achatar. */
+.menu-closing__photo { position: relative; aspect-ratio: 658 / 708; overflow: hidden; }
+.menu-closing__photo img { object-fit: cover; object-position: 50% 50%; }
 .menu-browser--with-cart { padding-bottom: 96px; }
 .menu-cart-bar { position: fixed; z-index: 70; right: 16px; bottom: 16px; left: 16px; display: flex; width: min(100% - 32px, 650px); min-height: 68px; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.55rem 0.65rem 0.55rem 1rem; margin-inline: auto; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--paper-soft); background: #29160f; box-shadow: 0 12px 32px rgba(42,23,15,.25); font-family: var(--ui); }
 .menu-cart-bar__summary { display: flex; min-width: 0; align-items: center; gap: 0.75rem; font-size: var(--t-ui); }
@@ -445,9 +440,9 @@ time, data { font-variant-numeric: tabular-nums; }
   .menu-category__photo { aspect-ratio: 4 / 3; }
   .menu-category__products { width: 100%; }
   .menu-list--extras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .menu-closing { min-height: 0; grid-template-columns: minmax(0, 1fr) minmax(0, .85fr); }
+  .menu-closing { grid-template-columns: minmax(0, 1fr) 300px; }
   .menu-closing__copy { padding: 24px; }
-  .menu-closing__photo { min-height: 240px; }
+
   .menu-order-overlay { align-items: end; padding: 10px; }
   .menu-order-dialog { max-height: 86vh; }
 
@@ -472,7 +467,7 @@ time, data { font-variant-numeric: tabular-nums; }
   .menu-section-heading h2 { font-size: clamp(1.9rem, 7.3vw, 2.5rem); }
   .menu-closing { grid-template-columns: minmax(0, 1fr); }
   .menu-closing__copy { padding: 28px 24px; }
-  .menu-closing__photo { min-height: 220px; }
+  .menu-closing__photo { aspect-ratio: 1 / 1; }
   .menu-cart-bar { right: 10px; bottom: 10px; left: 10px; width: calc(100% - 20px); min-height: 62px; }
   .menu-cart-bar__summary { gap: 0.5rem; font-size: var(--t-small); }
   .menu-cart-bar .button { min-height: 42px; padding-inline: 1rem; }

@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { menuItems, formatPrice } from "@/data/menu";
-import { cakeOrderUrl, createWhatsAppUrl } from "@/data/site";
+import { createWhatsAppUrl } from "@/data/site";
 import styles from "./boutique-highlights.module.css";
 
 type Highlight = {
@@ -83,7 +83,6 @@ export function BoutiqueHighlights() {
           <p>Bolos, cafés e sabores para acompanhar diferentes momentos do dia.</p>
           <div className={styles.links}>
             <a href="/cardapio">Ver cardápio completo</a>
-            <a href={cakeOrderUrl} target="_blank" rel="noreferrer">Encomendar bolo inteiro</a>
           </div>
         </div>
       </div>
