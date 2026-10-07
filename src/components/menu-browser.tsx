@@ -170,6 +170,10 @@ function ChevronIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>;
 }
 
+function ArrowIcon({ back }: { back?: boolean }) {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d={back ? "m15 6-6 6 6 6" : "m9 6 6 6-6 6"} /></svg>;
+}
+
 function BagIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z" /><path d="M9 9V6a3 3 0 0 1 6 0v3" /></svg>;
 }
@@ -226,6 +230,8 @@ export function MenuBrowser() {
   const [pickupTime, setPickupTime] = useState("");
   const [now, setNow] = useState<Date | null>(null);
   const dialogRef = useRef<HTMLElement>(null);
+  const chipsRef = useRef<HTMLDivElement>(null);
+  const [chipEdges, setChipEdges] = useState({ start: true, end: true });
   const openerRef = useRef<HTMLButtonElement>(null);
   // No celular, com "Todos" e sem busca, cada categoria chega fechada e abre com um toque.
   const [compact, setCompact] = useState(false);
@@ -244,6 +250,39 @@ export function MenuBrowser() {
     narrow.addEventListener("change", sync);
     return () => narrow.removeEventListener("change", sync);
   }, []);
+
+  // A faixa de categorias avisa quando há mais opções para os lados: esmaece a borda e,
+  // em telas com mouse, mostra setas. A categoria escolhida sempre fica à vista.
+  useEffect(() => {
+    const track = chipsRef.current;
+    if (!track) return;
+    const update = () => setChipEdges({
+      start: track.scrollLeft <= 4,
+      end: track.scrollLeft + track.clientWidth >= track.scrollWidth - 4,
+    });
+    update();
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      track.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  useEffect(() => {
+    const track = chipsRef.current;
+    const chip = track?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (!track || !chip) return;
+    const left = chip.offsetLeft - track.offsetLeft;
+    if (left < track.scrollLeft || left + chip.offsetWidth > track.scrollLeft + track.clientWidth) {
+      track.scrollTo({ left: left - 24, behavior: "smooth" });
+    }
+  }, [activeCategory]);
+
+  const scrollChips = (direction: 1 | -1) => {
+    const track = chipsRef.current;
+    if (track) track.scrollBy({ left: direction * track.clientWidth * 0.7, behavior: "smooth" });
+  };
 
   // O carrinho fica guardado durante a visita: recarregar ou voltar de outra página não o esvazia.
   useEffect(() => {
@@ -360,8 +399,8 @@ export function MenuBrowser() {
   ].filter(Boolean).join("\n");
 
   return (
-    <div className="menu-browser">
-      <section className="menu-hero" aria-labelledby="menu-page-title">
+    <div className={`menu-browser${cartCount > 0 ? " menu-browser--with-cart" : ""}`}>
+      <section className="menu-hero" id="inicio-cardapio" aria-labelledby="menu-page-title">
         <Image className="menu-hero__photo" src="/cafe-boutique/hero/hero-cafe-boutique-limpo.png" alt="Xícara de café sobre a mesa de madeira da Café Boutique." fill priority quality={90} sizes="(max-width: 760px) 300vw, 100vw" />
         <div className="menu-hero__copy">
           <p className="menu-eyebrow">Nosso cardápio</p>
@@ -377,12 +416,16 @@ export function MenuBrowser() {
       </section>
 
       <nav className="category-scroller" aria-label="Categorias do cardápio" data-scroll-reveal="true">
+        <button type="button" className="category-scroller__arrow category-scroller__arrow--prev" onClick={() => scrollChips(-1)} hidden={chipEdges.start} aria-label="Ver categorias anteriores"><ArrowIcon back /></button>
+        <div className="category-scroller__track" ref={chipsRef} data-start={chipEdges.start || undefined} data-end={chipEdges.end || undefined}>
         <div className="category-list">
           <button type="button" className="category-chip" aria-pressed={activeCategory === "todos"} onClick={() => selectCategory("todos")}>Todos</button>
           {menuCategories.map((category) => (
             <button key={category.id} type="button" className="category-chip" aria-pressed={activeCategory === category.id} onClick={() => selectCategory(category.id)}>{category.label}</button>
           ))}
         </div>
+        </div>
+        <button type="button" className="category-scroller__arrow category-scroller__arrow--next" onClick={() => scrollChips(1)} hidden={chipEdges.end} aria-label="Ver mais categorias"><ArrowIcon /></button>
       </nav>
 
       <section className="menu-featured section-wrap" id="cardapio-do-site" aria-labelledby="featured-menu-title" data-scroll-reveal="true">
