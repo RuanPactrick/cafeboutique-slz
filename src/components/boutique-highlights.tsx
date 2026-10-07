@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { menuItems, formatPrice } from "@/data/menu";
-import { createWhatsAppUrl } from "@/data/site";
+import { cakeOrderUrl, createWhatsAppUrl } from "@/data/site";
 import styles from "./boutique-highlights.module.css";
 
 type Highlight = {
@@ -81,7 +81,10 @@ export function BoutiqueHighlights() {
         </div>
         <div className={styles.intro}>
           <p>Bolos, cafés e sabores para acompanhar diferentes momentos do dia.</p>
-          <a href="/cardapio">Ver cardápio completo</a>
+          <div className={styles.links}>
+            <a href="/cardapio">Ver cardápio completo</a>
+            <a href={cakeOrderUrl} target="_blank" rel="noreferrer">Encomendar bolo inteiro</a>
+          </div>
         </div>
       </div>
       {/* Carrossel contínuo: a lista aparece duas vezes e a segunda cópia fica fora da leitura e do Tab. */}

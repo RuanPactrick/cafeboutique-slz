@@ -36,6 +36,15 @@ export const siteConfig = {
   canonicalUrl: null,
 } as const;
 
+// Bolo inteiro é sob consulta: a mensagem já pergunta o que a equipe precisa saber.
+export const cakeOrderUrl = createWhatsAppUrl([
+  "Olá! Vim pelo site da Café Boutique e gostaria de encomendar um bolo inteiro.",
+  "Sabor:",
+  "Cobertura:",
+  "Para quantas pessoas:",
+  "Dia da retirada:",
+].join("\n"));
+
 export const navigationItems = [
   { label: "A cafeteria", href: "/#a-casa" },
   { label: "Nossa história", href: "/nossa-historia" },

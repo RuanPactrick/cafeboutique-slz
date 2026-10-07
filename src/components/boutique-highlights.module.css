@@ -31,7 +31,8 @@
 /* O bloco termina na borda direita do carrossel; o texto segue alinhado à esquerda. */
 .intro { justify-self: end; width: max-content; max-width: 28em; padding-top: 23px; }
 .intro p { max-width: 30ch; color: #392317; font-size: var(--t-lede); line-height: 1.55; }
-.intro > a {
+.links { display: flex; flex-wrap: wrap; column-gap: 22px; }
+.links > a {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
@@ -41,7 +42,7 @@
   text-decoration-thickness: 1px;
   text-underline-offset: 8px;
 }
-.intro > a:hover { color: var(--espresso); }
+.links > a:hover { color: var(--espresso); }
 
 /* Carrossel contínuo, dentro da mesma grade das outras seções. A lista vem duplicada; o padding final igual ao gap faz -50% cair
    exatamente no início da cópia. Pausa sob o mouse/foco e para com menos movimento. */

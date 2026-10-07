@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ChevronRightIcon, MapPinIcon } from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { siteConfig } from "@/data/site";
+import { cakeOrderUrl, siteConfig } from "@/data/site";
 import styles from "./nossa-historia.module.css";
 
 export const metadata: Metadata = {
@@ -175,9 +175,14 @@ export default function NossaHistoriaPage() {
                 As collabs e o trabalho com parceiros como a La Mia Dolce Vita
                 também fazem parte dos sabores e encontros da Boutique.
               </p>
-              <a className={styles.textLink} href="/cardapio">
-                Ver o cardápio <ChevronRightIcon />
-              </a>
+              <div className={styles.flavorLinks}>
+                <a className={styles.textLink} href="/cardapio">
+                  Ver o cardápio <ChevronRightIcon />
+                </a>
+                <a className={styles.textLink} href={cakeOrderUrl} target="_blank" rel="noreferrer">
+                  Encomendar um bolo <ChevronRightIcon />
+                </a>
+              </div>
             </div>
           </section>
 

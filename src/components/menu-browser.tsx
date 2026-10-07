@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cakeCoverings, formatPrice, getMenuPriceLabel, hasCoveringChoice, menuCategories, menuItems, menuSectionNotes, type MenuItem } from "@/data/menu";
-import { createWhatsAppUrl, siteConfig } from "@/data/site";
+import { cakeOrderUrl, createWhatsAppUrl, siteConfig } from "@/data/site";
 
 type MenuGroup = {
   key: string;
@@ -518,6 +518,16 @@ export function MenuBrowser() {
                         </div>
                       ))}
                       {menuSectionNotes[section.id] ? <p className="menu-section-note">{menuSectionNotes[section.id]}</p> : null}
+                      {section.id === "doces" ? (
+                        // Bolo inteiro não tem preço fixo no cardápio: a encomenda é combinada no WhatsApp.
+                        <div className="menu-cake-order">
+                          <div>
+                            <h3>Bolo inteiro sob encomenda</h3>
+                            <p>Sabor, cobertura, tamanho e data combinados com a equipe pelo WhatsApp.</p>
+                          </div>
+                          <a className="button" href={cakeOrderUrl} target="_blank" rel="noreferrer">Encomendar bolo</a>
+                        </div>
+                      ) : null}
                       {collapsible ? (
                         // Fechar pelo fim da lista devolve o visitante ao título da categoria.
                         <button type="button" className="menu-category__close" aria-controls={`itens-${section.id}`} onClick={() => {
