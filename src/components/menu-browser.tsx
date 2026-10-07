@@ -28,12 +28,12 @@ const featuredProducts = [
 ] as const;
 
 const categoryArt: Record<string, { src: string; alt: string; position?: string }> = {
-  doces: { src: "/cafe-boutique/destaques/fatia-bolo-amanteigado-hd.jpg", position: "50% 64%", alt: "Fatia de bolo amanteigado com cobertura, item do cardápio de doces." },
-  "sobremesas-gourmet": { src: "/cafe-boutique/destaques/sobremesa-surpresa-de-uva-hd.jpg", position: "50% 58%", alt: "Surpresa de uva servida no copo, com chocolate por cima." },
-  capuccinos: { src: "/cafe-boutique/destaques/cappuccino-tradicional.webp", alt: "Capuccino tradicional preparado em uma xícara da Café Boutique." },
-  sanduiches: { src: "/cafe-boutique/destaques/sanduiche-americano.webp", alt: "Sanduíche Americano servido em um prato." },
-  croissants: { src: "/cafe-boutique/destaques/croissant-americano-hd.jpg", position: "50% 64%", alt: "Croissant Americano servido em um prato." },
-  salgados: { src: "/cafe-boutique/cozinha/quiche-e-empadas.jpg", alt: "Quiches e empadas durante o preparo na cozinha." },
+  doces: { src: "/cafe-boutique/destaques/fatia-bolo-amanteigado-hd.jpg", position: "50% 39%", alt: "Fatia de bolo amanteigado com cobertura, item do cardápio de doces." },
+  "sobremesas-gourmet": { src: "/cafe-boutique/destaques/sobremesa-surpresa-de-uva-hd.jpg", position: "50% 74%", alt: "Surpresa de uva servida no copo, com chocolate por cima." },
+  capuccinos: { src: "/cafe-boutique/destaques/cappuccino-tradicional.webp", position: "50% 29%", alt: "Capuccino tradicional preparado em uma xícara da Café Boutique." },
+  sanduiches: { src: "/cafe-boutique/destaques/sanduiche-americano.webp", position: "50% 41%", alt: "Sanduíche Americano servido em um prato." },
+  croissants: { src: "/cafe-boutique/destaques/croissant-americano-hd.jpg", position: "50% 78%", alt: "Croissant Americano servido em um prato." },
+  salgados: { src: "/cafe-boutique/cozinha/quiche-e-empadas.jpg", position: "50% 50%", alt: "Quiches e empadas durante o preparo na cozinha." },
 };
 
 const categoryDescriptions: Record<string, string> = {
@@ -131,6 +131,10 @@ function SearchIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 4.5 4.5" /></svg>;
 }
 
+function ChevronIcon() {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>;
+}
+
 function BagIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z" /><path d="M9 9V6a3 3 0 0 1 6 0v3" /></svg>;
 }
@@ -179,11 +183,22 @@ export function MenuBrowser() {
   const [query, setQuery] = useState("");
   const [cart, setCart] = useState<Cart>({});
   const [orderOpen, setOrderOpen] = useState(false);
+  // No celular, com "Todos" e sem busca, cada categoria chega fechada e abre com um toque.
+  const [compact, setCompact] = useState(false);
+  const [openIds, setOpenIds] = useState<Set<string>>(() => new Set());
   const normalizedQuery = searchKey(query.trim());
 
   useEffect(() => {
     const categoryId = window.location.hash.replace("#categoria-", "");
     if (menuCategories.some((category) => category.id === categoryId)) setActiveCategory(categoryId);
+  }, []);
+
+  useEffect(() => {
+    const narrow = window.matchMedia("(max-width: 760px)");
+    const sync = () => setCompact(narrow.matches);
+    sync();
+    narrow.addEventListener("change", sync);
+    return () => narrow.removeEventListener("change", sync);
   }, []);
 
   useEffect(() => {
@@ -209,6 +224,14 @@ export function MenuBrowser() {
       })
       .filter((category) => category.count > 0);
   }, [activeCategory, normalizedQuery]);
+
+  const collapsible = compact && activeCategory === "todos" && !normalizedQuery;
+  const toggleSection = (id: string) => setOpenIds((current) => {
+    const next = new Set(current);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    return next;
+  });
 
   const resultCount = sections.reduce((total, section) => total + section.count, 0);
   const cartEntries = Object.entries(cart).flatMap(([id, quantity]) => {
@@ -314,14 +337,22 @@ export function MenuBrowser() {
           <div className={`menu-sections${sections.length === 1 ? " menu-sections--single" : ""}`}>
             {sections.map((section) => {
               const art = categoryArt[section.id];
+              const open = !collapsible || openIds.has(section.id);
               return (
-                <section className={`menu-category${section.id === "extras" ? " menu-category--extras" : ""}${art ? " menu-category--illustrated" : ""}`} key={section.id} id={`categoria-${section.id}`} aria-labelledby={`heading-${section.id}`} data-scroll-reveal="true">
+                <section className={`menu-category${section.id === "extras" ? " menu-category--extras" : ""}${art ? " menu-category--illustrated" : ""}${collapsible ? " menu-category--collapsible" : ""}${open ? "" : " menu-category--closed"}`} key={section.id} id={`categoria-${section.id}`} aria-labelledby={`heading-${section.id}`} data-scroll-reveal="true">
                   <header className="menu-section-heading menu-category__heading">
-                    <div><p className="menu-eyebrow">{section.label}</p><h2 id={`heading-${section.id}`}>{categoryTitles[section.id]}</h2></div>
+                    <div>
+                      <p className="menu-eyebrow">{section.label}</p>
+                      <h2 id={`heading-${section.id}`}>
+                        {collapsible ? (
+                          <button type="button" className="menu-category__toggle" aria-expanded={open} aria-controls={`itens-${section.id}`} onClick={() => toggleSection(section.id)}>{categoryTitles[section.id]}</button>
+                        ) : categoryTitles[section.id]}
+                      </h2>
+                    </div>
                     <p className="menu-category__description">{categoryDescriptions[section.id]}</p>
-                    <span className="menu-section-heading__aside">{section.count} {section.count === 1 ? "item" : "itens"}</span>
+                    <span className="menu-section-heading__aside">{section.count} {section.count === 1 ? "item" : "itens"}{collapsible ? <ChevronIcon /> : null}</span>
                   </header>
-                  <div className="menu-category__body">
+                  <div className="menu-category__body" id={`itens-${section.id}`} hidden={!open}>
                     {art ? <figure className="menu-category__photo"><Image src={art.src} alt={art.alt} fill quality={90} sizes="(max-width: 900px) 92vw, 600px" style={art.position ? { objectPosition: art.position } : undefined} /></figure> : null}
                     <div className="menu-category__products">
                       {section.id === "extras" ? <p className="menu-extras-intro">Adicione complementos ao seu pedido.</p> : null}
