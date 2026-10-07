@@ -27,12 +27,12 @@ const featuredProducts = [
   { id: "fatia-bolo-amanteigado-com-cobertura", category: "Doces", src: "/cafe-boutique/destaques/fatia-bolo-amanteigado-hd.jpg", position: "50% 68%", alt: "Fatia de bolo amanteigado com cobertura acompanhada de café." },
 ] as const;
 
-const categoryArt: Record<string, { src: string; alt: string }> = {
-  doces: { src: "/cafe-boutique/products/cafe-e-bolo-amanteigado.jpg", alt: "Fatia de bolo amanteigado com cobertura, item do cardápio de doces." },
-  "sobremesas-gourmet": { src: "/cafe-boutique/destaques/sobremesa-chocolate.webp", alt: "Sobremesa de chocolate apresentada em uma composição da Café Boutique." },
+const categoryArt: Record<string, { src: string; alt: string; position?: string }> = {
+  doces: { src: "/cafe-boutique/destaques/fatia-bolo-amanteigado-hd.jpg", position: "50% 64%", alt: "Fatia de bolo amanteigado com cobertura, item do cardápio de doces." },
+  "sobremesas-gourmet": { src: "/cafe-boutique/destaques/sobremesa-surpresa-de-uva-hd.jpg", position: "50% 58%", alt: "Surpresa de uva servida no copo, com chocolate por cima." },
   capuccinos: { src: "/cafe-boutique/destaques/cappuccino-tradicional.webp", alt: "Capuccino tradicional preparado em uma xícara da Café Boutique." },
   sanduiches: { src: "/cafe-boutique/destaques/sanduiche-americano.webp", alt: "Sanduíche Americano servido em um prato." },
-  croissants: { src: "/cafe-boutique/destaques/croissant-americano.webp", alt: "Croissant Americano servido em um prato." },
+  croissants: { src: "/cafe-boutique/destaques/croissant-americano-hd.jpg", position: "50% 64%", alt: "Croissant Americano servido em um prato." },
   salgados: { src: "/cafe-boutique/cozinha/quiche-e-empadas.jpg", alt: "Quiches e empadas durante o preparo na cozinha." },
 };
 
@@ -219,6 +219,13 @@ export function MenuBrowser() {
   const cartTotal = cartEntries.reduce((total, entry) => total + (entry.item.availability === "pending-confirmation" ? 0 : entry.item.priceCents * entry.quantity), 0);
   const pendingCartCount = cartEntries.filter((entry) => entry.item.availability === "pending-confirmation").reduce((total, entry) => total + entry.quantity, 0);
 
+  // Trocar de categoria leva o visitante ao começo da lista, sem pular para o topo da página.
+  const selectCategory = (id: string) => {
+    setActiveCategory(id);
+    const list = document.getElementById("cardapio-do-site");
+    if (list && list.getBoundingClientRect().top < 0) list.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  };
+
   const addToCart = (item: MenuItem) => setCart((current) => ({ ...current, [item.id]: (current[item.id] ?? 0) + 1 }));
   const changeQuantity = (item: MenuItem, amount: number) => setCart((current) => {
     const next = { ...current };
@@ -254,9 +261,9 @@ export function MenuBrowser() {
 
       <nav className="category-scroller" aria-label="Categorias do cardápio" data-scroll-reveal="true">
         <div className="category-list">
-          <button type="button" className="category-chip" aria-pressed={activeCategory === "todos"} onClick={() => setActiveCategory("todos")}>Todos</button>
+          <button type="button" className="category-chip" aria-pressed={activeCategory === "todos"} onClick={() => selectCategory("todos")}>Todos</button>
           {menuCategories.map((category) => (
-            <button key={category.id} type="button" className="category-chip" aria-pressed={activeCategory === category.id} onClick={() => setActiveCategory(category.id)}>{category.label}</button>
+            <button key={category.id} type="button" className="category-chip" aria-pressed={activeCategory === category.id} onClick={() => selectCategory(category.id)}>{category.label}</button>
           ))}
         </div>
       </nav>
@@ -304,7 +311,7 @@ export function MenuBrowser() {
         {sections.length === 0 ? (
           <div className="menu-empty" role="status"><h3>Nenhum item encontrado</h3><p>Confira a escrita ou escolha outra categoria.</p><button className="menu-reset" type="button" onClick={() => { setQuery(""); setActiveCategory("todos"); }}>Limpar busca e filtros</button></div>
         ) : (
-          <div className="menu-sections">
+          <div className={`menu-sections${sections.length === 1 ? " menu-sections--single" : ""}`}>
             {sections.map((section) => {
               const art = categoryArt[section.id];
               return (
@@ -315,7 +322,7 @@ export function MenuBrowser() {
                     <span className="menu-section-heading__aside">{section.count} {section.count === 1 ? "item" : "itens"}</span>
                   </header>
                   <div className="menu-category__body">
-                    {art ? <figure className="menu-category__photo"><Image src={art.src} alt={art.alt} fill sizes="(max-width: 760px) 92vw, (max-width: 1050px) 40vw, 32vw" /></figure> : null}
+                    {art ? <figure className="menu-category__photo"><Image src={art.src} alt={art.alt} fill quality={90} sizes="(max-width: 900px) 92vw, 600px" style={art.position ? { objectPosition: art.position } : undefined} /></figure> : null}
                     <div className="menu-category__products">
                       {section.id === "extras" ? <p className="menu-extras-intro">Adicione complementos ao seu pedido.</p> : null}
                       {section.groups.map((group) => (

@@ -169,12 +169,13 @@ time, data { font-variant-numeric: tabular-nums; }
 .menu-search--hero input::placeholder { color: var(--muted); }
 .menu-search__count { flex: 0 0 auto; padding-left: 0.8rem; border-left: 1px solid var(--rule); color: var(--muted); font-family: var(--ui); font-size: 0.68rem; white-space: nowrap; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
-.category-scroller { overflow-x: auto; padding: 9px var(--gutter) 0; border-bottom: 1px solid rgba(221,213,200,.6); scrollbar-width: none; }
+/* As categorias ficam presas logo abaixo do cabeçalho: dá para trocar de seção em qualquer ponto da rolagem. */
+.category-scroller { position: sticky; z-index: 40; top: 70px; overflow-x: auto; padding: 9px var(--gutter) 0; border-bottom: 1px solid rgba(221,213,200,.6); background: rgba(248, 245, 238, 0.94); backdrop-filter: blur(8px); scrollbar-width: none; }
 .category-scroller::-webkit-scrollbar { display: none; }
 .category-list { display: flex; width: max-content; min-width: 100%; align-items: center; gap: 0.32rem; padding-bottom: 9px; }
 .category-chip { min-height: 36px; padding: 0.4rem 0.78rem; border: 1px solid transparent; border-radius: 999px; color: var(--ink); background: transparent; font-family: var(--ui); font-size: 0.66rem; white-space: nowrap; cursor: pointer; transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease; }
 .category-chip:hover, .category-chip[aria-pressed="true"] { border-color: var(--espresso); color: var(--paper-soft); background: var(--espresso); }
-.menu-featured { padding-block: clamp(30px, 3vw, 42px) clamp(62px, 7vw, 92px); scroll-margin-top: 5rem; }
+.menu-featured { padding-block: clamp(30px, 3vw, 42px) clamp(62px, 7vw, 92px); scroll-margin-top: 7.5rem; }
 .menu-section-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 0.78fr) auto; align-items: end; gap: clamp(1rem, 2.5vw, 2.2rem); }
 .menu-section-heading h2 { max-width: 22ch; margin-top: 0.38rem; font-size: clamp(1.9rem, 3vw, 2.85rem); line-height: 1.02; }
 .menu-section-heading__aside { padding-bottom: 0.25rem; color: var(--muted); font-family: var(--ui); font-size: 0.68rem; white-space: nowrap; }
@@ -206,13 +207,19 @@ time, data { font-variant-numeric: tabular-nums; }
 .menu-controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.05rem 0 0.6rem; }
 .menu-results { color: var(--muted); font-family: var(--ui); font-size: 0.68rem; }
 .menu-reset { padding: 0.35rem 0; border: 0; color: #814a20; background: transparent; font-family: var(--ui); font-size: 0.7rem; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
-.menu-sections { border-top: 1px solid rgba(221,213,200,.72); }
-.menu-category { padding-block: clamp(27px, 3vw, 42px); border-bottom: 1px solid rgba(221,213,200,.75); scroll-margin-top: 5rem; }
-.menu-category__heading { margin-bottom: 1rem; }
-.menu-category__heading h2 { max-width: 28ch; }
-.menu-category__description { max-width: 35ch; padding-bottom: 0.25rem; color: var(--muted); font-family: var(--ui); font-size: 0.72rem; line-height: 1.45; }
-.menu-category__body { display: grid; grid-template-columns: minmax(250px, 0.86fr) minmax(0, 1.14fr); align-items: start; gap: clamp(18px, 3vw, 38px); }
-.menu-category__photo { position: relative; overflow: hidden; aspect-ratio: 4 / 3; border-radius: 9px; background: var(--paper-secondary); }
+/* Como um cardápio impresso: duas colunas, cada categoria com a foto em cima e os itens embaixo,
+   encaixadas uma sob a outra sem buracos. A leitura desce a coluna da esquerda e depois a da direita. */
+.menu-sections { columns: 2; column-gap: clamp(36px, 4.5vw, 72px); margin-top: clamp(8px, 1vw, 16px); }
+.menu-sections--single { columns: 1; }
+.menu-category { padding-block: clamp(28px, 2.6vw, 40px) clamp(30px, 2.8vw, 44px); border-top: 1px solid rgba(221,213,200,.75); break-inside: avoid; scroll-margin-top: 7.5rem; }
+.menu-category--extras { column-span: all; }
+.menu-category__heading { grid-template-columns: minmax(0, 1fr) auto; gap: 0.5rem 1rem; margin-bottom: 1.1rem; }
+.menu-category__heading > div { grid-column: 1 / -1; }
+.menu-category__heading h2 { max-width: 20ch; font-size: clamp(1.75rem, 2.4vw, 2.35rem); }
+.menu-category__description { max-width: 42ch; padding-bottom: 0.25rem; color: var(--muted); font-family: var(--ui); font-size: 0.72rem; line-height: 1.45; }
+.menu-category__heading .menu-section-heading__aside { grid-column: 2; grid-row: 2; }
+.menu-category__body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.9rem; }
+.menu-category__photo { position: relative; overflow: hidden; aspect-ratio: 2 / 1; border-radius: 12px; background: var(--paper-secondary); }
 .menu-category__photo img { object-fit: cover; }
 .menu-category__products { min-width: 0; }
 .menu-group + .menu-group { margin-top: 0.75rem; }
@@ -576,6 +583,7 @@ time, data { font-variant-numeric: tabular-nums; }
 }
 
 @media (max-width: 900px) {
+  .menu-sections { columns: 1; }
   .cb-head { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .cb-story { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .cb-story__photo { width: min(100%, 360px); }
@@ -584,6 +592,7 @@ time, data { font-variant-numeric: tabular-nums; }
 }
 
 @media (max-width: 760px) {
+  .category-scroller { top: 64px; }
   :root { --t-display: 40px; --t-title: 22px; --t-lede: 16px; }
   .cb { padding: 52px 0; }
   #cafe-story { padding-bottom: 36px; }
