@@ -95,18 +95,13 @@ time, data { font-variant-numeric: tabular-nums; }
 .mobile-menu-toggle svg { width: 1.12rem; height: 1.12rem; }
 .mobile-nav { display: none; }
 
-@media (min-width: 761px) {
-  .site-page-frame:has(.home-hero) { position: relative; }
-  .site-page-frame:has(.home-hero) > .site-header { position: absolute; inset: 0 0 auto; background: transparent; }
-  .site-page-frame:has(.home-hero) > .site-header .site-header__nav a { color: var(--paper-soft); text-shadow: 0 1px 14px rgba(20, 10, 4, 0.45), 0 1px 6px rgba(34, 17, 9, 0.6); }
-  /* Logo maior e destacado da parede iluminada do hero, com respiro do topo. */
-  .site-page-frame:has(.home-hero) > .site-header .site-header__inner { padding-top: 22px; }
-  .site-page-frame:has(.home-hero) > .site-header .brand-logo img { width: 112px; height: auto; filter: drop-shadow(0 6px 16px rgba(20, 10, 4, 0.5)) drop-shadow(0 1px 2px rgba(20, 10, 4, 0.35)); }
-}
+/* Na home o hero vira uma moldura arredondada sobre o mesmo creme da seção seguinte; o
+   cabeçalho fica acima dela, fora do vídeo. */
+.site-page-frame:has(.home-hero), .site-page-frame:has(.home-hero) > .site-header { background: #f5ecdf; }
 
 /* Home */
-.home-hero { position: relative; isolation: isolate; display: flex; min-height: clamp(620px, 82svh, 880px); align-items: center; overflow: hidden; padding: clamp(38px, 5.8vw, 78px); margin: 0; border-radius: 0; background: var(--espresso); }
-.home-hero::after { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, transparent 0%, transparent calc(100% - 12px), #f5ecdf 100%), linear-gradient(90deg, rgba(34, 17, 9, 0.42) 0%, rgba(34, 17, 9, 0.18) 47%, rgba(34, 17, 9, 0.02) 72%), linear-gradient(180deg, rgba(34, 17, 9, 0.3), transparent 23%); content: ""; }
+.home-hero { position: relative; isolation: isolate; display: flex; min-height: clamp(560px, calc(100svh - 70px - clamp(12px, 1.6vw, 24px)), 860px); align-items: center; overflow: hidden; padding: clamp(38px, 5.8vw, 78px); margin: 0 clamp(12px, 1.6vw, 24px); border-radius: clamp(18px, 2vw, 28px); background: var(--espresso); }
+.home-hero::after { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(34, 17, 9, 0.42) 0%, rgba(34, 17, 9, 0.18) 47%, rgba(34, 17, 9, 0.02) 72%), linear-gradient(180deg, rgba(34, 17, 9, 0.3), transparent 23%); content: ""; }
 .home-hero__copy { display: flex; max-width: 850px; flex-direction: column; align-items: flex-start; justify-content: center; color: var(--paper-soft); }
 .home-hero__copy h1 { color: var(--paper-soft); font-family: var(--display); font-size: var(--t-xl); font-weight: 400; letter-spacing: -0.035em; line-height: 0.98; }
 .home-hero__copy h1 span, .home-hero__copy h1 em { display: block; white-space: nowrap; }
@@ -322,7 +317,7 @@ time, data { font-variant-numeric: tabular-nums; }
   h1 { font-size: clamp(2.7rem, 10vw, 3.7rem); }
   h2 { font-size: clamp(2.2rem, 8vw, 3rem); }
 
-  .home-hero { min-height: 560px; align-items: flex-end; padding: 44px 22px; margin: 8px 8px 0; border-radius: 18px 18px 0 0; }
+  .home-hero { min-height: 560px; align-items: flex-end; padding: 44px 22px; margin: 0 8px; border-radius: 18px; }
   .home-hero::after { background: linear-gradient(180deg, rgba(28, 15, 10, 0.08) 10%, rgba(28, 15, 10, 0.72) 88%); }
   .home-hero__copy { max-width: 100%; }
   .home-hero__copy h1 { font-size: clamp(2.35rem, 10.6vw, 3.25rem); line-height: 0.96; }
@@ -412,7 +407,7 @@ time, data { font-variant-numeric: tabular-nums; }
   .site-header__brand .brand-logo img { width: 62px; height: 44px; }
   .button--header { min-height: 38px; padding: 0 12px 0 10px; font-size: 12.5px; }
   .mobile-menu-toggle { width: 37px; height: 37px; }
-  .home-hero { min-height: 520px; padding: 36px 18px; margin: 6px 6px 0; }
+  .home-hero { min-height: 520px; padding: 36px 18px; margin: 0 6px; }
   .home-hero__copy h1 { font-size: clamp(2.2rem, 10.5vw, 2.8rem); }
   .featured-product__copy h3 { font-size: 1.65rem; }
   .menu-hero { min-height: 438px; padding-inline: 20px; }
