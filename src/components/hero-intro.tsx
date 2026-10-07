@@ -4,7 +4,20 @@ import { useEffect, useRef, useState } from "react";
 
 const SEEN_KEY = "cb-hero-intro";
 
-// Abertura do hero: os closes do grão até a xícara rodam uma vez, sem texto, e ao fim o vídeo
+// Versão em teste: o vídeo completo (11,4 s). O recorte só com os closes (6,1 s) está guardado
+// em /cafe-boutique/hero/recorte/; para voltar a ele, troque este objeto pelo comentado.
+const CLIP = {
+  desktop: "/cafe-boutique/hero/completo-1440.mp4",
+  mobile: "/cafe-boutique/hero/completo-mobile.mp4",
+  poster: "/cafe-boutique/hero/completo-poster.jpg",
+};
+// const CLIP = {
+//   desktop: "/cafe-boutique/hero/recorte/abertura-1440.mp4",
+//   mobile: "/cafe-boutique/hero/recorte/abertura-mobile.mp4",
+//   poster: "/cafe-boutique/hero/recorte/abertura-poster.jpg",
+// };
+
+// Abertura do hero: o vídeo roda uma vez, sem texto, e ao fim o vídeo
 // se dissolve na foto de sempre enquanto o título sobe. O hero chega do servidor em
 // data-intro="pending"; aqui ele passa a "playing" e termina em "done". Quem prefere menos
 // movimento, economiza dados ou já viu a abertura nesta visita vai direto para o fim.
@@ -39,8 +52,8 @@ export function HeroIntro() {
     // O React não reflete `muted` no elemento; sem isso o navegador bloqueia o autoplay.
     video.muted = true;
     video.src = window.matchMedia("(max-width: 760px)").matches
-      ? "/cafe-boutique/hero/abertura-mobile.mp4"
-      : "/cafe-boutique/hero/abertura-1440.mp4";
+      ? CLIP.mobile
+      : CLIP.desktop;
     hero.dataset.intro = "playing";
 
     // Sem início em 3 s (rede lenta, autoplay bloqueado), o visitante não fica esperando.
@@ -64,7 +77,7 @@ export function HeroIntro() {
       <video
         ref={videoRef}
         className="home-hero__video"
-        poster="/cafe-boutique/hero/abertura-poster.jpg"
+        poster={CLIP.poster}
         muted
         playsInline
         preload="auto"
