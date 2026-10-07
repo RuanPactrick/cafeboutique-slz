@@ -107,8 +107,12 @@ time, data { font-variant-numeric: tabular-nums; }
 .home-hero__copy h1 span, .home-hero__copy h1 em { display: block; white-space: nowrap; }
 .home-hero__copy h1 em { color: var(--cream); font-style: italic; font-weight: inherit; }
 .home-hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.6rem; }
-.button--hero { min-height: 52px; padding-inline: 1.6rem; border-color: var(--cream); color: var(--cream); background: transparent; font-family: var(--body); font-size: var(--t-ui); font-weight: 400; letter-spacing: 0.01em; }
-.button--hero:hover { color: var(--espresso); background: var(--cream); }
+/* Ação principal do hero: botão cheio em creme, o mais forte da tela; o bolo inteiro vem ao lado como link. */
+.button--hero { min-height: 54px; padding-inline: 1.8rem; border-color: var(--cream); color: var(--espresso); background: var(--cream); box-shadow: 0 10px 24px rgba(20, 10, 4, 0.28); font-family: var(--body); font-size: var(--t-ui); font-weight: 400; letter-spacing: 0.01em; }
+.button--hero:hover { border-color: #fff; color: var(--espresso); background: #fff; }
+.home-hero__secondary { display: inline-flex; min-height: 44px; align-items: center; color: var(--paper-soft); font: 400 var(--t-ui) / 1.3 var(--body); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; text-shadow: 0 1px 10px rgba(20, 10, 4, 0.55); }
+.home-hero__secondary:hover { color: var(--cream); }
+.home-hero__secondary:focus-visible { outline: 2px solid var(--cream); outline-offset: 4px; border-radius: 4px; }
 .home-hero__photo { position: absolute; z-index: -3; width: 100%; height: 100%; inset: 0; object-fit: cover; object-position: var(--position-desktop, 50% 50%); }
 
 .cafe-experience { padding: clamp(54px, 7vw, 86px) var(--gutter); color: var(--paper-soft); background: var(--espresso); }

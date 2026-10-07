@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { BrandLogo } from "@/components/brand-logo";
 import { CloseIcon, MenuIcon, WhatsAppGlyph } from "@/components/icons";
 import { navigationItems, siteConfig } from "@/data/site";
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  // No cardápio a tarefa é pedir: o botão do topo diz isso.
+  const onMenu = usePathname() === "/cardapio";
   const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
@@ -52,7 +55,7 @@ export function SiteHeader() {
         <div className="site-header__actions">
           <a className="button button--header" href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer">
             <WhatsAppGlyph className="whatsapp-glyph" />
-            <span>Fale conosco</span>
+            <span>{onMenu ? "Pedir no WhatsApp" : "Fale conosco"}</span>
           </a>
           <button
             ref={toggleRef}
