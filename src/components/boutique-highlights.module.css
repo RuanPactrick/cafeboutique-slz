@@ -117,7 +117,8 @@
 .order { display: inline-flex; width: 40px; aspect-ratio: 1; flex-shrink: 0; align-items: center; justify-content: center; border: 1px solid #faefda; border-radius: 50%; color: #49290e; background: #faefda; font: 400 26px / 1 var(--body); text-decoration: none; box-shadow: 0 4px 14px rgba(30, 16, 9, 0.25); transition: background-color 160ms ease, color 160ms ease; }
 .order { position: relative; }
 .order::after { position: absolute; inset: -4px; border-radius: 50%; content: ""; }
-.order:hover { color: #fff1dd; background: #603719; }
+@media (hover: hover) { .order:hover { color: #fff1dd; background: #603719; } }
+.order:active { color: #fff1dd; background: #603719; }
 .order:focus-visible { outline-color: #fff1dd; }
 
 @media (max-width: 1050px) {

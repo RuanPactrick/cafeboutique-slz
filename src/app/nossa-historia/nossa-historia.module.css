@@ -387,7 +387,7 @@
     flex-wrap: wrap;
     gap: 10px 16px;
     color: #73431e;
-    font-size: 0.64rem;
+    font-size: var(--t-label);
   }
 
   .welcomeInner {
@@ -436,7 +436,7 @@
   .space figcaption,
   .flavors figcaption,
   .visitPhoto figcaption {
-    font-size: 0.72rem;
+    font-size: 13px;
   }
 
   .flavors {

@@ -9,7 +9,8 @@ import { navigationItems, siteConfig } from "@/data/site";
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   // No cardápio a tarefa é pedir: o botão do topo diz isso.
-  const onMenu = usePathname() === "/cardapio";
+  const pathname = usePathname();
+  const onMenu = pathname === "/cardapio";
   const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
@@ -46,7 +47,7 @@ export function SiteHeader() {
 
         <nav className="site-header__nav" aria-label="Navegação principal">
           {navigationItems.map((item) => (
-            <a href={item.href} key={item.href} target={"external" in item ? "_blank" : undefined} rel={"external" in item ? "noreferrer" : undefined}>
+            <a href={item.href} key={item.href} target={"external" in item ? "_blank" : undefined} rel={"external" in item ? "noreferrer" : undefined} aria-current={item.href === pathname ? "page" : undefined}>
               {item.label}
             </a>
           ))}
@@ -73,7 +74,7 @@ export function SiteHeader() {
 
       <nav className="mobile-nav" id="mobile-navigation" aria-label="Navegação principal" hidden={!menuOpen}>
         {navigationItems.map((item) => (
-          <a href={item.href} key={item.href} target={"external" in item ? "_blank" : undefined} rel={"external" in item ? "noreferrer" : undefined} onClick={closeMenu}>
+          <a href={item.href} key={item.href} target={"external" in item ? "_blank" : undefined} rel={"external" in item ? "noreferrer" : undefined} aria-current={item.href === pathname ? "page" : undefined} onClick={closeMenu}>
             {item.label}
           </a>
         ))}

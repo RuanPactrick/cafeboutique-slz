@@ -197,7 +197,7 @@ export default function NossaHistoriaPage() {
               </address>
               <p className={styles.hours}>{siteConfig.openingHoursLabel}</p>
               <div className={styles.visitActions}>
-                <a className={styles.visitButton} href={siteConfig.directionsUrl}>
+                <a className={styles.visitButton} href={siteConfig.directionsUrl} target="_blank" rel="noreferrer">
                   <MapPinIcon /> Como chegar
                 </a>
                 <a
