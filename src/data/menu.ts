@@ -51,6 +51,23 @@ export const menuCategories: MenuCategory[] = [
   { id: "extras", label: "Extras" },
 ];
 
+// Coberturas citadas no material do cardápio (nota da seção Doces), sujeitas à disponibilidade.
+export const cakeCoverings = [
+  "Chocolate",
+  "Ninho",
+  "Doce de leite",
+  "Limão",
+  "Romeu e Julieta",
+  "Castanha",
+  "Ameixa",
+  "Castanha com ameixa",
+  "Castanha do Pará com cupuaçu",
+] as const;
+
+export function hasCoveringChoice(item: { id: string }) {
+  return item.id.includes("com-cobertura");
+}
+
 export function formatPrice(priceCents: number) {
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { formatPrice, getMenuPriceLabel, menuCategories, menuItems, menuSectionNotes, type MenuItem } from "@/data/menu";
+import { cakeCoverings, formatPrice, getMenuPriceLabel, hasCoveringChoice, menuCategories, menuItems, menuSectionNotes, type MenuItem } from "@/data/menu";
 import { createWhatsAppUrl, siteConfig } from "@/data/site";
 
 type MenuGroup = {
@@ -229,6 +229,8 @@ export function MenuBrowser() {
   const [pickupDay, setPickupDay] = useState("");
   const [pickupTime, setPickupTime] = useState("");
   const [now, setNow] = useState<Date | null>(null);
+  const [orderNotes, setOrderNotes] = useState("");
+  const [coverings, setCoverings] = useState<Record<string, string>>({});
   const dialogRef = useRef<HTMLElement>(null);
   const chipsRef = useRef<HTMLDivElement>(null);
   const [chipEdges, setChipEdges] = useState({ start: true, end: true });
@@ -330,7 +332,9 @@ export function MenuBrowser() {
     return () => {
       window.removeEventListener("keydown", onKey);
       root.style.overflow = previousOverflow;
-      opener?.focus();
+      // Se o carrinho esvaziou, o botão "Ver pedido" sumiu: o foco vai para a busca.
+      if (opener?.isConnected) opener.focus();
+      else document.getElementById("busca")?.focus({ preventScroll: true });
     };
   }, [orderOpen]);
 
@@ -390,12 +394,18 @@ export function MenuBrowser() {
   const times = selectedDay && now ? pickupTimes(selectedDay.date, now) : [];
   const pickupLabel = selectedDay ? `${selectedDay.label}${pickupTime && times.includes(pickupTime) ? ` às ${pickupTime}` : ", horário a combinar"}` : "dia e horário a combinar";
 
+  // Sem itens não há pedido: a janela fecha sozinha quando o último item sai.
+  useEffect(() => {
+    if (orderOpen && cartCount === 0) setOrderOpen(false);
+  }, [orderOpen, cartCount]);
+
   const orderMessage = [
     "Olá! Vim pelo site da Café Boutique e gostaria de pedir:",
-    ...cartEntries.map(({ item, quantity }) => `• ${item.name} x${quantity} — ${getMenuPriceLabel(item)}`),
+    ...cartEntries.map(({ item, quantity }) => `• ${item.name}${hasCoveringChoice(item) ? ` (cobertura: ${coverings[item.id] ?? "a combinar"})` : ""} x${quantity} — ${getMenuPriceLabel(item)}`),
     pendingCartCount ? "Alguns itens estão sujeitos à confirmação de disponibilidade e valor." : "",
     customerName.trim() ? `Nome: ${customerName.trim()}` : "",
     `Retirada na loja: ${pickupLabel}.`,
+    orderNotes.trim() ? `Observações: ${orderNotes.trim()}` : "",
   ].filter(Boolean).join("\n");
 
   return (
@@ -548,16 +558,28 @@ export function MenuBrowser() {
             <ul className="menu-order-list">
               {cartEntries.map(({ item, quantity }) => (
                 <li className="menu-order-line" key={item.id}>
-                  <div><h3>{item.name}</h3><p>{getMenuPriceLabel(item)}{quantity > 1 ? ` · ${quantity} unidades` : ""}</p></div>
+                  <div className="menu-order-line__copy">
+                    <h3>{item.name}</h3>
+                    <p>{getMenuPriceLabel(item)}{quantity > 1 ? ` · ${quantity} unidades` : ""}</p>
+                    {hasCoveringChoice(item) ? (
+                      <label className="menu-order-covering">
+                        <span>Cobertura</span>
+                        <select value={coverings[item.id] ?? ""} onChange={(event) => { const value = event.currentTarget.value; setCoverings((current) => ({ ...current, [item.id]: value })); }}>
+                          <option value="">A combinar</option>
+                          {cakeCoverings.map((covering) => <option key={covering} value={covering}>{covering}</option>)}
+                        </select>
+                      </label>
+                    ) : null}
+                  </div>
                   <div className="menu-order-line__actions"><button type="button" onClick={() => changeQuantity(item, -1)} aria-label={`Remover uma unidade de ${item.name}`}>−</button><span>{quantity}</span><button type="button" onClick={() => changeQuantity(item, 1)} aria-label={`Adicionar uma unidade de ${item.name}`}>+</button></div>
                 </li>
               ))}
             </ul>
-            <div className="menu-order-total"><span>Subtotal dos itens com preço informado</span><strong>{cartTotal > 0 ? formatPrice(cartTotal) : "A confirmar"}</strong></div>
+            <div className="menu-order-total"><span>Subtotal</span><strong>{cartTotal > 0 ? formatPrice(cartTotal) : "A confirmar"}</strong></div>
             {pendingCartCount > 0 ? <p className="menu-order-dialog__note">{pendingCartCount} {pendingCartCount === 1 ? "item depende" : "itens dependem"} de confirmação de disponibilidade e valor.</p> : null}
             <fieldset className="menu-order-pickup">
               <legend>Retirada na loja</legend>
-              <p className="menu-order-pickup__hours">Funcionamos de segunda a sábado, das 15h às 20h. Tudo aqui é opcional: o que ficar em branco, a equipe combina com você no WhatsApp.</p>
+              <p className="menu-order-pickup__hours">Horário de funcionamento: {siteConfig.openingHoursLabel}. Tudo aqui é opcional: o que ficar em branco, a equipe combina com você no WhatsApp.</p>
               <label className="menu-order-field menu-order-field--wide">
                 <span>Seu nome</span>
                 <input type="text" value={customerName} onChange={(event) => setCustomerName(event.currentTarget.value)} autoComplete="name" maxLength={60} placeholder="Como podemos te chamar?" />
@@ -572,9 +594,13 @@ export function MenuBrowser() {
               <label className="menu-order-field">
                 <span>Horário</span>
                 <select value={pickupTime} onChange={(event) => setPickupTime(event.currentTarget.value)} disabled={!selectedDay}>
-                  <option value="">{selectedDay ? "A combinar" : "Escolha o dia"}</option>
+                  <option value="">{selectedDay ? "A combinar" : "—"}</option>
                   {times.map((time) => <option key={time} value={time}>{time}</option>)}
                 </select>
+              </label>
+              <label className="menu-order-field menu-order-field--wide">
+                <span>Observações</span>
+                <textarea value={orderNotes} onChange={(event) => setOrderNotes(event.currentTarget.value)} rows={3} maxLength={300} placeholder="Ex.: sem cebola, vela de aniversário, para 10 pessoas" />
               </label>
             </fieldset>
             <a className="button menu-order-dialog__submit" href={createWhatsAppUrl(orderMessage)} target="_blank" rel="noreferrer">Continuar pelo WhatsApp</a>

@@ -312,7 +312,14 @@ time, data { font-variant-numeric: tabular-nums; }
 .menu-order-field { display: grid; min-width: 0; gap: 0.35rem; }
 .menu-order-field--wide { grid-column: 1 / -1; }
 .menu-order-field span { color: var(--ink); font-family: var(--body); font-size: var(--t-small); }
-.menu-order-field input, .menu-order-field select { width: 100%; min-height: 46px; padding: 0 0.85rem; border: 1px solid var(--rule); border-radius: 10px; color: var(--ink); background: #fff; font: 400 16px / 1.2 var(--body); }
+.menu-order-field input, .menu-order-field select, .menu-order-field textarea { width: 100%; min-height: 46px; padding: 0 0.85rem; border: 1px solid var(--rule); border-radius: 10px; color: var(--ink); background: #fff; font: 400 16px / 1.2 var(--body); }
+.menu-order-field textarea { min-height: 84px; padding: 0.7rem 0.85rem; line-height: 1.45; resize: vertical; }
+.menu-order-field textarea:focus-visible { outline: 2px solid #8a541b; outline-offset: 1px; border-color: transparent; }
+/* Cobertura escolhida no próprio item do pedido. */
+.menu-order-line__copy { min-width: 0; }
+.menu-order-covering { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.45rem; color: var(--muted); font-family: var(--body); font-size: var(--t-small); }
+.menu-order-covering select { min-height: 40px; max-width: 100%; padding: 0 0.7rem; border: 1px solid var(--rule); border-radius: 8px; color: var(--ink); background: #fff; font: 400 16px / 1.2 var(--body); }
+.menu-order-covering select:focus-visible { outline: 2px solid #8a541b; outline-offset: 1px; }
 .menu-order-field select:disabled { color: var(--muted); background: var(--paper-secondary); }
 .menu-order-field input:focus-visible, .menu-order-field select:focus-visible { outline: 2px solid #8a541b; outline-offset: 1px; border-color: transparent; }
 .menu-order-dialog h2:focus { outline: none; }
