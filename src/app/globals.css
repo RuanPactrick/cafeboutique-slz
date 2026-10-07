@@ -541,7 +541,7 @@ time, data { font-variant-numeric: tabular-nums; }
 .rv-button { margin-top: 20px; }
 .rv-button:hover { background: rgba(241, 228, 211, 0.08); }
 .google-icon { width: 17px; height: 17px; flex: 0 0 auto; stroke: none; }
-.rv-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
+.rv-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
 .rv-card { padding: 20px 24px 18px; border: 1px solid rgba(234, 220, 203, 0.18); border-radius: 12px; background: rgba(255, 248, 236, 0.04); transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.35s var(--ease-out); }
 .rv-card:hover { border-color: rgba(226, 196, 140, 0.42); background: rgba(255, 248, 236, 0.07); transform: translateY(-2px); }
 .rv-card__top { display: flex; align-items: center; gap: 12px; }
@@ -549,7 +549,7 @@ time, data { font-variant-numeric: tabular-nums; }
 .rv-avatar { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border-radius: 50%; color: #3a2414; background: #e8d6b6; font-family: var(--display); font-size: 15px; }
 .rv-card__top [role="img"] { margin-left: 4px; }
 .rv-when { color: #d9c8b2; font-size: var(--t-small); }
-.rv-quote { margin-top: 16px; color: #f1e4d3; font-size: var(--t-body); line-height: 1.55; text-wrap: pretty; }
+.rv-quote { margin: 16px 0 0; color: #f1e4d3; font-size: var(--t-body); line-height: 1.55; text-wrap: pretty; }
 .rv-by { display: flex; align-items: center; gap: 16px; margin-top: 16px; color: #d9c8b2; font-size: var(--t-small); }
 .rv-by span { width: 22px; height: 1px; background: rgba(217, 200, 178, 0.5); }
 .rv-note { display: flex; align-items: center; gap: 16px; margin: 24px 0 0 36px; }

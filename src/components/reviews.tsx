@@ -54,7 +54,7 @@ export function Reviews() {
                 <span className="rv-when">{review.when}</span>
                 <GoogleIcon />
               </div>
-              <p className="rv-quote">“{review.summary}”</p>
+              <blockquote className="rv-quote"><p>“{review.quote}”</p></blockquote>
               <p className="rv-by"><span aria-hidden="true" />{review.name}</p>
             </li>
           ))}
@@ -62,7 +62,7 @@ export function Reviews() {
         <div className="rv-note">
           <SprigIcon />
           <div>
-            <p>Resumos dos comentários públicos no Google Maps, não transcrições.</p>
+            <p>Trechos de avaliações públicas no Google Maps, com o nome que cada pessoa usa lá.</p>
             <a href={siteConfig.mapsUrl} target="_blank" rel="noreferrer">
               Ver as avaliações no Google
               <ExternalLinkIcon />

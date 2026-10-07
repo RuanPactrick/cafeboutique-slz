@@ -31,7 +31,7 @@ Café Boutique centers cakes and coffee, with the supplied brand line “Mais qu
 - Orders are for pickup. The official Instagram bio snapshot checked on 2026-10-03 lists Monday to Saturday, 15:00–20:00; this may need a future confirmation.
 - Show the address supplied with the brand material with a note to confirm the map point because public listings diverge.
 - Keep orders and contact on the configured WhatsApp and phone links. Checkout is out of scope.
-- Do not add testimonials, sales metrics, founder stories, product details, or photography without evidence.
+- Do not add testimonials, sales metrics, founder stories, product details, or photography without evidence. Customer quotes must be literal excerpts of public reviews approved by the owner.
 
 ## Brand commitments
 
@@ -47,7 +47,7 @@ Café Boutique centers cakes and coffee, with the supplied brand line “Mais qu
 - `public/cafe-boutique/PROVENANCE.md` records the inspected source posts and local assets.
 - Seven official posts with known project links were inspected. The complete Instagram history and private/highlight content were not available to unauthenticated browsing; the displayed selection is limited to those verified posts.
 - The address in `src/data/site.ts` remains marked pending confirmation. Opening hours and pickup-only ordering are tied to the official profile and Linktree snapshots.
-- A historical Google rating module was removed from the page so the home screen does not repeat aggregate counters or imply customer endorsements.
+- The home shows a Google Maps reviews block (`src/data/reviews.ts`): the public rating, review count and check date, plus verbatim excerpts (complete sentences) of three public reviews under the name each reviewer uses on Google, published with the owner's approval on 2026-10-07. Keep excerpts literal, never paraphrased inside quotation marks, and refresh rating, count and date together.
 
 ## Product principles
 
