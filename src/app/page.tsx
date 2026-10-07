@@ -107,7 +107,7 @@ export default function HomePage() {
                 <div className="visit-band__visual vb">
                   <figure className="vb-photo">
                     <Image
-                      src="/cafe-boutique/localizacao/fachada.jpg"
+                      src="/cafe-boutique/localizacao/fachada-entrada.jpg"
                       alt="Fachada da Café Boutique no Holandeses Center, com a placa da marca, a vitrine de vidro e mesas na entrada."
                       fill
                       quality={90}
