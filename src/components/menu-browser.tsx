@@ -268,7 +268,7 @@ export function MenuBrowser() {
   return (
     <div className="menu-browser">
       <section className="menu-hero" aria-labelledby="menu-page-title">
-        <Image className="menu-hero__photo" src="/cafe-boutique/hero/hero-cafe-boutique-limpo.png" alt="Xícara de café sobre a mesa de madeira da Café Boutique." fill priority sizes="100vw" />
+        <Image className="menu-hero__photo" src="/cafe-boutique/hero/hero-cafe-boutique-limpo.png" alt="Xícara de café sobre a mesa de madeira da Café Boutique." fill priority quality={90} sizes="(max-width: 760px) 300vw, 100vw" />
         <div className="menu-hero__copy">
           <p className="menu-eyebrow">Nosso cardápio</p>
           <h1 id="menu-page-title">Sabores para<br />cada momento.</h1>
@@ -365,6 +365,13 @@ export function MenuBrowser() {
                         </div>
                       ))}
                       {menuSectionNotes[section.id] ? <p className="menu-section-note">{menuSectionNotes[section.id]}</p> : null}
+                      {collapsible ? (
+                        // Fechar pelo fim da lista devolve o visitante ao título da categoria.
+                        <button type="button" className="menu-category__close" aria-controls={`itens-${section.id}`} onClick={() => {
+                          toggleSection(section.id);
+                          document.getElementById(`categoria-${section.id}`)?.scrollIntoView({ block: "start" });
+                        }}>Fechar {section.label}<ChevronIcon /></button>
+                      ) : null}
                     </div>
                   </div>
                 </section>

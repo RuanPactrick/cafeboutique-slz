@@ -406,9 +406,10 @@ time, data { font-variant-numeric: tabular-nums; }
   .home-hero { align-items: flex-start; padding-top: clamp(32px, 8vw, 46px); }
   .home-hero::after { background: linear-gradient(180deg, rgba(28, 15, 10, 0.48) 0%, rgba(28, 15, 10, 0.2) 58%, rgba(28, 15, 10, 0.62) 100%); }
   .home-hero__copy h1 { text-shadow: 0 2px 14px rgba(28, 15, 10, 0.42); }
-  .menu-hero { min-height: 460px; align-items: center; padding-block: 36px; }
-  .menu-hero::after { background: linear-gradient(90deg, rgba(248,245,238,.98) 0%, rgba(248,245,238,.94) 54%, rgba(248,245,238,.68) 74%, rgba(248,245,238,.25) 100%); }
-  .menu-hero__photo { object-position: 67% 50%; }
+  .menu-hero { min-height: 560px; align-items: flex-start; padding-block: 36px; }
+  /* O creme fica só atrás do texto, no alto; a xícara aparece nítida embaixo. */
+  .menu-hero::after { background: linear-gradient(180deg, rgba(248,245,238,.97) 0%, rgba(248,245,238,.93) 46%, rgba(248,245,238,.55) 62%, rgba(248,245,238,0) 78%); }
+  .menu-hero__photo { object-position: 70% 78%; }
   .menu-hero h1 { max-width: 12ch; font-size: clamp(2.75rem, 10vw, 3.8rem); }
   .menu-hero__description { max-width: 36ch; }
   .menu-search--hero { min-height: 50px; gap: 0.6rem; padding-inline: 0.75rem; }
@@ -609,6 +610,11 @@ time, data { font-variant-numeric: tabular-nums; }
   .menu-category--collapsible .menu-section-heading__aside { display: inline-flex; align-items: center; gap: 8px; }
   .menu-category--collapsible .menu-section-heading__aside svg { width: 30px; height: 30px; padding: 6px; border: 1px solid var(--rule); border-radius: 50%; fill: none; stroke: currentColor; stroke-width: 1.8; transform: rotate(180deg); transition: transform 0.3s var(--ease-out); }
   .menu-category--closed .menu-section-heading__aside svg { transform: none; }
+  /* A seta é só sinal visual: o toque nela, aberta ou fechada, cai no botão do título. */
+  .menu-category--collapsible .menu-section-heading__aside { pointer-events: none; }
+  .menu-category__close { display: flex; width: 100%; min-height: 48px; align-items: center; justify-content: center; gap: 8px; margin-top: 1rem; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink); background: transparent; font: 400 var(--t-small) / 1 var(--body); cursor: pointer; }
+  .menu-category__close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; transform: rotate(180deg); }
+  .menu-category__close:focus-visible { outline: 2px solid #8a541b; outline-offset: 2px; }
   .category-scroller { top: 64px; }
   :root { --t-display: 40px; --t-title: 22px; --t-lede: 16px; }
   .cb { padding: 52px 0; }
