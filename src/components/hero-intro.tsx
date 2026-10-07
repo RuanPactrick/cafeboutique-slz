@@ -40,7 +40,7 @@ export function HeroIntro() {
     video.muted = true;
     video.src = window.matchMedia("(max-width: 760px)").matches
       ? "/cafe-boutique/hero/abertura-mobile.mp4"
-      : "/cafe-boutique/hero/abertura-1080.mp4";
+      : "/cafe-boutique/hero/abertura-1440.mp4";
     hero.dataset.intro = "playing";
 
     // Sem início em 3 s (rede lenta, autoplay bloqueado), o visitante não fica esperando.
