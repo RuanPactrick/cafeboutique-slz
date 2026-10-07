@@ -148,6 +148,9 @@ time, data { font-variant-numeric: tabular-nums; }
 .visit-detail__hours span { white-space: nowrap; }
 .visit-detail__hours span[data-separator="true"]::before { margin-right: 0.3em; content: "·"; }
 .visit-detail__copy dd a { width: fit-content; color: #814a20; font-family: var(--body); font-size: var(--t-small); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+/* O telefone liga com um toque, mas lê como dado, não como mais um link sublinhado. */
+.visit-detail__copy dd a.visit-detail__phone { color: inherit; font: inherit; text-decoration: none; }
+.visit-detail__copy dd a.visit-detail__phone:hover { text-decoration: underline; }
 .visit-band__visual { display: grid; min-width: 0; gap: 12px; }
 
 @container visit-copy (max-width: 560px) {

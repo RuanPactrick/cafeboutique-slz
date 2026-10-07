@@ -9,7 +9,7 @@ export function CafeStory() {
           <div className="cb-photo cb-photo--portrait">
             <Image
               src="/cafe-boutique/historia/retrato.jpg"
-              alt="A dona da Café Boutique sorrindo com um bolo nas mãos, em frente à vitrine de doces."
+              alt="Alana, empreendedora da Café Boutique, sorri com um bolo amanteigado nas mãos diante da vitrine de doces."
               fill
               sizes="(max-width: 760px) 86vw, 460px"
               quality={90}

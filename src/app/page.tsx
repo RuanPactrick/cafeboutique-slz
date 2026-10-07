@@ -97,7 +97,7 @@ export default function HomePage() {
                       <div className="visit-detail__copy">
                         <dt>Contato</dt>
                         <dd>
-                          <span>{siteConfig.phone}</span>
+                          <a className="visit-detail__phone" href={siteConfig.phoneHref}>{siteConfig.phone}</a>
                           <a href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer">Chamar no WhatsApp</a>
                         </dd>
                       </div>
