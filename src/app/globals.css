@@ -286,6 +286,22 @@ time, data { font-variant-numeric: tabular-nums; }
 .menu-order-total strong { color: var(--espresso); font-size: 0.9rem; white-space: nowrap; }
 .menu-order-dialog__note { margin-top: 0.55rem; color: var(--muted); font-family: var(--ui); font-size: 0.67rem; line-height: 1.5; }
 .menu-order-dialog__submit { width: 100%; margin-top: 1rem; }
+/* Retirada: nome, dia e horário opcionais, que entram na mensagem do WhatsApp. */
+.menu-order-pickup { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 0.75rem; min-width: 0; margin: 0.4rem 0 0; padding: 1rem 0 0; border: 0; border-top: 1px solid var(--rule); }
+.menu-order-pickup legend { float: left; width: 100%; padding: 0; color: var(--espresso); font-family: var(--display); font-size: 1.25rem; }
+.menu-order-pickup__hours { grid-column: 1 / -1; color: var(--muted); font-family: var(--body); font-size: var(--t-small); line-height: 1.5; }
+.menu-order-field { display: grid; min-width: 0; gap: 0.35rem; }
+.menu-order-field--wide { grid-column: 1 / -1; }
+.menu-order-field span { color: var(--ink); font-family: var(--body); font-size: var(--t-small); }
+.menu-order-field input, .menu-order-field select { width: 100%; min-height: 46px; padding: 0 0.85rem; border: 1px solid var(--rule); border-radius: 10px; color: var(--ink); background: #fff; font: 400 16px / 1.2 var(--body); }
+.menu-order-field select:disabled { color: var(--muted); background: var(--paper-secondary); }
+.menu-order-field input:focus-visible, .menu-order-field select:focus-visible { outline: 2px solid #8a541b; outline-offset: 1px; border-color: transparent; }
+.menu-order-dialog h2:focus { outline: none; }
+/* Confirmação ao adicionar: a sacola pulsa e o resumo mostra o item por um instante. */
+.menu-cart-bar__added { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.menu-cart-bar__icon { animation: cart-pop 0.45s var(--ease-out); }
+@keyframes cart-pop { 40% { transform: scale(1.18); } }
+@media (prefers-reduced-motion: reduce) { .menu-cart-bar__icon { animation: none; } }
 
 /* Footer */
 .site-footer { padding: clamp(42px, 5vw, 76px) var(--gutter) 1rem; color: var(--paper-soft); background: linear-gradient(115deg, #2a170f, #351d13 55%, #29160f); }

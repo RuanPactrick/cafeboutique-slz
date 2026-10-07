@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { formatPrice, getMenuPriceLabel, menuCategories, menuItems, menuSectionNotes, type MenuItem } from "@/data/menu";
-import { createWhatsAppUrl } from "@/data/site";
+import { createWhatsAppUrl, siteConfig } from "@/data/site";
 
 type MenuGroup = {
   key: string;
@@ -18,6 +18,41 @@ type CategorySection = (typeof menuCategories)[number] & {
 };
 
 type Cart = Record<string, number>;
+
+const CART_KEY = "cb-menu-cart";
+const WEEKDAYS = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+
+function pad(value: number) {
+  return String(value).padStart(2, "0");
+}
+
+// Horários de retirada dentro do funcionamento (seg. a sáb., 15h–20h), de meia em meia hora.
+// Hoje só entra se ainda houver horário com pelo menos 30 minutos de folga.
+function pickupTimes(day: Date, now: Date) {
+  const times: string[] = [];
+  for (let minutes = 15 * 60; minutes <= 19 * 60 + 30; minutes += 30) {
+    const slot = new Date(day.getFullYear(), day.getMonth(), day.getDate(), Math.floor(minutes / 60), minutes % 60);
+    if (slot.getTime() - now.getTime() < 30 * 60 * 1000) continue;
+    times.push(`${Math.floor(minutes / 60)}h${minutes % 60 ? "30" : ""}`);
+  }
+  return times;
+}
+
+function pickupDays(now: Date) {
+  const days: { value: string; label: string; date: Date }[] = [];
+  for (let offset = 0; days.length < 6 && offset < 10; offset += 1) {
+    const date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + offset);
+    if (date.getDay() === 0) continue;
+    if (offset === 0 && pickupTimes(date, now).length === 0) continue;
+    const short = `${WEEKDAYS[date.getDay()]} ${date.getDate()}/${date.getMonth() + 1}`;
+    days.push({
+      value: `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`,
+      label: offset === 0 ? `Hoje · ${short}` : offset === 1 ? `Amanhã · ${short}` : short,
+      date,
+    });
+  }
+  return days;
+}
 
 // Mesmas fotos e enquadramentos dos destaques da home: a foto ocupa o cartão inteiro.
 const featuredProducts = [
@@ -183,6 +218,14 @@ export function MenuBrowser() {
   const [query, setQuery] = useState("");
   const [cart, setCart] = useState<Cart>({});
   const [orderOpen, setOrderOpen] = useState(false);
+  const [cartLoaded, setCartLoaded] = useState(false);
+  const [lastAdded, setLastAdded] = useState<{ name: string; at: number } | null>(null);
+  const [customerName, setCustomerName] = useState("");
+  const [pickupDay, setPickupDay] = useState("");
+  const [pickupTime, setPickupTime] = useState("");
+  const [now, setNow] = useState<Date | null>(null);
+  const dialogRef = useRef<HTMLElement>(null);
+  const openerRef = useRef<HTMLButtonElement>(null);
   // No celular, com "Todos" e sem busca, cada categoria chega fechada e abre com um toque.
   const [compact, setCompact] = useState(false);
   const [openIds, setOpenIds] = useState<Set<string>>(() => new Set());
@@ -201,13 +244,54 @@ export function MenuBrowser() {
     return () => narrow.removeEventListener("change", sync);
   }, []);
 
+  // O carrinho fica guardado durante a visita: recarregar ou voltar de outra página não o esvazia.
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(CART_KEY) ?? "{}") as Cart;
+      const valid = Object.fromEntries(Object.entries(saved).filter(([id, quantity]) => menuItems.some((item) => item.id === id) && Number.isInteger(quantity) && quantity > 0));
+      setCart(valid);
+    } catch {}
+    setCartLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!cartLoaded) return;
+    try { sessionStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch {}
+  }, [cart, cartLoaded]);
+
+  useEffect(() => {
+    if (!lastAdded) return;
+    const timer = window.setTimeout(() => setLastAdded(null), 2600);
+    return () => window.clearTimeout(timer);
+  }, [lastAdded]);
+
+  // Janela do pedido: o foco entra nela e fica preso até fechar, a página atrás não rola,
+  // Esc fecha e o foco volta para o botão "Ver pedido".
   useEffect(() => {
     if (!orderOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOrderOpen(false);
+    setNow(new Date());
+    const dialog = dialogRef.current;
+    const opener = openerRef.current;
+    const root = document.documentElement;
+    const previousOverflow = root.style.overflow;
+    root.style.overflow = "hidden";
+    dialog?.querySelector<HTMLElement>("h2")?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setOrderOpen(false); return; }
+      if (event.key !== "Tab" || !dialog) return;
+      const focusables = [...dialog.querySelectorAll<HTMLElement>("a[href], button, input, select, textarea")].filter((el) => !el.hasAttribute("disabled"));
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      root.style.overflow = previousOverflow;
+      opener?.focus();
+    };
   }, [orderOpen]);
 
   const sections = useMemo<CategorySection[]>(() => {
@@ -249,7 +333,10 @@ export function MenuBrowser() {
     if (list && list.getBoundingClientRect().top < 0) list.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   };
 
-  const addToCart = (item: MenuItem) => setCart((current) => ({ ...current, [item.id]: (current[item.id] ?? 0) + 1 }));
+  const addToCart = (item: MenuItem) => {
+    setCart((current) => ({ ...current, [item.id]: (current[item.id] ?? 0) + 1 }));
+    setLastAdded({ name: item.name, at: Date.now() });
+  };
   const changeQuantity = (item: MenuItem, amount: number) => setCart((current) => {
     const next = { ...current };
     const quantity = (next[item.id] ?? 0) + amount;
@@ -258,11 +345,17 @@ export function MenuBrowser() {
     return next;
   });
 
+  const days = now ? pickupDays(now) : [];
+  const selectedDay = days.find((day) => day.value === pickupDay);
+  const times = selectedDay && now ? pickupTimes(selectedDay.date, now) : [];
+  const pickupLabel = selectedDay ? `${selectedDay.label}${pickupTime && times.includes(pickupTime) ? ` às ${pickupTime}` : ", horário a combinar"}` : "dia e horário a combinar";
+
   const orderMessage = [
     "Olá! Vim pelo site da Café Boutique e gostaria de pedir:",
     ...cartEntries.map(({ item, quantity }) => `• ${item.name} x${quantity} — ${getMenuPriceLabel(item)}`),
     pendingCartCount ? "Alguns itens estão sujeitos à confirmação de disponibilidade e valor." : "",
-    "Pedido para retirada na loja.",
+    customerName.trim() ? `Nome: ${customerName.trim()}` : "",
+    `Retirada na loja: ${pickupLabel}.`,
   ].filter(Boolean).join("\n");
 
   return (
@@ -386,18 +479,22 @@ export function MenuBrowser() {
         <div className="menu-closing__photo"><Image src="/cafe-boutique/destaques/cappuccino-tradicional.webp" alt="Capuccino tradicional servido em uma xícara da Café Boutique." fill sizes="(max-width: 760px) 100vw, 48vw" /></div>
       </section>
 
+      <p className="visually-hidden" role="status" aria-live="polite">{lastAdded ? `${lastAdded.name} adicionado ao pedido. ${cartCount} ${cartCount === 1 ? "item" : "itens"} no pedido.` : ""}</p>
       {cartCount > 0 ? (
         <div className="menu-cart-bar">
-          <div className="menu-cart-bar__summary"><span className="menu-cart-bar__icon"><BagIcon /><span>{cartCount}</span></span><span>{cartCount} {cartCount === 1 ? "item" : "itens"} · {cartTotal > 0 ? formatPrice(cartTotal) : "valor a confirmar"}</span></div>
-          <button className="button button--light" type="button" onClick={() => setOrderOpen(true)}>Ver pedido</button>
+          <div className="menu-cart-bar__summary">
+            <span className="menu-cart-bar__icon" key={lastAdded?.at}><BagIcon /><span>{cartCount}</span></span>
+            {lastAdded ? <span className="menu-cart-bar__added">{lastAdded.name} adicionado</span> : <span>{cartCount} {cartCount === 1 ? "item" : "itens"} · {cartTotal > 0 ? formatPrice(cartTotal) : "valor a confirmar"}</span>}
+          </div>
+          <button ref={openerRef} className="button button--light" type="button" onClick={() => setOrderOpen(true)}>Ver pedido</button>
         </div>
       ) : null}
 
       {orderOpen ? (
         <div className="menu-order-overlay">
           <button className="menu-order-overlay__backdrop" type="button" aria-label="Fechar pedido" onClick={() => setOrderOpen(false)} />
-          <section className="menu-order-dialog" role="dialog" aria-modal="true" aria-labelledby="menu-order-title">
-            <header className="menu-order-dialog__heading"><div><p className="menu-eyebrow">Seu pedido</p><h2 id="menu-order-title">Confira seus itens.</h2></div><button type="button" className="menu-order-dialog__close" onClick={() => setOrderOpen(false)} aria-label="Fechar pedido">×</button></header>
+          <section ref={dialogRef} className="menu-order-dialog" role="dialog" aria-modal="true" aria-labelledby="menu-order-title">
+            <header className="menu-order-dialog__heading"><div><p className="menu-eyebrow">Seu pedido</p><h2 id="menu-order-title" tabIndex={-1}>Confira seus itens.</h2></div><button type="button" className="menu-order-dialog__close" onClick={() => setOrderOpen(false)} aria-label="Fechar pedido">×</button></header>
             <ul className="menu-order-list">
               {cartEntries.map(({ item, quantity }) => (
                 <li className="menu-order-line" key={item.id}>
@@ -408,8 +505,30 @@ export function MenuBrowser() {
             </ul>
             <div className="menu-order-total"><span>Subtotal dos itens com preço informado</span><strong>{cartTotal > 0 ? formatPrice(cartTotal) : "A confirmar"}</strong></div>
             {pendingCartCount > 0 ? <p className="menu-order-dialog__note">{pendingCartCount} {pendingCartCount === 1 ? "item depende" : "itens dependem"} de confirmação de disponibilidade e valor.</p> : null}
+            <fieldset className="menu-order-pickup">
+              <legend>Retirada na loja</legend>
+              <p className="menu-order-pickup__hours">Funcionamos de segunda a sábado, das 15h às 20h. Tudo aqui é opcional: o que ficar em branco, a equipe combina com você no WhatsApp.</p>
+              <label className="menu-order-field menu-order-field--wide">
+                <span>Seu nome</span>
+                <input type="text" value={customerName} onChange={(event) => setCustomerName(event.currentTarget.value)} autoComplete="name" maxLength={60} placeholder="Como podemos te chamar?" />
+              </label>
+              <label className="menu-order-field">
+                <span>Dia</span>
+                <select value={pickupDay} onChange={(event) => { setPickupDay(event.currentTarget.value); setPickupTime(""); }}>
+                  <option value="">A combinar</option>
+                  {days.map((day) => <option key={day.value} value={day.value}>{day.label}</option>)}
+                </select>
+              </label>
+              <label className="menu-order-field">
+                <span>Horário</span>
+                <select value={pickupTime} onChange={(event) => setPickupTime(event.currentTarget.value)} disabled={!selectedDay}>
+                  <option value="">{selectedDay ? "A combinar" : "Escolha o dia"}</option>
+                  {times.map((time) => <option key={time} value={time}>{time}</option>)}
+                </select>
+              </label>
+            </fieldset>
             <a className="button menu-order-dialog__submit" href={createWhatsAppUrl(orderMessage)} target="_blank" rel="noreferrer">Continuar pelo WhatsApp</a>
-            <p className="menu-order-dialog__note">Os pedidos são para retirada na loja. A equipe confirma a disponibilidade.</p>
+            <p className="menu-order-dialog__note">A mensagem abre pronta no WhatsApp, com os itens e a retirada. A equipe confirma a disponibilidade antes de preparar.</p>
           </section>
         </div>
       ) : null}
