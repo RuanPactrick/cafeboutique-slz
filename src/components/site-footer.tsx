@@ -14,6 +14,7 @@ export function SiteFooter() {
 
         <nav className="footer-links" aria-label="Links do site">
           <h2>Explore</h2>
+          <a href="/nossa-historia">Nossa história</a>
           <a href="/cardapio">Cardápio completo</a>
           <a href={siteConfig.instagramUrl} target="_blank" rel="noreferrer">Instagram · {siteConfig.instagram}</a>
           <a href={siteConfig.mapsUrl} target="_blank" rel="noreferrer">Como chegar</a>

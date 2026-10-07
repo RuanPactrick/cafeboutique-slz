@@ -23,7 +23,7 @@ export function CafeStory() {
           <p className="cb-lede">
             A Café Boutique nasceu do desejo de unir café de verdade, sabores especiais e encontros que fazem sentido. Mais que uma cafeteria, somos um espaço para desacelerar, conversar e viver bons momentos.
           </p>
-          <a className="cb-cta" href="/cardapio">
+          <a className="cb-cta" href="/nossa-historia">
             <span>Conheça nossa história</span>
             <ChevronRightIcon />
           </a>

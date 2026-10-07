@@ -38,6 +38,7 @@ export const siteConfig = {
 
 export const navigationItems = [
   { label: "A cafeteria", href: "/#a-casa" },
+  { label: "Nossa história", href: "/nossa-historia" },
   { label: "Cardápio", href: "/cardapio" },
   { label: "Instagram", href: siteConfig.instagramUrl, external: true },
   { label: "Como chegar", href: "/#localizacao" },
