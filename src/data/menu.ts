@@ -25,24 +25,29 @@ export const menuItems = source.items.map((item) => ({
 })) as MenuItem[];
 export const menuSectionNotes = source.sectionNotes as Record<string, string>;
 
+// Ordem de cardápio: comidas, depois doces e sobremesas, depois bebidas e, por fim, os adicionais.
 export const menuCategories: MenuCategory[] = [
-  { id: "doces", label: "Doces" },
-  { id: "sobremesas-gourmet", label: "Sobremesas gourmet" },
-  { id: "cafes", label: "Cafés" },
-  { id: "espressos", label: "Espressos" },
-  { id: "latte", label: "Latte" },
-  { id: "capuccinos", label: "Capuccinos" },
-  { id: "chas", label: "Chá quente" },
-  { id: "gelados", label: "Gelados" },
-  { id: "bebidas", label: "Bebidas" },
-  { id: "sucos", label: "Sucos" },
+  // Comidas
   { id: "sanduiches", label: "Sanduíches" },
   { id: "croissants", label: "Croissants" },
   { id: "salgados", label: "Salgados" },
   { id: "tapiocas", label: "Tapiocas" },
-  { id: "omeletes", label: "Omeletes" },
   { id: "crepiocas", label: "Crepiocas" },
+  { id: "omeletes", label: "Omeletes" },
   { id: "cuscuz", label: "Cuscuz" },
+  // Doces e sobremesas
+  { id: "doces", label: "Doces" },
+  { id: "sobremesas-gourmet", label: "Sobremesas gourmet" },
+  // Bebidas
+  { id: "cafes", label: "Cafés" },
+  { id: "espressos", label: "Espressos" },
+  { id: "capuccinos", label: "Capuccinos" },
+  { id: "latte", label: "Latte" },
+  { id: "chas", label: "Chá quente" },
+  { id: "gelados", label: "Gelados" },
+  { id: "sucos", label: "Sucos" },
+  { id: "bebidas", label: "Bebidas" },
+  // Adicionais
   { id: "extras", label: "Extras" },
 ];
 
