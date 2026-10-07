@@ -582,8 +582,18 @@ time, data { font-variant-numeric: tabular-nums; }
   .cb-photos > li { scroll-snap-align: start; }
   .rv { padding: 96px 0 60px; }
   .rv-prop--flowers, .rv-prop--cup, .rv-prop--pastry { display: none; }
-  .rv-cards { grid-template-columns: minmax(0, 1fr); }
-  .rv-card { padding: 18px 18px 16px; }
+  /* Avaliações viram carrossel de arrastar, como as fotos do espaço; o próximo cartão aparece na borda. */
+  .rv-cards { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%; align-items: stretch; gap: 12px; overflow-x: auto; margin-inline: calc(var(--gutter) * -1); padding: 0 var(--gutter) 4px; scroll-padding-inline: var(--gutter); scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .rv-cards::-webkit-scrollbar { display: none; }
+  .rv-card { padding: 18px 18px 16px; scroll-snap-align: start; }
+  .rv-card:hover { transform: none; }
+  /* Rodapé em uma coluna, centralizado. */
+  .site-footer__inner { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 1.9rem; text-align: center; }
+  .footer-brand, .footer-pickup { grid-column: auto; }
+  .footer-links, .footer-contact, .footer-pickup { align-items: center; padding-top: 0; }
+  .footer-icon-link, .footer-icon-copy { align-items: center; }
+  .footer-icon-copy { text-align: left; }
+  .footer-credit { align-items: center; flex-direction: column; gap: 0.65rem; text-align: center; }
   .rv-note { margin-left: 0; }
   #localizacao { padding-top: 48px; }
   .vb { grid-template-columns: minmax(0, 420px); }
