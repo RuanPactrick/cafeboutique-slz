@@ -3,7 +3,6 @@
   "sectionNotes": {
     "doces": "Coberturas indicadas no material: chocolate, Ninho, doce de leite, limão, Romeu e Julieta, castanha, ameixa, castanha com ameixa e castanha do Pará com cupuaçu. Sujeito à disponibilidade.",
     "sobremesas-gourmet": "Outras opções: consultar no balcão.",
-    "latte": "O material também menciona “Mel, Chocolate ou Caramelo” e “Espresso com Doce de Leite e Paçoca”. A associação de cada observação aos produtos está pendente de confirmação.",
     "omeletes": "Tomate, cebola, pimenta de cheiro e cheiro verde são opcionais."
   },
   "items": [
@@ -289,7 +288,7 @@
       "subCategory": null,
       "name": "Mocha",
       "priceCents": 1700,
-      "description": null,
+      "description": "Mel, chocolate ou caramelo.",
       "note": null,
       "availability": "listed-in-source",
       "image": null,
@@ -301,7 +300,7 @@
       "subCategory": null,
       "name": "Paçoquinha",
       "priceCents": 1700,
-      "description": null,
+      "description": "Espresso com doce de leite e paçoca.",
       "note": null,
       "availability": "listed-in-source",
       "image": null,
@@ -395,11 +394,11 @@
       "id": "capuccino-tradicional-com-chantilly-150l",
       "category": "capuccinos",
       "subCategory": null,
-      "name": "Capuccino Tradicional com Chantilly 150l",
+      "name": "Capuccino Tradicional com Chantilly 150ml",
       "priceCents": 2500,
       "description": null,
-      "note": "A fonte registra “150l”; confirmar a unidade antes da publicação definitiva.",
-      "availability": "pending-confirmation",
+      "note": null,
+      "availability": "listed-in-source",
       "image": null,
       "tags": []
     },
