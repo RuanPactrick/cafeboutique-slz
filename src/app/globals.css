@@ -523,7 +523,8 @@ time, data { font-variant-numeric: tabular-nums; }
 .cb-lede, .rv-lede { max-width: 40ch; color: var(--cb-body); font-size: var(--t-lede); line-height: 1.55; text-wrap: pretty; }
 .cb-cta, .rv-button { display: inline-flex; height: 42px; align-items: center; gap: 10px; padding: 0 16px 0 18px; border: 1px solid var(--cb-cta); border-radius: 999px; color: var(--cb-title); font: 400 var(--t-ui) / 1 var(--body); letter-spacing: 0.01em; text-decoration: none; transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-out); }
 .cb-cta:hover { background: color-mix(in srgb, var(--cb-title) 7%, transparent); }
-.cb-cta:active, .rv-button:active, .vb-route:active { transform: scale(0.97); transition-duration: 0.1s; }
+.cb-cta:active, .rv-button:active { transform: scale(0.97); transition-duration: 0.1s; }
+.vb-route:active { transform: translateX(-50%) scale(0.97); transition-duration: 0.1s; }
 .cb-cta:focus-visible, .rv-button:focus-visible { outline: 2px solid var(--cb-accent); outline-offset: 3px; }
 .cb-cta svg, .rv-button > svg:last-child, .vb-route > svg:last-child { width: 15px; height: 15px; margin-left: 4px; transition: transform 0.25s var(--ease-out); }
 .cb-cta:hover svg, .cb-cta:focus-visible svg, .rv-button:hover > svg:last-child, .rv-button:focus-visible > svg:last-child, .vb-route:hover > svg:last-child, .vb-route:focus-visible > svg:last-child { transform: translateX(4px); }
@@ -590,9 +591,12 @@ time, data { font-variant-numeric: tabular-nums; }
 .vb { grid-template-columns: 380px; justify-content: center; }
 .vb-photo { position: relative; width: 100%; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 14px; background: #d8c4ae; }
 .vb-photo img { object-fit: cover; object-position: 50% 50%; }
-.vb-route { display: inline-flex; width: 100%; height: 48px; align-items: center; justify-content: center; gap: 10px; border-radius: 999px; color: #fff7ec; background: #2a170f; font: 400 var(--t-ui) / 1 var(--body); text-decoration: none; transition: background-color 0.25s ease, transform 0.25s var(--ease-out); }
-.vb-route:hover { background: #4a3024; transform: translateY(-1px); }
-.vb-route:focus-visible { outline: 2px solid #8a541b; outline-offset: 3px; }
+/* Véu só no pé da foto, para o botão de vidro ter contraste sobre o piso claro. */
+.vb-photo::after { content: ""; position: absolute; inset: auto 0 0; height: 34%; background: linear-gradient(180deg, transparent, rgba(30, 16, 9, 0.5)); pointer-events: none; }
+.vb-route { position: absolute; z-index: 1; bottom: 20px; left: 50%; display: inline-flex; height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 0 16px 0 18px; border: 1px solid rgba(255, 247, 236, 0.75); border-radius: 999px; color: #fff7ec; background: rgba(42, 23, 15, 0.16); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font: 400 var(--t-ui) / 1 var(--body); text-decoration: none; text-shadow: 0 1px 8px rgba(20, 10, 4, 0.45); white-space: nowrap; transform: translateX(-50%); transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-out); }
+@media (hover: hover) { .vb-route:hover { border-color: #2a170f; background: #2a170f; text-shadow: none; } }
+.vb-route:active { border-color: #2a170f; background: #2a170f; }
+.vb-route:focus-visible { border-color: #2a170f; background: #2a170f; outline: 2px solid #fff7ec; outline-offset: 3px; }
 .vb-route > svg:first-child { width: 18px; height: 18px; }
 
 /* ===== Movimento: "uma pausa afetiva" =====

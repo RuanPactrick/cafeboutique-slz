@@ -116,12 +116,13 @@ export default function HomePage() {
                       quality={90}
                       sizes="(max-width: 760px) 92vw, 380px"
                     />
+                    {/* Botão sobre a foto: vidro transparente em repouso, café cheio no hover. */}
+                    <a className="vb-route" href={siteConfig.directionsUrl} target="_blank" rel="noreferrer">
+                      <MapPinIcon />
+                      <span>Como chegar</span>
+                      <ChevronRightIcon />
+                    </a>
                   </figure>
-                  <a className="vb-route" href={siteConfig.directionsUrl} target="_blank" rel="noreferrer">
-                    <MapPinIcon />
-                    <span>Como chegar</span>
-                    <ChevronRightIcon />
-                  </a>
                 </div>
               </div>
             </section>
