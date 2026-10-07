@@ -19,11 +19,12 @@ type CategorySection = (typeof menuCategories)[number] & {
 
 type Cart = Record<string, number>;
 
+// Mesmas fotos e enquadramentos dos destaques da home: a foto ocupa o cartão inteiro.
 const featuredProducts = [
-  { id: "croissant-americano", category: "Croissants", src: "/cafe-boutique/destaques/croissant-americano.webp", alt: "Croissant Americano servido em um prato." },
-  { id: "capuccino-tradicional-150ml", category: "Capuccinos", src: "/cafe-boutique/destaques/cappuccino-tradicional.webp", alt: "Capuccino tradicional da Café Boutique." },
-  { id: "sanduiche-americano-pao-frances", category: "Sanduíches", src: "/cafe-boutique/destaques/sanduiche-americano.webp", alt: "Sanduíche Americano servido em um prato." },
-  { id: "fatia-bolo-amanteigado-com-cobertura", category: "Doces", src: "/cafe-boutique/products/cafe-e-bolo-amanteigado.jpg", alt: "Fatia de bolo amanteigado com cobertura acompanhada de café." },
+  { id: "croissant-americano", category: "Croissants", src: "/cafe-boutique/destaques/croissant-americano-hd.jpg", position: "50% 66%", alt: "Croissant Americano servido em um prato." },
+  { id: "capuccino-tradicional-150ml", category: "Capuccinos", src: "/cafe-boutique/destaques/cappuccino-tradicional.webp", position: "50% 26%", alt: "Capuccino tradicional da Café Boutique." },
+  { id: "sanduiche-americano-pao-frances", category: "Sanduíches", src: "/cafe-boutique/destaques/sanduiche-americano.webp", position: "50% 26%", alt: "Sanduíche Americano servido em um prato." },
+  { id: "fatia-bolo-amanteigado-com-cobertura", category: "Doces", src: "/cafe-boutique/destaques/fatia-bolo-amanteigado-hd.jpg", position: "50% 68%", alt: "Fatia de bolo amanteigado com cobertura acompanhada de café." },
 ] as const;
 
 const categoryArt: Record<string, { src: string; alt: string }> = {
@@ -272,14 +273,19 @@ export function MenuBrowser() {
                 const item = menuItems.find((entry) => entry.id === featured.id);
                 if (!item) return null;
                 return (
-                  <li className="featured-menu-card" key={featured.id}>
-                    <div className="featured-menu-card__photo"><Image src={featured.src} alt={featured.alt} fill sizes="(max-width: 600px) 76vw, (max-width: 900px) 42vw, 23vw" /></div>
+                  // Toque, foco ou mouse abrem a descrição sob o nome, como nos destaques da home.
+                  <li className="featured-menu-card" key={featured.id} tabIndex={0}>
+                    <Image className="featured-menu-card__img" src={featured.src} alt={featured.alt} fill sizes="(max-width: 760px) 78vw, 300px" quality={90} style={{ objectPosition: featured.position }} />
                     <div className="featured-menu-card__copy">
                       <span className="featured-menu-card__category">{featured.category}</span>
-                      <h3>{item.name}</h3>
-                      {item.description ? <p>{item.description}</p> : null}
-                      <span className="featured-menu-card__price">{getMenuPriceLabel(item)}</span>
-                      <button type="button" className="featured-menu-card__add" onClick={() => addToCart(item)} aria-label={`Adicionar ${item.name} ao pedido`}><PlusIcon /></button>
+                      <div className="featured-menu-card__row">
+                        <div className="featured-menu-card__title">
+                          <h3>{item.name}</h3>
+                          <span className="featured-menu-card__price">{getMenuPriceLabel(item)}</span>
+                        </div>
+                        <button type="button" className="featured-menu-card__add" onClick={() => addToCart(item)} aria-label={`Adicionar ${item.name} ao pedido`}><PlusIcon /></button>
+                      </div>
+                      {item.description ? <div className="featured-menu-card__more"><p>{item.description}</p></div> : null}
                     </div>
                   </li>
                 );

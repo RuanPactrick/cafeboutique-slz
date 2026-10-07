@@ -132,6 +132,16 @@
   .copy h3 { font-size: 19px; }
 }
 
+/* Em telas de toque a fileira não corre sozinha: o visitante arrasta, cada cartão para no centro
+   e o toque abre a descrição sem o cartão fugir do dedo. A cópia do loop some. */
+@media (hover: none) {
+  .railView { width: 100%; overflow-x: auto; mask-image: none; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .railView::-webkit-scrollbar { display: none; }
+  .rail { padding: 0 calc((100% - var(--card-w)) / 2) 8px; animation: none; }
+  .card { scroll-snap-align: center; }
+  .card[aria-hidden="true"] { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   /* Sem rolagem automática: a fileira vira rolagem manual e a cópia some. */
   .railView { overflow-x: auto; mask-image: none; scrollbar-width: none; }
