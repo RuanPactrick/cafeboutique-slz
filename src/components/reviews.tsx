@@ -17,11 +17,12 @@ export function Reviews() {
 
   return (
     <section className="rv" id="avaliacoes" aria-labelledby="rv-title">
-      {/* Cena de mesa recortada da referência aprovada; decorativa. */}
-      <img className="rv-prop rv-prop--table" src="/cafe-boutique/avaliacoes/mesa.webp" alt="" aria-hidden="true" />
-      <img className="rv-prop rv-prop--flowers" src="/cafe-boutique/avaliacoes/gipsofila.svg" alt="" aria-hidden="true" />
-      <img className="rv-prop rv-prop--cup" src="/cafe-boutique/avaliacoes/xicara.webp" alt="" aria-hidden="true" />
-      <img className="rv-prop rv-prop--pastry" src="/cafe-boutique/avaliacoes/rosca.webp" alt="" aria-hidden="true" />
+      {/* O salão da Boutique ao fundo, desfocado no próprio arquivo: o lugar é reconhecível,
+          mas nenhum cliente da foto vira o "rosto" de uma avaliação. No celular, o recorte é a vitrine. */}
+      <picture className="rv-bg" aria-hidden="true">
+        <source media="(max-width: 760px)" srcSet="/cafe-boutique/avaliacoes/salao-fundo-mobile.jpg" />
+        <img src="/cafe-boutique/avaliacoes/salao-fundo.jpg" alt="" loading="lazy" decoding="async" />
+      </picture>
       <div className="rv-inner">
         <div className="rv-top">
           <div className="rv-copy">
