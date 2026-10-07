@@ -3,6 +3,7 @@ import Image from "next/image";
 import { CafeExperience } from "@/components/cafe-experience";
 import { CafeStory } from "@/components/cafe-story";
 import { BoutiqueHighlights } from "@/components/boutique-highlights";
+import { HeroIntro } from "@/components/hero-intro";
 import { ChevronRightIcon, ClockIcon, MapPinIcon, PhoneIcon, PickupIcon } from "@/components/icons";
 import { Reviews } from "@/components/reviews";
 import { SiteFooter } from "@/components/site-footer";
@@ -17,7 +18,7 @@ export default function HomePage() {
         <div className="site-page-frame">
           <SiteHeader />
           <main id="conteudo">
-            <section className="home-hero" id="inicio" aria-labelledby="hero-title">
+            <section className="home-hero" id="inicio" aria-labelledby="hero-title" data-intro="pending">
               <Image
                 className="home-hero__photo"
                 src={cafeBoutiqueMedia.heroPanoramic.src}
@@ -31,6 +32,7 @@ export default function HomePage() {
                   "--position-mobile": cafeBoutiqueMedia.heroPanoramic.objectPositionMobile,
                 } as CSSProperties & { "--position-desktop": string; "--position-mobile": string }}
               />
+              <HeroIntro />
               <div className="home-hero__copy">
                 <h1 id="hero-title">
                   <span>Mais que um café,</span>
