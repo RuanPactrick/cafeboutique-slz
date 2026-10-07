@@ -174,15 +174,16 @@ function BagIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z" /><path d="M9 9V6a3 3 0 0 1 6 0v3" /></svg>;
 }
 
-function MenuProduct({ item, group, onAdd }: { item: MenuItem; group: MenuGroup; onAdd: (item: MenuItem) => void }) {
+function MenuProduct({ item, group, onAdd, nested }: { item: MenuItem; group: MenuGroup; onAdd: (item: MenuItem) => void; nested: boolean }) {
   const [selectedId, setSelectedId] = useState(item.id);
+  const Name = nested ? "h4" : "h3";
   const selected = group.items.find((entry) => entry.id === selectedId) ?? group.items[0];
 
   if (group.variants) {
     return (
       <li className="menu-item menu-item--variant">
         <div className="menu-item__copy">
-          <h4>{group.title}</h4>
+          <Name>{group.title}</Name>
           {selected.description ? <p>{selected.description}</p> : null}
           {selected.note ? <p className="menu-item__pending">{selected.note}</p> : null}
         </div>
@@ -203,7 +204,7 @@ function MenuProduct({ item, group, onAdd }: { item: MenuItem; group: MenuGroup;
   return (
     <li className={`menu-item${item.category === "extras" ? " menu-item--extra" : ""}`}>
       <div className="menu-item__copy">
-        <h4>{item.name}</h4>
+        <Name>{item.name}</Name>
         {item.description ? <p>{item.description}</p> : null}
         {item.note ? <p className="menu-item__pending">{item.note}</p> : null}
       </div>
@@ -434,14 +435,20 @@ export function MenuBrowser() {
               return (
                 <section className={`menu-category${section.id === "extras" ? " menu-category--extras" : ""}${art ? " menu-category--illustrated" : ""}${collapsible ? " menu-category--collapsible" : ""}${open ? "" : " menu-category--closed"}`} key={section.id} id={`categoria-${section.id}`} aria-labelledby={`heading-${section.id}`} data-scroll-reveal="true">
                   <header className="menu-section-heading menu-category__heading">
-                    <div>
-                      <p className="menu-eyebrow">{section.label}</p>
-                      <h2 id={`heading-${section.id}`}>
-                        {collapsible ? (
-                          <button type="button" className="menu-category__toggle" aria-expanded={open} aria-controls={`itens-${section.id}`} onClick={() => toggleSection(section.id)}>{categoryTitles[section.id]}</button>
-                        ) : categoryTitles[section.id]}
-                      </h2>
-                    </div>
+                    {collapsible ? (
+                      // No celular o nome da categoria é o que se procura: ele lidera, a frase vem embaixo.
+                      <div>
+                        <h2 id={`heading-${section.id}`}>
+                          <button type="button" className="menu-category__toggle" aria-expanded={open} aria-controls={`itens-${section.id}`} onClick={() => toggleSection(section.id)}>{section.label}</button>
+                        </h2>
+                        <p className="menu-category__tagline">{categoryTitles[section.id]}</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="menu-eyebrow">{section.label}</p>
+                        <h2 id={`heading-${section.id}`}>{categoryTitles[section.id]}</h2>
+                      </div>
+                    )}
                     <p className="menu-category__description">{categoryDescriptions[section.id]}</p>
                     <span className="menu-section-heading__aside">{section.count} {section.count === 1 ? "item" : "itens"}{collapsible ? <ChevronIcon /> : null}</span>
                   </header>
@@ -453,7 +460,7 @@ export function MenuBrowser() {
                         <div className="menu-group" key={section.id + "-" + (group.key || "geral")}>
                           {group.title && section.id !== "extras" && !group.variants ? <h3 className="menu-group__title">{group.title}</h3> : null}
                           <ul className={section.id === "extras" ? "menu-list menu-list--extras" : "menu-list"}>
-                            {(group.variants ? group.items.slice(0, 1) : group.items).map((item) => <MenuProduct key={group.key + item.id} item={item} group={group} onAdd={addToCart} />)}
+                            {(group.variants ? group.items.slice(0, 1) : group.items).map((item) => <MenuProduct key={group.key + item.id} item={item} group={group} onAdd={addToCart} nested={Boolean(group.title && section.id !== "extras" && !group.variants)} />)}
                           </ul>
                         </div>
                       ))}
