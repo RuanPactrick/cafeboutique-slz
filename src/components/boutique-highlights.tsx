@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import { menuItems, formatPrice } from "@/data/menu";
 import { createWhatsAppUrl } from "@/data/site";
+import { SwipeHint } from "./swipe-hint";
 import styles from "./boutique-highlights.module.css";
 
 type Highlight = {
@@ -86,11 +87,12 @@ export function BoutiqueHighlights() {
           </div>
         </div>
       </div>
-      <div className={styles.railView}>
+      <div className={styles.railView} id="queridinhos-fileira">
         <ul className={styles.rail} aria-label="Destaques do cardápio" style={{ "--items": highlights.length } as CSSProperties}>
           {highlights.map((item) => <ProductCard item={item} key={item.key} />)}
         </ul>
       </div>
+      <SwipeHint targetId="queridinhos-fileira" className={styles.hint2} />
     </section>
   );
 }

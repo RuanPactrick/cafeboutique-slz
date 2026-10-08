@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SwipeHint } from "./swipe-hint";
 
 // Fotos reais do espaço, com o mesmo tratamento de cor das fotos de "Nossa história".
 const photos = [
@@ -22,7 +23,7 @@ export function CafeExperience() {
             </p>
           </div>
         </div>
-        <ul className="cb-photos">
+        <ul className="cb-photos" id="espaco-fotos">
           {photos.map((photo) => (
             <li key={photo.src}>
               <figure>
@@ -34,6 +35,7 @@ export function CafeExperience() {
             </li>
           ))}
         </ul>
+        <SwipeHint targetId="espaco-fotos" />
       </div>
     </section>
   );

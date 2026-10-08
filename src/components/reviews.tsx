@@ -1,5 +1,6 @@
 import { googleReviews } from "@/data/reviews";
 import { siteConfig } from "@/data/site";
+import { SwipeHint } from "./swipe-hint";
 import { ChevronRightIcon, ExternalLinkIcon, GoogleIcon, SprigIcon, StarIcon } from "./icons";
 
 function Stars({ value, large, idPrefix }: { value: number; large?: boolean; idPrefix: string }) {
@@ -44,7 +45,7 @@ export function Reviews() {
             </a>
           </div>
         </div>
-        <ul className="rv-cards">
+        <ul className="rv-cards" id="avaliacoes-cards">
           {items.map((review) => (
             <li className="rv-card" key={review.name}>
               <div className="rv-card__top">
@@ -60,6 +61,7 @@ export function Reviews() {
             </li>
           ))}
         </ul>
+        <SwipeHint targetId="avaliacoes-cards" className="swipe-hint--dark" />
         <div className="rv-note">
           <SprigIcon />
           <div>

@@ -512,6 +512,16 @@ time, data { font-variant-numeric: tabular-nums; }
 .cb-story__copy .cb-lede { margin-top: 24px; }
 .cb-story__copy .cb-cta { margin-top: 30px; }
 
+/* Indicação de arrastar sob as fileiras roláveis do celular (swipe-hint.tsx). */
+.swipe-hint { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: var(--frame); margin: 14px auto 0; color: #7a5a40; font: 400 var(--t-small) / 1 var(--body); }
+.swipe-hint__label { display: inline-flex; align-items: center; gap: 8px; }
+.swipe-hint__label svg { width: 16px; height: 16px; stroke-width: 1.6; }
+.swipe-hint__dots { display: inline-flex; align-items: center; gap: 6px; }
+.swipe-hint__dots span { width: 6px; height: 6px; border-radius: 999px; background: currentColor; opacity: 0.3; transition: opacity var(--dur-micro) var(--ease-soft), transform var(--dur-micro) var(--ease-out); }
+.swipe-hint__dots span.is-active { opacity: 1; transform: scale(1.35); }
+.cb .swipe-hint, .rv .swipe-hint { width: auto; }
+.swipe-hint--dark { color: #e2cfb6; }
+
 /* Dúvidas frequentes: título fixo à esquerda, acordeão à direita; uma resposta aberta por vez. */
 .faq-layout { display: grid; grid-template-columns: 380px minmax(0, 1fr); align-items: start; gap: 80px; }
 .faq-head { position: sticky; top: 112px; }
