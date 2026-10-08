@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import { CafeExperience } from "@/components/cafe-experience";
 import { CafeStory } from "@/components/cafe-story";
+import { Faq } from "@/components/faq";
 import { BoutiqueHighlights } from "@/components/boutique-highlights";
 import { HeroIntro } from "@/components/hero-intro";
 import { ChevronRightIcon, ClockIcon, MapPinIcon, PhoneIcon, PickupIcon } from "@/components/icons";
@@ -53,6 +54,8 @@ export default function HomePage() {
             <CafeStory />
 
             <Reviews />
+
+            <Faq />
 
             <section className="visit-band" id="localizacao" aria-labelledby="visit-title" data-scroll-reveal="true">
               <div className="visit-band__inner section-wrap">
