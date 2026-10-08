@@ -8,3 +8,6 @@ dist/
 .impeccable/questions/
 .impeccable/review/
 .codex-next-dev.*.log
+
+# capturas de teste do Playwright MCP
+.playwright-mcp/

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Antic_Didone, Lustria } from "next/font/google";
 import { SectionReveal } from "@/components/section-reveal";
+import { WhatsAppFloat } from "@/components/whatsapp-float";
 import "./globals.css";
 
 const anticDidone = Antic_Didone({
@@ -50,6 +51,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${anticDidone.variable} ${lustria.variable}`}>
       <body>
         {children}
+        <WhatsAppFloat />
         <SectionReveal />
       </body>
     </html>

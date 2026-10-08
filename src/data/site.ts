@@ -47,11 +47,11 @@ export const cakeOrderUrl = createWhatsAppUrl([
 ].join("\n"));
 
 export const navigationItems = [
-  { label: "A cafeteria", href: "/#a-casa" },
+  { label: "Início", href: "/" },
   { label: "Nossa história", href: "/nossa-historia" },
-  { label: "Cardápio", href: "/cardapio" },
-  { label: "Instagram", href: siteConfig.instagramUrl, external: true },
-  { label: "Como chegar", href: "/#localizacao" },
+  { label: "Avaliações", href: "/#avaliacoes" },
+  { label: "Dúvidas", href: "/#duvidas" },
+  { label: "Localização", href: "/#localizacao" },
 ] as const;
 
 export const localBusinessSchema = {

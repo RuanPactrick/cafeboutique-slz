@@ -17,13 +17,15 @@ const CLIP = {
 //   poster: "/cafe-boutique/hero/recorte/abertura-poster.jpg",
 // };
 
-// Abertura do hero: o vídeo roda uma vez, sem texto, e ao fim o vídeo
-// se dissolve na foto de sempre enquanto o título sobe. O hero chega do servidor em
-// data-intro="pending"; aqui ele passa a "playing" e termina em "done". Quem prefere menos
-// movimento, economiza dados ou já viu a abertura nesta visita vai direto para o fim.
+// Abertura do hero: o vídeo roda uma vez, sem texto; ao fim o título sobe e o vídeo continua
+// em loop como fundo (data-video="loop"). O hero chega do servidor em data-intro="pending";
+// aqui ele passa a "playing" e termina em "done". Quem já viu a abertura nesta visita vê o vídeo
+// em loop com o texto desde o início. Quem prefere menos movimento ou economiza dados fica com
+// a foto, que também é o que aparece se o vídeo falhar.
 export function HeroIntro() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [active, setActive] = useState(true);
+  const [intro, setIntro] = useState(true);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -32,19 +34,28 @@ export function HeroIntro() {
 
     let finished = false;
     let cancelled = false;
+    // Sem vídeo (erro, autoplay bloqueado): a foto assume e o elemento sai.
+    const fallBack = () => {
+      if (cancelled) return;
+      delete hero.dataset.video;
+      hero.dataset.intro = "done";
+      window.setTimeout(() => setActive(false), 1400);
+    };
     const finish = () => {
       if (finished || cancelled) return;
       finished = true;
       hero.dataset.intro = "done";
+      setIntro(false);
       try { sessionStorage.setItem(SEEN_KEY, "1"); } catch {}
-      window.setTimeout(() => setActive(false), 1400);
+      video.loop = true;
+      if (video.paused) video.play().catch(fallBack);
     };
 
     let seen = false;
     try { seen = sessionStorage.getItem(SEEN_KEY) === "1"; } catch {}
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
-    if (seen || saveData || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      finish();
+    if (saveData || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      hero.dataset.intro = "done";
       setActive(false);
       return;
     }
@@ -54,19 +65,38 @@ export function HeroIntro() {
     video.src = window.matchMedia("(max-width: 760px)").matches
       ? CLIP.mobile
       : CLIP.desktop;
-    hero.dataset.intro = "playing";
+    hero.dataset.video = "loop";
 
+    // Fora da tela, o vídeo pausa: poupa bateria e dados enquanto a pessoa lê o resto da página.
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!finished) return;
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    });
+    observer.observe(hero);
+    video.addEventListener("error", fallBack);
+
+    if (seen) {
+      finish();
+      return () => {
+        cancelled = true;
+        observer.disconnect();
+        video.removeEventListener("error", fallBack);
+      };
+    }
+
+    hero.dataset.intro = "playing";
     // Sem início em 3 s (rede lenta, autoplay bloqueado), o visitante não fica esperando.
-    const stall = window.setTimeout(() => { if (video.paused) finish(); }, 3000);
+    const stall = window.setTimeout(() => { if (video.paused) { finished = true; fallBack(); } }, 3000);
     video.addEventListener("ended", finish);
-    video.addEventListener("error", finish);
-    video.play().catch(finish);
+    video.play().catch(() => { finished = true; fallBack(); });
 
     return () => {
       cancelled = true;
       window.clearTimeout(stall);
+      observer.disconnect();
       video.removeEventListener("ended", finish);
-      video.removeEventListener("error", finish);
+      video.removeEventListener("error", fallBack);
     };
   }, []);
 
@@ -84,7 +114,7 @@ export function HeroIntro() {
         aria-hidden="true"
         tabIndex={-1}
       />
-      <button
+      {intro ? <button
         className="home-hero__skip"
         type="button"
         onClick={() => {
@@ -93,7 +123,7 @@ export function HeroIntro() {
         }}
       >
         Pular abertura
-      </button>
+      </button> : null}
     </>
   );
 }
