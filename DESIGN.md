@@ -224,6 +224,17 @@ Primary actions and catalogue filter controls use pill ends (999px). Product and
 ### Media
 - Images use Next Image with intrinsic dimensions, sizes, AVIF/WebP optimization, and source-specific object-position metadata. The media registry maps only one verified Instagram image to a menu item. Five additional posts are presented as linked editorial records, without menu prices. The supplied kitchen video is retained in the asset inventory but is not autoplayed or used as a visual placeholder.
 
+## Motion
+
+Sistema definido pelo cliente em 7 out. 2026. Tokens em `src/app/globals.css` (`--ease-out`, `--ease-soft`, `--dur-*`).
+
+- **Durações:** microinterações 160–240ms; transições de componente 280–420ms; revelações editoriais 650–850ms.
+- **Easing:** principal `cubic-bezier(.16, 1, .3, 1)`; secundário `cubic-bezier(.22, 1, .36, 1)`.
+- **Animar:** principalmente transform e opacity; clip-path só quando necessário (abertura das fotos na rolagem, linhas do título do hero).
+- **Nunca animar:** blur grande, box-shadow grande, largura/altura continuamente, background-position continuamente.
+- **Não usar:** quique, elástico, botões magnéticos, cursor personalizado, sequestro de rolagem, parallax pesado, cards 3D, tudo surgindo de baixo, animação letra a letra, animações de interface infinitas (o vídeo do hero é mídia, não interface).
+- **Movimento reduzido:** tudo que se move tem alternativa estática em `prefers-reduced-motion: reduce`.
+
 ## Do's and Don'ts
 
 ### Do:

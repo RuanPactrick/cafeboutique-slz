@@ -315,7 +315,7 @@
   background: var(--espresso);
   font: 400 var(--t-ui) / 1.2 var(--body);
   text-decoration: none;
-  transition: color 160ms ease, background-color 160ms ease;
+  transition: color 160ms var(--ease-soft), background-color 160ms var(--ease-soft);
 }
 
 .visitButton:hover {

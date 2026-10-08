@@ -86,11 +86,9 @@ export function BoutiqueHighlights() {
           </div>
         </div>
       </div>
-      {/* Carrossel contínuo: a lista aparece duas vezes e a segunda cópia fica fora da leitura e do Tab. */}
       <div className={styles.railView}>
         <ul className={styles.rail} aria-label="Destaques do cardápio" style={{ "--items": highlights.length } as CSSProperties}>
           {highlights.map((item) => <ProductCard item={item} key={item.key} />)}
-          {highlights.map((item) => <ProductCard item={item} key={`${item.key}-clone`} clone />)}
         </ul>
       </div>
     </section>

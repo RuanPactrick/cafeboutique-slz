@@ -44,8 +44,9 @@
 }
 .links > a:hover { color: var(--espresso); }
 
-/* Carrossel contínuo, dentro da mesma grade das outras seções. A lista vem duplicada; o padding final igual ao gap faz -50% cair
-   exatamente no início da cópia. Pausa sob o mouse/foco e para com menos movimento. */
+/* Fileira dos queridinhos, na mesma grade das outras seções. Não corre sozinha (sem loop de interface):
+   em telas largas os cartões dividem a largura; abaixo disso, a fileira rola com o dedo ou o trackpad
+   e cada cartão para no centro. */
 .railView {
   --card-w: 240px;
   /* Fundo de reserva enquanto a foto carrega. */
@@ -60,11 +61,19 @@
   display: flex;
   width: max-content;
   gap: var(--card-gap);
-  padding: 0 var(--card-gap) 8px 0;
-  animation: rail-loop calc(var(--items, 5) * 7s) linear infinite;
+  padding: 0 0 8px;
 }
-.railView:hover .rail, .railView:focus-within .rail { animation-play-state: paused; }
-@keyframes rail-loop { to { transform: translateX(-50%); } }
+@media (min-width: 1100px) {
+  .railView { mask-image: none; }
+  .rail { width: 100%; }
+  .rail > .card { flex: 1 1 0; min-width: 0; }
+}
+@media (max-width: 1099px) {
+  .railView { width: 100%; overflow-x: auto; mask-image: none; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .railView::-webkit-scrollbar { display: none; }
+  .rail { padding: 0 calc((100% - var(--card-w)) / 2) 8px; }
+  .rail > .card { scroll-snap-align: center; }
+}
 
 /* Cartão compacto: a foto ocupa o cartão inteiro e o marrom vira só um véu no rodapé, atrás
    do nome, do preço e do botão. Ao passar o mouse, focar ou tocar, o véu sobe e a descrição
@@ -83,16 +92,16 @@
   outline-offset: 3px;
 }
 .card:focus-visible { outline: 2px solid #8a541b; }
-.photoImage { z-index: -2; object-fit: cover; object-position: 50% 26%; transition: transform 0.9s var(--ease-out); }
+.photoImage { z-index: -2; object-fit: cover; object-position: 50% 26%; transition: transform 420ms var(--ease-out); }
 .card::before, .card::after { position: absolute; z-index: -1; inset: 0; content: ""; pointer-events: none; }
 .card::before { background: linear-gradient(180deg, rgba(42, 23, 15, 0) 48%, rgba(42, 23, 15, 0.5) 70%, rgba(42, 23, 15, 0.86) 100%); }
-.card::after { background: linear-gradient(180deg, rgba(42, 23, 15, 0.12) 0%, rgba(42, 23, 15, 0.55) 40%, rgba(42, 23, 15, 0.9) 100%); opacity: 0; transition: opacity 0.35s ease; }
+.card::after { background: linear-gradient(180deg, rgba(42, 23, 15, 0.12) 0%, rgba(42, 23, 15, 0.55) 40%, rgba(42, 23, 15, 0.9) 100%); opacity: 0; transition: opacity 350ms var(--ease-soft); }
 .copy { padding: 14px 14px 16px 16px; color: #fff1d8; }
 .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .titleRow { min-width: 0; }
 .copy h3 { color: #fff5e4; font-size: 20px; letter-spacing: -0.01em; line-height: 1.12; text-shadow: 0 1px 10px rgba(30, 16, 9, 0.45); text-wrap: balance; }
 .price { display: block; margin-top: 6px; color: #f5dcba; font: 400 var(--t-body) / 1.1 var(--body); font-variant-numeric: tabular-nums; text-shadow: 0 1px 8px rgba(30, 16, 9, 0.5); white-space: nowrap; }
-.more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s var(--ease-out); }
+.more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 420ms var(--ease-out); }
 .description {
   min-height: 0;
   overflow: hidden;
@@ -101,7 +110,7 @@
   text-wrap: pretty;
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity 0.35s ease, transform 0.45s var(--ease-out);
+  transition: opacity 350ms var(--ease-soft), transform 420ms var(--ease-out);
 }
 .description::before { display: block; height: 10px; content: ""; }
 .card:hover .photoImage, .card:focus-within .photoImage { transform: scale(1.05); }
@@ -109,12 +118,12 @@
 .card:hover .more, .card:focus-within .more { grid-template-rows: 1fr; }
 .card:hover .description, .card:focus-within .description { opacity: 1; transform: none; }
 /* Em telas de toque não há hover: um "i" discreto avisa que o toque mostra a descrição. */
-.hint { position: absolute; z-index: 1; top: 10px; right: 10px; display: none; width: 24px; height: 24px; place-items: center; border-radius: 50%; color: #2a170f; background: rgba(255, 247, 236, 0.88); font: italic 400 14px / 1 var(--display); transition: opacity 0.25s ease; }
+.hint { position: absolute; z-index: 1; top: 10px; right: 10px; display: none; width: 24px; height: 24px; place-items: center; border-radius: 50%; color: #2a170f; background: rgba(255, 247, 236, 0.88); font: italic 400 14px / 1 var(--display); transition: opacity 240ms var(--ease-soft); }
 @media (hover: none) {
   .hint { display: grid; }
   .card:focus-within .hint { opacity: 0; }
 }
-.order { display: inline-flex; width: 40px; aspect-ratio: 1; flex-shrink: 0; align-items: center; justify-content: center; border: 1px solid #faefda; border-radius: 50%; color: #49290e; background: #faefda; font: 400 26px / 1 var(--body); text-decoration: none; box-shadow: 0 4px 14px rgba(30, 16, 9, 0.25); transition: background-color 160ms ease, color 160ms ease; }
+.order { display: inline-flex; width: 40px; aspect-ratio: 1; flex-shrink: 0; align-items: center; justify-content: center; border: 1px solid #faefda; border-radius: 50%; color: #49290e; background: #faefda; font: 400 26px / 1 var(--body); text-decoration: none; box-shadow: 0 4px 14px rgba(30, 16, 9, 0.25); transition: background-color 160ms var(--ease-soft), color 160ms var(--ease-soft); }
 .order { position: relative; }
 .order::after { position: absolute; inset: -4px; border-radius: 50%; content: ""; }
 @media (hover: hover) { .order:hover { color: #fff1dd; background: #603719; } }
@@ -136,21 +145,9 @@
   .copy h3 { font-size: 19px; }
 }
 
-/* Em telas de toque a fileira não corre sozinha: o visitante arrasta, cada cartão para no centro
-   e o toque abre a descrição sem o cartão fugir do dedo. A cópia do loop some. */
-@media (hover: none) {
-  .railView { width: 100%; overflow-x: auto; mask-image: none; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
-  .railView::-webkit-scrollbar { display: none; }
-  .rail { padding: 0 calc((100% - var(--card-w)) / 2) 8px; animation: none; }
-  .card { scroll-snap-align: center; }
-  .card[aria-hidden="true"] { display: none; }
-}
+
 
 @media (prefers-reduced-motion: reduce) {
-  /* Sem rolagem automática: a fileira vira rolagem manual e a cópia some. */
-  .railView { overflow-x: auto; mask-image: none; scrollbar-width: none; }
-  .rail { animation: none; }
-  .card[aria-hidden="true"] { display: none; }
   .card:hover .photoImage, .card:focus-within .photoImage { transform: none; }
   .description, .more { transform: none; transition: none; }
   .order { transition: none; }
