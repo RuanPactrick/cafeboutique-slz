@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Antic_Didone, Lustria } from "next/font/google";
-import { SectionReveal } from "@/components/section-reveal";
+import { MotionDirector } from "@/components/motion";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import "./globals.css";
 
@@ -48,11 +48,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${anticDidone.variable} ${lustria.variable}`}>
+    <html lang="pt-BR" className={`${anticDidone.variable} ${lustria.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Liga os estados de entrada antes da primeira pintura; se o diretor não rodar em 3 s, tudo aparece. */}
+        <script dangerouslySetInnerHTML={{ __html: "try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('motion');setTimeout(function(){if(!window.__cbMotion)r.classList.remove('motion')},3000)}}catch(e){}" }} />
+      </head>
       <body>
         {children}
         <WhatsAppFloat />
-        <SectionReveal />
+        <MotionDirector />
       </body>
     </html>
   );

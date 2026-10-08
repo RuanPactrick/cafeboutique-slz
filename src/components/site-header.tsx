@@ -8,6 +8,7 @@ import { navigationItems, siteConfig } from "@/data/site";
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [compact, setCompact] = useState(false);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -15,6 +16,22 @@ export function SiteHeader() {
   function closeMenu() {
     setMenuOpen(false);
   }
+
+  // Na home o topo acompanha o hero e fica compacto (fundo sólido, logo menor) só depois dele;
+  // nas outras páginas, assim que a rolagem começa.
+  useEffect(() => {
+    const hero = document.querySelector(".home-hero, .menu-hero");
+    const height = headerRef.current?.offsetHeight ?? 70;
+    if (hero) {
+      const observer = new IntersectionObserver(([entry]) => setCompact(!entry.isIntersecting), { rootMargin: `-${height}px 0px 0px 0px` });
+      observer.observe(hero);
+      return () => observer.disconnect();
+    }
+    const onScroll = () => setCompact(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Menu do celular aberto: Esc fecha (e devolve o foco ao botão) e um toque fora dele também.
   useEffect(() => {
@@ -36,7 +53,7 @@ export function SiteHeader() {
   }, [menuOpen]);
 
   return (
-    <header className="site-header" ref={headerRef}>
+    <header className="site-header" ref={headerRef} data-compact={compact || undefined}>
       <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
       <div className="site-header__inner">
         <a className="site-header__brand" href="/" aria-label="Café Boutique — início">

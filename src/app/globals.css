@@ -63,15 +63,6 @@ time, data { font-variant-numeric: tabular-nums; }
 .skip-link { position: fixed; z-index: 100; top: 0.75rem; left: 1rem; padding: 0.7rem 1rem; transform: translateY(-160%); color: var(--paper-soft); background: var(--espresso); font-family: var(--ui); }
 .skip-link:focus { transform: translateY(0); }
 
-/* Progressive enhancement: content stays visible until a section enters view. */
-[data-scroll-reveal="true"].is-scroll-revealed {
-  animation: section-arrive var(--dur-editorial) var(--ease-soft);
-}
-
-@keyframes section-arrive {
-  from { opacity: 0.92; }
-  to { opacity: 1; }
-}
 
 /* Shared actions and navigation */
 .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 0.7rem 1.3rem; border: 1px solid var(--espresso); border-radius: 999px; color: var(--paper-soft); background: var(--espresso); font-family: var(--ui); font-size: 0.76rem; font-weight: 600; line-height: 1.2; text-decoration: none; transition: color 160ms var(--ease-soft), background-color 160ms var(--ease-soft); }
@@ -223,7 +214,7 @@ time, data { font-variant-numeric: tabular-nums; }
 .featured-menu-card__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 420ms var(--ease-out); }
 .featured-menu-card__more p { min-height: 0; overflow: hidden; color: #fff3e0; font: 400 var(--t-small) / 1.45 var(--body); opacity: 0; transform: translateY(6px); transition: opacity 350ms var(--ease-soft), transform 420ms var(--ease-out); }
 .featured-menu-card__more p::before { display: block; height: 10px; content: ""; }
-.featured-menu-card:hover .featured-menu-card__img, .featured-menu-card:focus-within .featured-menu-card__img { transform: scale(1.05); }
+.featured-menu-card:hover .featured-menu-card__img, .featured-menu-card:focus-within .featured-menu-card__img { transform: scale(1.02); }
 .featured-menu-card:hover::after, .featured-menu-card:focus-within::after { opacity: 1; }
 .featured-menu-card:hover .featured-menu-card__more, .featured-menu-card:focus-within .featured-menu-card__more { grid-template-rows: 1fr; }
 .featured-menu-card:hover .featured-menu-card__more p, .featured-menu-card:focus-within .featured-menu-card__more p { opacity: 1; transform: none; }
@@ -654,10 +645,7 @@ time, data { font-variant-numeric: tabular-nums; }
 
 @keyframes frame-open { from { clip-path: inset(14% 8% 0 8% round 12px); } to { clip-path: inset(0 round 12px); } }
 @keyframes frame-settle { from { transform: scale(1.06); } to { transform: none; } }
-@supports (animation-timeline: view()) {
-  .cb-photo, .vb-photo { animation: frame-open linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
-  .cb-photo img, .vb-photo img { animation: frame-settle linear both; animation-timeline: view(); animation-range: entry 0% cover 55%; }
-}
+
 
 @media (max-width: 900px) {
   .menu-sections { columns: 1; }
@@ -812,3 +800,121 @@ body:has(.menu-cart-bar) .wa-float { bottom: 100px; }
   .footer-col ul { justify-items: center; }
   .footer-credit { flex-direction: column; justify-content: center; padding: 22px 0 92px; text-align: center; }
 }
+
+/* =====================================================================
+   Movimento editorial (motion.tsx marca .is-in quando cada bloco entra na tela).
+   Cada seção tem a sua entrada: títulos por máscara de linha, fotos por opacidade e escala,
+   cartões em sequência curta, informações em cascata lateral. Os estados escondidos só existem
+   com html.motion (ligado no <head> para quem não pede menos movimento).
+   ===================================================================== */
+.ml { display: block; overflow: clip; padding-block: 0.1em 0.14em; margin-block: -0.1em -0.14em; }
+.ml__i { display: block; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Títulos: cada linha sobe por trás da própria máscara, 90 ms depois da anterior. */
+  html.motion [data-reveal="lines"] .ml__i { transform: translateY(108%); transition: transform 800ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms); }
+  html.motion [data-reveal="lines"].is-in .ml__i { transform: none; }
+
+  /* Fotos: aparecem e assentam (1,05 → 1) dentro da moldura, que não se mexe. */
+  html.motion [data-reveal="image"] { opacity: 0; transition: opacity 700ms var(--ease-soft); }
+  html.motion [data-reveal="image"] img { transform: scale(1.05); transition: transform 850ms var(--ease-out); }
+  html.motion [data-reveal="image"].is-in { opacity: 1; }
+  html.motion [data-reveal="image"].is-in img { transform: none; }
+
+  /* Retrato (Nossa história): só a moldura se abre; a pessoa nunca é escalada nem deslocada. */
+  html.motion [data-reveal="frame"] { opacity: 0; clip-path: inset(0 0 7% 0 round 12px); transition: opacity 650ms var(--ease-soft), clip-path 850ms var(--ease-out); }
+  html.motion [data-reveal="frame"].is-in { opacity: 1; clip-path: inset(0 round 12px); }
+
+  /* Cartões (queridinhos, avaliações, destaques do cardápio): sequência curta de 70 ms. */
+  /* Animação (não transição) para não herdar atraso no hover dos cartões; "backwards" devolve o
+     cartão aos próprios estilos quando termina. */
+  html.motion [data-reveal="cards"] > * { opacity: 0; }
+  html.motion [data-reveal="cards"].is-in > * { opacity: 1; animation: card-in 750ms var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 70ms); }
+
+  /* Nosso espaço: a entrada mais forte depois do hero. A foto principal abre primeiro, as outras
+     seguem em 160 ms; as legendas chegam depois das fotos. */
+  html.motion [data-reveal="space"] .cb-photo { opacity: 0; clip-path: inset(9% 0 0 0 round 12px); transition: opacity 650ms var(--ease-soft), clip-path 850ms var(--ease-out); transition-delay: calc(var(--i, 0) * 160ms); }
+  html.motion [data-reveal="space"] > li:first-child .cb-photo { clip-path: inset(14% 6% 0 6% round 12px); }
+  html.motion [data-reveal="space"] .cb-photo img { transform: scale(1.08); transition: transform 850ms var(--ease-out); transition-delay: calc(var(--i, 0) * 160ms); }
+  html.motion [data-reveal="space"] figcaption { opacity: 0; transition: opacity 420ms var(--ease-soft); transition-delay: calc(var(--i, 0) * 160ms + 420ms); }
+  html.motion [data-reveal="space"].is-in .cb-photo { opacity: 1; clip-path: inset(0 round 12px); }
+  html.motion [data-reveal="space"].is-in .cb-photo img { transform: none; }
+  html.motion [data-reveal="space"].is-in figcaption { opacity: 1; }
+
+  /* Avaliações: nota, depois as estrelas uma a uma, depois a contagem e o botão. Sem contador. */
+  html.motion [data-reveal="score"] > :is(.rv-score__num, .rv-score__count, .rv-score__date, .rv-button) { opacity: 0; transition: opacity 650ms var(--ease-soft); }
+  html.motion [data-reveal="score"] .rv-stars svg { opacity: 0; transform: scale(0.82); transition: opacity 240ms var(--ease-soft), transform 240ms var(--ease-out); }
+  html.motion [data-reveal="score"] .rv-score__num { transition-delay: 150ms; }
+  html.motion [data-reveal="score"] .rv-stars svg:nth-child(1) { transition-delay: 380ms; }
+  html.motion [data-reveal="score"] .rv-stars svg:nth-child(2) { transition-delay: 450ms; }
+  html.motion [data-reveal="score"] .rv-stars svg:nth-child(3) { transition-delay: 520ms; }
+  html.motion [data-reveal="score"] .rv-stars svg:nth-child(4) { transition-delay: 590ms; }
+  html.motion [data-reveal="score"] .rv-stars svg:nth-child(5) { transition-delay: 660ms; }
+  html.motion [data-reveal="score"] .rv-score__count { transition-delay: 760ms; }
+  html.motion [data-reveal="score"] .rv-score__date { transition-delay: 820ms; }
+  html.motion [data-reveal="score"] .rv-button { transition-delay: 880ms; }
+  html.motion [data-reveal="score"].is-in > :is(.rv-score__num, .rv-score__count, .rv-score__date, .rv-button) { opacity: 1; }
+  html.motion [data-reveal="score"].is-in .rv-stars svg { opacity: 1; transform: none; }
+  html.motion .rv-cards[data-reveal="cards"].is-in > * { animation-delay: calc(var(--i, 0) * 110ms); }
+
+  /* Localização: a foto primeiro, depois os blocos de informação em cascata lateral. */
+  html.motion [data-reveal="info"] > * { opacity: 0; transform: translateX(-10px); transition: opacity 600ms var(--ease-soft), transform 700ms var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms + 240ms); }
+  html.motion [data-reveal="info"].is-in > * { opacity: 1; transform: none; }
+
+  /* Dúvidas: as perguntas assentam em sequência curta, só opacidade. */
+  html.motion [data-reveal="list"] > * { opacity: 0; transition: opacity 650ms var(--ease-soft); transition-delay: calc(var(--i, 0) * 50ms); }
+  html.motion [data-reveal="list"].is-in > * { opacity: 1; }
+
+  /* Navegação entre páginas: troca de página em dissolvência curta (View Transitions). */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: vt-out 260ms var(--ease-soft) both; }
+  ::view-transition-new(root) { animation: vt-in 420ms var(--ease-out) both; }
+
+  /* Pedido: a barra do carrinho vira a janela do pedido e volta (mesmo nome de transição). */
+  .menu-cart-bar[data-vt], .menu-order-dialog { view-transition-name: order-surface; }
+  ::view-transition-group(order-surface) { animation-duration: 420ms; animation-timing-function: var(--ease-out); }
+  ::view-transition-old(order-surface) { animation: vt-out 200ms var(--ease-soft) both; }
+  ::view-transition-new(order-surface) { animation: vt-in 320ms var(--ease-soft) 80ms both; }
+}
+@keyframes card-in { from { opacity: 0; transform: translateY(16px); } }
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; } }
+
+/* Sem View Transitions: a janela sobe da barra (origem embaixo) e o fundo escurece junto. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports not (view-transition-name: none) {
+    .menu-order-dialog { animation: order-in 420ms var(--ease-out) both; transform-origin: 50% 100%; }
+    .menu-order-overlay__backdrop { animation: vt-in 380ms var(--ease-soft) both; }
+  }
+  .menu-cart-bar { animation: bar-in 400ms var(--ease-out) both; }
+}
+@keyframes order-in { from { opacity: 0; transform: translateY(24px) scale(0.98); } }
+@keyframes bar-in { from { opacity: 0; transform: translateY(16px); } }
+
+/* "+" → ✓ ao adicionar: troca cruzada de 200 ms, sem quique. */
+.add-icon { display: grid; place-items: center; }
+.add-icon > svg { grid-area: 1 / 1; transition: opacity var(--dur-micro) var(--ease-soft), transform 240ms var(--ease-out); }
+.add-icon > svg:last-child { opacity: 0; transform: scale(0.6); }
+.add-icon[data-done] > svg:first-child { opacity: 0; transform: scale(0.6) rotate(-45deg); }
+.add-icon[data-done] > svg:last-child { opacity: 1; transform: none; }
+/* Toque: o botão afunda levemente ao pressionar. */
+.menu-item__add, .featured-menu-card__add { transition: transform 160ms var(--ease-out), color 160ms var(--ease-soft), background-color 160ms var(--ease-soft), border-color 160ms var(--ease-soft); }
+.menu-item__add:active, .featured-menu-card__add:active { transform: scale(0.92); }
+
+/* Categorias: um marcador só desliza entre os botões; o botão ativo fica transparente sobre ele. */
+.category-list { position: relative; }
+.category-chip { z-index: 1; }
+.category-indicator { position: absolute; top: 0; left: 0; z-index: 0; border-radius: 999px; background: var(--espresso); opacity: 0; pointer-events: none; }
+.category-list[data-indicator] .category-indicator { opacity: 1; }
+.category-list[data-indicator="ready"] .category-indicator { transition: transform 380ms var(--ease-out), width 380ms var(--ease-out); }
+.category-list[data-indicator] .category-chip[aria-pressed="true"] { border-color: transparent; background: transparent; transition: color 240ms var(--ease-soft) 80ms; }
+@media (hover: hover) {
+  .category-list[data-indicator] .category-chip:not([aria-pressed="true"]):hover { border-color: rgba(42, 23, 15, 0.45); color: var(--ink); background: transparent; }
+}
+
+/* Topo: no hero ele se funde à página; depois dele fica compacto e sólido. */
+.site-header { isolation: isolate; }
+.site-header::after { content: ""; position: absolute; z-index: -1; inset: 0; border-bottom: 1px solid rgba(42, 23, 15, 0.08); background: rgba(250, 246, 240, 0.97); box-shadow: 0 10px 28px rgba(42, 23, 15, 0.08); opacity: 0; pointer-events: none; transition: opacity var(--dur-component) var(--ease-soft); }
+.site-header[data-compact]::after { opacity: 1; }
+.site-header__brand img { transform-origin: 0 50%; transition: transform var(--dur-component) var(--ease-out); }
+.site-header[data-compact] .site-header__brand img { transform: scale(0.86); }

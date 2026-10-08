@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Line } from "./motion";
 import { SwipeHint } from "./swipe-hint";
 
 // Fotos reais do espaço, com o mesmo tratamento de cor das fotos de "Nossa história".
@@ -15,7 +16,7 @@ export function CafeExperience() {
         <div className="cb-head">
           <div>
             <p className="cb-eyebrow">Nosso espaço</p>
-            <h2 id="cafe-experience-title">Um cantinho<br />para <em>bons encontros.</em></h2>
+            <h2 id="cafe-experience-title" data-reveal="lines"><Line>Um cantinho</Line><Line>para <em>bons encontros.</em></Line></h2>
           </div>
           <div className="cb-head__side">
             <p className="cb-lede">
@@ -23,7 +24,7 @@ export function CafeExperience() {
             </p>
           </div>
         </div>
-        <ul className="cb-photos" id="espaco-fotos">
+        <ul className="cb-photos" id="espaco-fotos" data-reveal="space">
           {photos.map((photo) => (
             <li key={photo.src}>
               <figure>

@@ -1,6 +1,7 @@
 import { BrandLogo } from "@/components/brand-logo";
 import { ArrowUpRightIcon, InstagramIcon, MapPinIcon, PhoneIcon, WhatsAppGlyph } from "@/components/icons";
 import { siteConfig } from "@/data/site";
+import { Line } from "./motion";
 
 const exploreLinks = [
   { label: "Início", href: "/" },
@@ -16,7 +17,7 @@ export function SiteFooter() {
     <footer className="site-footer" data-scroll-reveal="true">
       {/* Fecho da página: a frase da marca e as duas ações que importam. */}
       <div className="footer-cta">
-        <p className="footer-cta__line">Mais que um café,<br /><em>uma pausa afetiva.</em></p>
+        <p className="footer-cta__line" data-reveal="lines"><Line>Mais que um café,</Line><Line><em>uma pausa afetiva.</em></Line></p>
         <div className="footer-cta__actions">
           <a className="footer-button footer-button--solid" href="/cardapio">Ver cardápio e pedir</a>
           <a className="footer-button" href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer">

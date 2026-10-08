@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import { menuItems, formatPrice } from "@/data/menu";
 import { createWhatsAppUrl } from "@/data/site";
+import { Line } from "./motion";
 import { SwipeHint } from "./swipe-hint";
 import styles from "./boutique-highlights.module.css";
 
@@ -78,7 +79,7 @@ export function BoutiqueHighlights() {
       <div className={styles.heading}>
         <div>
           <p className={styles.eyebrow}>Nosso cardápio</p>
-          <h2 id="boutique-highlights-title">Os queridinhos<br />da Boutique.</h2>
+          <h2 id="boutique-highlights-title" data-reveal="lines"><Line>Os queridinhos</Line><Line>da Boutique.</Line></h2>
         </div>
         <div className={styles.intro}>
           <p>Bolos, cafés e sabores para acompanhar diferentes momentos do dia.</p>
@@ -88,7 +89,7 @@ export function BoutiqueHighlights() {
         </div>
       </div>
       <div className={styles.railView} id="queridinhos-fileira">
-        <ul className={styles.rail} aria-label="Destaques do cardápio" style={{ "--items": highlights.length } as CSSProperties}>
+        <ul className={styles.rail} data-reveal="cards" aria-label="Destaques do cardápio" style={{ "--items": highlights.length } as CSSProperties}>
           {highlights.map((item) => <ProductCard item={item} key={item.key} />)}
         </ul>
       </div>

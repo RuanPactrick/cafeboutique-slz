@@ -4,6 +4,7 @@ import { ChevronRightIcon, MapPinIcon } from "@/components/icons";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/data/site";
+import { Line } from "@/components/motion";
 import styles from "./nossa-historia.module.css";
 
 export const metadata: Metadata = {
@@ -42,8 +43,8 @@ export default function NossaHistoriaPage() {
           <section className={styles.hero} aria-labelledby="history-title">
             <div className={styles.heroCopy}>
               <p className={styles.eyebrow}>Nossa história · São Luís</p>
-              <h1 id="history-title">
-                Um café para criar <em>memórias.</em>
+              <h1 id="history-title" data-reveal="lines">
+                <Line>Um café para criar <em>memórias.</em></Line>
               </h1>
               <p className={styles.heroLede}>
                 À frente da Café Boutique está a empreendedora Alana, junto da
@@ -85,8 +86,8 @@ export default function NossaHistoriaPage() {
           >
             <div className={styles.welcomeInner}>
               <p className={styles.eyebrow}>O que nos inspira</p>
-              <h2 id="welcome-title">
-                Um espaço para desacelerar e se encontrar.
+              <h2 id="welcome-title" data-reveal="lines">
+                <Line>Um espaço para desacelerar e se encontrar.</Line>
               </h2>
               <p>
                 A Café Boutique nasceu em torno das memórias afetivas: um
@@ -100,7 +101,7 @@ export default function NossaHistoriaPage() {
           <section className={styles.space} aria-labelledby="space-title">
             <div className={styles.spaceCopy}>
               <p className={styles.eyebrow}>A casa</p>
-              <h2 id="space-title">Cada cantinho acolhe um encontro.</h2>
+              <h2 id="space-title" data-reveal="lines"><Line>Cada cantinho acolhe um encontro.</Line></h2>
               <p>
                 No salão, na área externa ou no espaço kids, a ideia é que cada
                 pessoa encontre seu jeito de aproveitar a visita. Acolhimento
@@ -163,7 +164,7 @@ export default function NossaHistoriaPage() {
 
             <div className={styles.flavorCopy}>
               <p className={styles.eyebrow}>Sabores da casa</p>
-              <h2 id="flavors-title">Receitas que viram lembrança.</h2>
+              <h2 id="flavors-title" data-reveal="lines"><Line>Receitas que viram lembrança.</Line></h2>
               <p>
                 Bolos amanteigados em vários tamanhos e sabores, com coberturas
                 de leite Ninho, chocolate e abacaxi caramelizado, dividem a
@@ -186,7 +187,7 @@ export default function NossaHistoriaPage() {
           <section className={styles.visit} aria-labelledby="visit-story-title">
             <div className={styles.visitCopy}>
               <p className={styles.eyebrow}>A história continua</p>
-              <h2 id="visit-story-title">Venha viver esse encontro.</h2>
+              <h2 id="visit-story-title" data-reveal="lines"><Line>Venha viver esse encontro.</Line></h2>
               <address>
                 {siteConfig.address.lines.map((line) => (
                   <span key={line}>{line}</span>

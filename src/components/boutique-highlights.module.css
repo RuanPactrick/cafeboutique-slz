@@ -114,7 +114,7 @@
   transition: opacity 350ms var(--ease-soft), transform 420ms var(--ease-out);
 }
 .description::before { display: block; height: 10px; content: ""; }
-.card:hover .photoImage, .card:focus-within .photoImage { transform: scale(1.05); }
+.card:hover .photoImage, .card:focus-within .photoImage { transform: scale(1.02); }
 .card:hover::after, .card:focus-within::after { opacity: 1; }
 .card:hover .more, .card:focus-within .more { grid-template-rows: 1fr; }
 .card:hover .description, .card:focus-within .description { opacity: 1; transform: none; }

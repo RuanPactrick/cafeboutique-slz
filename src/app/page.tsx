@@ -6,6 +6,7 @@ import { Faq } from "@/components/faq";
 import { BoutiqueHighlights } from "@/components/boutique-highlights";
 import { HeroIntro } from "@/components/hero-intro";
 import { ChevronRightIcon, ClockIcon, MapPinIcon, PhoneIcon, PickupIcon } from "@/components/icons";
+import { Line } from "@/components/motion";
 import { Reviews } from "@/components/reviews";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -61,11 +62,11 @@ export default function HomePage() {
               <div className="visit-band__inner section-wrap">
                 <div className="visit-band__copy">
                   <p className="visit-band__eyebrow">Nossa cafeteria</p>
-                  <h2 id="visit-title">Venha nos visitar.</h2>
+                  <h2 id="visit-title" data-reveal="lines"><Line>Venha nos visitar.</Line></h2>
                   <p className="visit-band__intro">
                     Um cantinho feito com carinho para te receber, com cafés especiais, bolos autorais e momentos que ficam na memória.
                   </p>
-                  <dl className="visit-details">
+                  <dl className="visit-details" data-reveal="info">
                     <div className="visit-detail">
                       <span className="visit-detail__icon"><ClockIcon /></span>
                       <div className="visit-detail__copy">
@@ -108,7 +109,7 @@ export default function HomePage() {
                   </dl>
                 </div>
                 <div className="visit-band__visual vb">
-                  <figure className="vb-photo">
+                  <figure className="vb-photo" data-reveal="image">
                     <Image
                       src="/cafe-boutique/localizacao/fachada-entrada.jpg"
                       alt="Fachada da Café Boutique no Holandeses Center, com a placa da marca, a vitrine de vidro e mesas na entrada."

@@ -1,6 +1,7 @@
 import { faqItems } from "@/data/faq";
 import { siteConfig } from "@/data/site";
 import { ChevronRightIcon, WhatsAppIcon } from "./icons";
+import { Line } from "./motion";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -18,7 +19,7 @@ export function Faq() {
       <div className="cb-inner faq-layout">
         <div className="faq-head">
           <p className="cb-eyebrow">Dúvidas frequentes</p>
-          <h2 id="faq-title">Antes do seu<br /><em>pedido.</em></h2>
+          <h2 id="faq-title" data-reveal="lines"><Line>Antes do seu</Line><Line><em>pedido.</em></Line></h2>
           <p className="cb-lede">Retirada, encomendas de bolo e reservas: como cada uma funciona na Boutique.</p>
           <a className="cb-cta" href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer">
             <WhatsAppIcon />
@@ -27,7 +28,7 @@ export function Faq() {
           </a>
         </div>
         {/* Acordeão nativo: abre com toque, clique ou teclado e funciona sem JavaScript. */}
-        <div className="faq-list">
+        <div className="faq-list" data-reveal="list">
           {faqItems.map((item) => (
             <details className="faq-item" name="faq" key={item.question}>
               <summary>

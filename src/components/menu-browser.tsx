@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
+import { Line } from "@/components/motion";
 import { cakeCoverings, formatPrice, getMenuPriceLabel, hasCoveringChoice, menuCategories, menuItems, menuSectionNotes, type MenuItem } from "@/data/menu";
 import { createWhatsAppUrl, siteConfig } from "@/data/site";
 
@@ -162,6 +164,31 @@ function PlusIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>;
 }
 
+// "+" que vira ✓ por um instante quando o item entra no pedido (os dois ícones ficam empilhados).
+function AddIcon({ done }: { done: boolean }) {
+  return (
+    <span className="add-icon" data-done={done || undefined}>
+      <PlusIcon />
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.5 4.2 4.2 8.8-9.4" /></svg>
+    </span>
+  );
+}
+
+// Abrir e fechar o pedido com View Transitions: a barra do carrinho se transforma na janela e volta.
+// Sem suporte, ou com menos movimento, a troca é direta (a janela tem a própria entrada em CSS).
+function withViewTransition(update: () => void) {
+  type Transition = { ready: Promise<void>; updateCallbackDone: Promise<void> };
+  const doc = document as Document & { startViewTransition?: (callback: () => void) => Transition };
+  if (typeof doc.startViewTransition === "function" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const transition = doc.startViewTransition(() => flushSync(update));
+    // Um toque duplo interrompe a transição anterior: isso é esperado, não um erro.
+    transition.ready.catch(() => {});
+    transition.updateCallbackDone.catch(() => {});
+  } else {
+    update();
+  }
+}
+
 function SearchIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 4.5 4.5" /></svg>;
 }
@@ -178,7 +205,7 @@ function BagIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z" /><path d="M9 9V6a3 3 0 0 1 6 0v3" /></svg>;
 }
 
-function MenuProduct({ item, group, onAdd, nested }: { item: MenuItem; group: MenuGroup; onAdd: (item: MenuItem) => void; nested: boolean }) {
+function MenuProduct({ item, group, onAdd, nested, addedId }: { item: MenuItem; group: MenuGroup; onAdd: (item: MenuItem) => void; nested: boolean; addedId: string | null }) {
   const [selectedId, setSelectedId] = useState(item.id);
   const Name = nested ? "h4" : "h3";
   const selected = group.items.find((entry) => entry.id === selectedId) ?? group.items[0];
@@ -200,7 +227,7 @@ function MenuProduct({ item, group, onAdd, nested }: { item: MenuItem; group: Me
           </select>
         </label>
         <span className="menu-item__price">{getMenuPriceLabel(selected)}</span>
-        <button className="menu-item__add" type="button" onClick={() => onAdd(selected)} aria-label={`Adicionar ${selected.name} ao pedido`}><PlusIcon /></button>
+        <button className="menu-item__add" type="button" onClick={() => onAdd(selected)} aria-label={`Adicionar ${selected.name} ao pedido`}><AddIcon done={addedId === selected.id} /></button>
       </li>
     );
   }
@@ -213,7 +240,7 @@ function MenuProduct({ item, group, onAdd, nested }: { item: MenuItem; group: Me
         {item.note ? <p className="menu-item__pending">{item.note}</p> : null}
       </div>
       <span className="menu-item__price">{getMenuPriceLabel(item)}</span>
-      <button className="menu-item__add" type="button" onClick={() => onAdd(item)} aria-label={`Adicionar ${item.name} ao pedido`}><PlusIcon /></button>
+      <button className="menu-item__add" type="button" onClick={() => onAdd(item)} aria-label={`Adicionar ${item.name} ao pedido`}><AddIcon done={addedId === item.id} /></button>
     </li>
   );
 }
@@ -233,6 +260,9 @@ export function MenuBrowser() {
   const [coverings, setCoverings] = useState<Record<string, string>>({});
   const dialogRef = useRef<HTMLElement>(null);
   const chipsRef = useRef<HTMLDivElement>(null);
+  const chipListRef = useRef<HTMLDivElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+  const [addedId, setAddedId] = useState<string | null>(null);
   const [chipEdges, setChipEdges] = useState({ start: true, end: true });
   const openerRef = useRef<HTMLButtonElement>(null);
   // No celular, com "Todos" e sem busca, cada categoria chega fechada e abre com um toque.
@@ -281,6 +311,29 @@ export function MenuBrowser() {
     }
   }, [activeCategory]);
 
+  // Marcador único da categoria ativa: uma pílula que desliza até o botão escolhido, em vez de
+  // cada botão acender sozinho. Na primeira medida ela aparece no lugar, sem deslizar.
+  useLayoutEffect(() => {
+    const list = chipListRef.current;
+    const indicator = indicatorRef.current;
+    if (!list || !indicator) return;
+    const place = () => {
+      const chip = list.querySelector<HTMLElement>('[aria-pressed="true"]');
+      if (!chip) return;
+      indicator.style.width = `${chip.offsetWidth}px`;
+      indicator.style.height = `${chip.offsetHeight}px`;
+      indicator.style.transform = `translate(${chip.offsetLeft}px, ${chip.offsetTop}px)`;
+      if (!list.dataset.indicator) {
+        list.dataset.indicator = "on";
+        requestAnimationFrame(() => requestAnimationFrame(() => { list.dataset.indicator = "ready"; }));
+      }
+    };
+    place();
+    const resize = new ResizeObserver(place);
+    resize.observe(list);
+    return () => resize.disconnect();
+  }, [activeCategory]);
+
   const scrollChips = (direction: 1 | -1) => {
     const track = chipsRef.current;
     if (track) track.scrollBy({ left: direction * track.clientWidth * 0.7, behavior: "smooth" });
@@ -302,6 +355,12 @@ export function MenuBrowser() {
   }, [cart, cartLoaded]);
 
   useEffect(() => {
+    if (!addedId) return;
+    const timer = window.setTimeout(() => setAddedId(null), 1100);
+    return () => window.clearTimeout(timer);
+  }, [addedId, lastAdded]);
+
+  useEffect(() => {
     if (!lastAdded) return;
     const timer = window.setTimeout(() => setLastAdded(null), 2600);
     return () => window.clearTimeout(timer);
@@ -319,7 +378,7 @@ export function MenuBrowser() {
     root.style.overflow = "hidden";
     dialog?.querySelector<HTMLElement>("h2")?.focus();
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") { setOrderOpen(false); return; }
+      if (event.key === "Escape") { closeOrder(); return; }
       if (event.key !== "Tab" || !dialog) return;
       const focusables = [...dialog.querySelectorAll<HTMLElement>("a[href], button, input, select, textarea")].filter((el) => !el.hasAttribute("disabled"));
       if (focusables.length === 0) return;
@@ -380,7 +439,10 @@ export function MenuBrowser() {
   const addToCart = (item: MenuItem) => {
     setCart((current) => ({ ...current, [item.id]: (current[item.id] ?? 0) + 1 }));
     setLastAdded({ name: item.name, at: Date.now() });
+    setAddedId(item.id);
   };
+  const openOrder = () => withViewTransition(() => setOrderOpen(true));
+  const closeOrder = () => withViewTransition(() => setOrderOpen(false));
   const changeQuantity = (item: MenuItem, amount: number) => setCart((current) => {
     const next = { ...current };
     const quantity = (next[item.id] ?? 0) + amount;
@@ -414,7 +476,7 @@ export function MenuBrowser() {
         <Image className="menu-hero__photo" src="/cafe-boutique/hero/hero-cafe-boutique-limpo.png" alt="Xícara de café sobre a mesa de madeira da Café Boutique." fill priority quality={90} sizes="(max-width: 760px) 300vw, 100vw" />
         <div className="menu-hero__copy">
           <p className="menu-eyebrow">Nosso cardápio</p>
-          <h1 id="menu-page-title">Sabores para<br />cada momento.</h1>
+          <h1 id="menu-page-title" data-reveal="lines"><Line>Sabores para</Line><Line>cada momento.</Line></h1>
           <p className="menu-hero__description">Bolos, cafés, salgados e sabores regionais reunidos para acompanhar a sua pausa.</p>
           <label className="menu-search menu-search--hero">
             <SearchIcon />
@@ -428,7 +490,8 @@ export function MenuBrowser() {
       <nav className="category-scroller" aria-label="Categorias do cardápio" data-scroll-reveal="true">
         <button type="button" className="category-scroller__arrow category-scroller__arrow--prev" onClick={() => scrollChips(-1)} hidden={chipEdges.start} aria-label="Ver categorias anteriores"><ArrowIcon back /></button>
         <div className="category-scroller__track" ref={chipsRef} data-start={chipEdges.start || undefined} data-end={chipEdges.end || undefined}>
-        <div className="category-list">
+        <div className="category-list" ref={chipListRef}>
+          <span className="category-indicator" ref={indicatorRef} aria-hidden="true" />
           <button type="button" className="category-chip" aria-pressed={activeCategory === "todos"} onClick={() => selectCategory("todos")}>Todos</button>
           {menuCategories.map((category) => (
             <button key={category.id} type="button" className="category-chip" aria-pressed={activeCategory === category.id} onClick={() => selectCategory(category.id)}>{category.label}</button>
@@ -442,10 +505,10 @@ export function MenuBrowser() {
         {activeCategory === "todos" && !normalizedQuery ? (
           <>
             <header className="menu-section-heading menu-featured__heading">
-              <div><p className="menu-eyebrow">Queridinhos da Boutique</p><h2 id="featured-menu-title">Nossos clássicos, sempre uma boa ideia.</h2></div>
+              <div><p className="menu-eyebrow">Queridinhos da Boutique</p><h2 id="featured-menu-title" data-reveal="lines"><Line>Nossos clássicos, sempre uma boa ideia.</Line></h2></div>
               <span className="menu-section-heading__aside">{menuCategories.length} categorias</span>
             </header>
-            <ul className="featured-menu-grid">
+            <ul className="featured-menu-grid" data-reveal="cards">
               {featuredProducts.map((featured) => {
                 const item = menuItems.find((entry) => entry.id === featured.id);
                 if (!item) return null;
@@ -460,7 +523,7 @@ export function MenuBrowser() {
                           <h3>{item.name}</h3>
                           <span className="featured-menu-card__price">{getMenuPriceLabel(item)}</span>
                         </div>
-                        <button type="button" className="featured-menu-card__add" onClick={() => addToCart(item)} aria-label={`Adicionar ${item.name} ao pedido`}><PlusIcon /></button>
+                        <button type="button" className="featured-menu-card__add" onClick={() => addToCart(item)} aria-label={`Adicionar ${item.name} ao pedido`}><AddIcon done={addedId === item.id} /></button>
                       </div>
                       {item.description ? <div className="featured-menu-card__more"><p>{item.description}</p></div> : null}
                     </div>
@@ -513,7 +576,7 @@ export function MenuBrowser() {
                         <div className="menu-group" key={section.id + "-" + (group.key || "geral")}>
                           {group.title && section.id !== "extras" && !group.variants ? <h3 className="menu-group__title">{group.title}</h3> : null}
                           <ul className={section.id === "extras" ? "menu-list menu-list--extras" : "menu-list"}>
-                            {(group.variants ? group.items.slice(0, 1) : group.items).map((item) => <MenuProduct key={group.key + item.id} item={item} group={group} onAdd={addToCart} nested={Boolean(group.title && section.id !== "extras" && !group.variants)} />)}
+                            {(group.variants ? group.items.slice(0, 1) : group.items).map((item) => <MenuProduct key={group.key + item.id} item={item} group={group} onAdd={addToCart} addedId={addedId} nested={Boolean(group.title && section.id !== "extras" && !group.variants)} />)}
                           </ul>
                         </div>
                       ))}
@@ -535,26 +598,26 @@ export function MenuBrowser() {
       </section>
 
       <section className="menu-closing" aria-labelledby="menu-closing-title" data-scroll-reveal="true">
-        <div className="menu-closing__copy"><p className="menu-eyebrow">Café Boutique</p><h2 id="menu-closing-title">Tudo fica melhor com um bom café.</h2><p>Escolha seus favoritos e monte seu pedido para retirada.</p><a className="button button--light" href="#inicio-cardapio">Voltar ao cardápio</a></div>
-        <div className="menu-closing__photo"><Image src="/cafe-boutique/destaques/capuccino-xicara-boutique.jpg" alt="Capuccino com desenho de canela na espuma, servido na xícara da Café Boutique." fill quality={90} sizes="(max-width: 760px) 100vw, 360px" /></div>
+        <div className="menu-closing__copy"><p className="menu-eyebrow">Café Boutique</p><h2 id="menu-closing-title" data-reveal="lines"><Line>Tudo fica melhor com um bom café.</Line></h2><p>Escolha seus favoritos e monte seu pedido para retirada.</p><a className="button button--light" href="#inicio-cardapio">Voltar ao cardápio</a></div>
+        <div className="menu-closing__photo" data-reveal="image"><Image src="/cafe-boutique/destaques/capuccino-xicara-boutique.jpg" alt="Capuccino com desenho de canela na espuma, servido na xícara da Café Boutique." fill quality={90} sizes="(max-width: 760px) 100vw, 360px" /></div>
       </section>
 
       <p className="visually-hidden" role="status" aria-live="polite">{lastAdded ? `${lastAdded.name} adicionado ao pedido. ${cartCount} ${cartCount === 1 ? "item" : "itens"} no pedido.` : ""}</p>
       {cartCount > 0 ? (
-        <div className="menu-cart-bar">
+        <div className="menu-cart-bar" data-vt={orderOpen ? undefined : ""}>
           <div className="menu-cart-bar__summary">
             <span className="menu-cart-bar__icon" key={lastAdded?.at}><BagIcon /><span>{cartCount}</span></span>
             {lastAdded ? <span className="menu-cart-bar__added">{lastAdded.name} adicionado</span> : <span>{cartCount} {cartCount === 1 ? "item" : "itens"} · {cartTotal > 0 ? formatPrice(cartTotal) : "valor a confirmar"}</span>}
           </div>
-          <button ref={openerRef} className="button button--light" type="button" onClick={() => setOrderOpen(true)}>Ver pedido</button>
+          <button ref={openerRef} className="button button--light" type="button" onClick={openOrder}>Ver pedido</button>
         </div>
       ) : null}
 
       {orderOpen ? (
         <div className="menu-order-overlay">
-          <button className="menu-order-overlay__backdrop" type="button" aria-label="Fechar pedido" onClick={() => setOrderOpen(false)} />
+          <button className="menu-order-overlay__backdrop" type="button" aria-label="Fechar pedido" onClick={closeOrder} />
           <section ref={dialogRef} className="menu-order-dialog" role="dialog" aria-modal="true" aria-labelledby="menu-order-title">
-            <header className="menu-order-dialog__heading"><div><p className="menu-eyebrow">Seu pedido</p><h2 id="menu-order-title" tabIndex={-1}>Confira seus itens.</h2></div><button type="button" className="menu-order-dialog__close" onClick={() => setOrderOpen(false)} aria-label="Fechar pedido">×</button></header>
+            <header className="menu-order-dialog__heading"><div><p className="menu-eyebrow">Seu pedido</p><h2 id="menu-order-title" tabIndex={-1}>Confira seus itens.</h2></div><button type="button" className="menu-order-dialog__close" onClick={closeOrder} aria-label="Fechar pedido">×</button></header>
             <ul className="menu-order-list">
               {cartEntries.map(({ item, quantity }) => (
                 <li className="menu-order-line" key={item.id}>

@@ -1,5 +1,6 @@
 import { googleReviews } from "@/data/reviews";
 import { siteConfig } from "@/data/site";
+import { Line } from "./motion";
 import { SwipeHint } from "./swipe-hint";
 import { ChevronRightIcon, ExternalLinkIcon, GoogleIcon, SprigIcon, StarIcon } from "./icons";
 
@@ -28,10 +29,10 @@ export function Reviews() {
         <div className="rv-top">
           <div className="rv-copy">
             <p className="rv-eyebrow">O que dizem de nós</p>
-            <h2 id="rv-title">Histórias que<br />a gente <em>guarda.</em></h2>
+            <h2 id="rv-title" data-reveal="lines"><Line>Histórias que</Line><Line>a gente <em>guarda.</em></Line></h2>
             <p className="rv-lede">Avaliações reais de quem já viveu a experiência da Café Boutique e fez parte da nossa história.</p>
           </div>
-          <div className="rv-score">
+          <div className="rv-score" data-reveal="score">
             <p className="rv-score__num"><strong>{ratingLabel}</strong><span>de 5</span></p>
             <span role="img" aria-label={`Nota ${ratingLabel} de 5`}>
               <Stars value={ratingValue} large idPrefix="rv-score" />
@@ -45,7 +46,7 @@ export function Reviews() {
             </a>
           </div>
         </div>
-        <ul className="rv-cards" id="avaliacoes-cards">
+        <ul className="rv-cards" id="avaliacoes-cards" data-reveal="cards">
           {items.map((review) => (
             <li className="rv-card" key={review.name}>
               <div className="rv-card__top">
